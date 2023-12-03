@@ -2,6 +2,7 @@
 
 namespace Statistics\Operations\CommonOperationFactories;
 
+use Statistics\Helpers\Helpers;
 use Statistics\Interfaces\ModelInterfaces\StatisticsProviderModel;
 use DataResourceInstructors\OperationComponents\Columns\Column;
 use DataResourceInstructors\OperationComponents\Columns\GroupingByColumn;
@@ -22,8 +23,6 @@ abstract class CommonOperationFactory
     /**
      * @param Model $model
      * @return void
-     *
-     * Only ModelProvidesStatistics instance will be accepted but in the same time it must be a Model implementing the  desired interface
      */
     public function setModel( Model $model): void
     {
@@ -41,7 +40,8 @@ abstract class CommonOperationFactory
 
         if(!$model instanceof Model)
         {
-            throw new Exception("The Given Class " . $modelClass . " Is Not A Model Class");
+            $exceptionClass = Helpers::getExceptionClass();
+            throw new $exceptionClass("The Given Class " . $modelClass . " Is Not A Model Class");
         }
         $this->setModel($model);
         return $this;
@@ -51,7 +51,6 @@ abstract class CommonOperationFactory
      * @param string|Model $modelClass
      * @return $this
      * @throws Exception
-     * Only ModelProvidesStatistics instance will be accepted but in the same time it must be a Model implementing the  desired interface
      */
     public function forModel(string | Model $modelClass) : CommonOperationFactory
     {
@@ -101,7 +100,8 @@ abstract class CommonOperationFactory
     {
         if($this->tableName){return $this->tableName;}
         if($this->model){return $this->model->getTable();}
-        throw new Exception("No Table Name Or Model Is Set !");
+        $exceptionClass = Helpers::getExceptionClass();
+        throw new $exceptionClass("No Table Name Or Model Is Set !");
     }
 
     /**
@@ -145,9 +145,17 @@ abstract class CommonOperationFactory
         return $this;
     }
 
-    protected function getDefaultDateColumnName() : string
+    protected function getDateColumnDefaultName() : string
     {
         return "created_at";
+    }
+    protected function getDateColumnName() : string
+    {
+        if($this->model instanceof StatisticsProviderModel)
+        {
+            return $this->model->getStatisticDateColumnName();
+        }
+        return $this->getDateColumnDefaultName();
     }
     /**
      * @return Column
@@ -155,11 +163,7 @@ abstract class CommonOperationFactory
     public function getDateColumnConveniently(): Column
     {
         if($this->dateColumn){return $this->dateColumn;}
-        if($this->model instanceof StatisticsProviderModel)
-        {
-            Column::create( $this->model->getStatisticDateColumnName() );
-        }
-        return Column::create($this->getDefaultDateColumnName());
+        return Column::create( $this->getDateColumnName() );
     }
     public function __construct()
     {

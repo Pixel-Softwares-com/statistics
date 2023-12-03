@@ -2,15 +2,16 @@
 
 namespace Statistics\StatisticsProviders\Traits;
 
-use App\CustomLibs\Generators\ValueGenerator;
+use CustomGenerators\GeneratorTypes\ValueGenerator;
 use Statistics\DataResources\DataResource;
+use Statistics\Helpers\Helpers;
 use Statistics\Interfaces\StatisticsProvidersInterfaces\HasDefaultAdvancedOperations;
 use Statistics\Interfaces\StatisticsProvidersInterfaces\HasDefaultOperations;
 use Statistics\Interfaces\StatisticsProvidersInterfaces\NeedsAdditionalAdvancedOperations;
 use Statistics\Interfaces\StatisticsProvidersInterfaces\NeedsAdditionalOperations;
 use Statistics\OperationsManagement\OperationTempHolders\OperationsTempHolder;
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
-use App\Exceptions\JsonException;
+use Exception;
 use ReflectionClass;
 use ReflectionException;
 
@@ -77,7 +78,7 @@ trait DataResourceInitMethods
     /**
      * @param string $dataResourceClass
      * @return void
-     * @throws JsonException
+     * @throws Exception
      * @throws ReflectionException
      */
     protected function initOperationsTempHolder(string $dataResourceClass ) : void
@@ -91,7 +92,7 @@ trait DataResourceInitMethods
     /**
      * @param string $dataResourceClass
      * @return DataResource|null
-     * @throws JsonException
+     * @throws Exception
      * @throws ReflectionException
      */
     protected function getDataResourceInstance(string $dataResourceClass) : DataResource | null
@@ -103,7 +104,7 @@ trait DataResourceInitMethods
      * @param string $childClass
      * @param string $abstractClass
      * @return void
-     * @throws JsonException
+     * @throws Exception
      * @throws ReflectionException
      */
     protected function InheritanceOfClassOrFail(string $childClass , string $abstractClass) : void
@@ -111,11 +112,12 @@ trait DataResourceInitMethods
         $reflection = new ReflectionClass($childClass);
         if(!$reflection->isSubclassOf($abstractClass))
         {
-            throw new JsonException("The Given  " . $childClass . "  Class Is Not A Valid Inheritance Form  " . $abstractClass . " Class !");
+            $exceptionClass = Helpers::getExceptionClass();
+            throw new $exceptionClass("The Given  " . $childClass . "  Class Is Not A Valid Inheritance Form  " . $abstractClass . " Class !");
         }
     }
     /**
-     * @throws JsonException
+     * @throws Exception
      * @throws ReflectionException
      */
     protected function setCurrentDataResource() : void
@@ -132,7 +134,7 @@ trait DataResourceInitMethods
 
     /**
      * @return void
-     * @throws JsonException
+     * @throws Exception
      * @throws ReflectionException
      */
     protected function setNextDataResource() : void

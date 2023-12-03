@@ -4,7 +4,6 @@ namespace Statistics\DataResources\DBFetcherDataResources;
 
 use Statistics\DataProcessors\DataProcessor;
 use Statistics\DataResources\DataResource;
-use Statistics\DataResources\DBFetcherDataResources\Traits\Getters;
 use Statistics\DataResources\DBFetcherDataResources\Traits\Setters;
 use Statistics\DataResources\DBFetcherDataResources\Traits\StatisticsProcessingMethods;
 use Statistics\DateProcessors\DateProcessor;
@@ -15,7 +14,7 @@ use Illuminate\Http\Request;
 
 abstract class DBFetcherDataResource extends DataResource
 {
-    use StatisticsProcessingMethods , Setters , Getters ;
+    use StatisticsProcessingMethods , Setters  ;
 
     protected Request $request;
     protected ?Builder $query = null;

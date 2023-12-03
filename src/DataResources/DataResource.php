@@ -6,7 +6,7 @@ namespace Statistics\DataResources;
 use Statistics\DataProcessors\DataProcessor;
 use Statistics\DateProcessors\DateProcessor;
 use Statistics\OperationsManagement\OperationTempHolders\DataResourceOperationsTempHolder;
-use App\Models\BaseModel;
+
 
 abstract class DataResource
 {
@@ -15,7 +15,6 @@ abstract class DataResource
     protected DataResourceOperationsTempHolder $operationsTempHolder;
     protected DataProcessor $dataProcessor;
     protected ?DateProcessor $dateProcessor = null;
-    protected BaseModel $model;
 
 
     public function __construct(DataResourceOperationsTempHolder $operationsTempHolder , DataProcessor $dataProcessor , ?DateProcessor $dateProcessor = null)

@@ -3,7 +3,7 @@
 namespace Statistics\StatisticsBuilderBaseService;
 
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
-use App\Exceptions\JsonException;
+use Exception;
 use ReflectionException;
 
 /**
@@ -52,7 +52,7 @@ abstract class StatisticsBuilderBaseService
 
     /**
      * @return array
-     * @throws JsonException
+     * @throws Exception
      * @throws ReflectionException
      */
     public function getStatistics()  :array

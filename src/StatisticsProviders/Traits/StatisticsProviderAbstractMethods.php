@@ -8,7 +8,6 @@ use Statistics\DateProcessors\NeededDateProcessorDeterminers\NeededDateProcessor
 trait StatisticsProviderAbstractMethods
 {
 
-//    abstract protected function getModelClass() : string;
 
     /**
      * @return string

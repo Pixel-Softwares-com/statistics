@@ -5,13 +5,13 @@ namespace Statistics\StatisticsProviders;
 use Statistics\DataProcessors\DataProcessor;
 use Statistics\DataResources\DataResource;
 use Statistics\DateProcessors\DateProcessor;
-use Statistics\Interfaces\ModelInterfaces\StatisticsProviderModel;
+use Statistics\Helpers\Helpers;
 use Statistics\OperationsManagement\OperationTempHolders\OperationsTempHolder;
 use Statistics\StatisticsProviders\Traits\DataResourceInitMethods;
 use Statistics\StatisticsProviders\Traits\StatisticsProviderAbstractMethods;
 use Statistics\StatisticsProviders\Traits\StatisticsProviderOperationsMethods;
-use App\Exceptions\JsonException;
-use App\CustomLibs\Generators\Generator;
+use Exception;
+use CustomGenerators\GeneratorTypes\Generator;
 use Illuminate\Database\Eloquent\Model;
 use ReflectionException;
 
@@ -20,7 +20,7 @@ abstract class StatisticsProviderDecorator
     use StatisticsProviderAbstractMethods , StatisticsProviderOperationsMethods , DataResourceInitMethods;
 
     protected array $data = [] ;
-    protected Model | StatisticsProviderModel | null  $model = null;
+    protected ?Model $model = null;
     protected ?StatisticsProviderDecorator $statisticsProvider = null;
     protected Generator $dataResourcesList;
     protected ?DataResource $dataResource = null;
@@ -31,20 +31,16 @@ abstract class StatisticsProviderDecorator
     /**
      * @param string $modelClass
      * @return void
-     * @throws JsonException
+     * @throws Exception
      */
     protected function setValidModel(string $modelClass) : void
     {
         $model = new $modelClass;
 
-        if(!$model instanceof StatisticsProviderModel)
-        {
-            throw new JsonException("The Given Class " . $modelClass . " Doesn't Implement StatisticsProviderModel Interface");
-        }
-
         if(!$model instanceof Model)
         {
-            throw new JsonException("The Given Class " . $modelClass . " Is Not A Model Class");
+            $exceptionClass = Helpers::getExceptionClass();
+            throw new $exceptionClass("The Given Class " . $modelClass . " Is Not A Model Class");
         }
         $this->model = $model;
     }
@@ -70,7 +66,7 @@ abstract class StatisticsProviderDecorator
 
     /**
      * @param StatisticsProviderDecorator|null $statisticsProvider
-     * @throws JsonException
+     * @throws Exception
      * @throws ReflectionException
      */
     public function __construct( ?StatisticsProviderDecorator $statisticsProvider = null)
@@ -85,7 +81,7 @@ abstract class StatisticsProviderDecorator
 
     /**
      * @return $this
-     * @throws JsonException
+     * @throws Exception
      * @throws ReflectionException
      */
     protected function setStatistics()  : StatisticsProviderDecorator
@@ -111,7 +107,7 @@ abstract class StatisticsProviderDecorator
     }
     /**
      * @return array
-     * @throws JsonException
+     * @throws Exception
      * @throws ReflectionException
      */
     protected function getCalculatedStatistics(): array
@@ -127,7 +123,7 @@ abstract class StatisticsProviderDecorator
 
     /**
      * @return array
-     * @throws JsonException
+     * @throws Exception
      * @throws ReflectionException
      */
     public function getStatistics()  :array

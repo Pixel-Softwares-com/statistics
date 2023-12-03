@@ -83,7 +83,6 @@ class ColumnValueTreeRuleDeterminer extends TreeRuleDeterminer
     protected function setOldTreeElementCount(): void
     {
         $this->oldTreeElementCount = $this->getCurrentTreeElementCount();
-//        dd($this->oldTreeElementCount);
     }
     protected function setNewTreeElementCount(): void
     {

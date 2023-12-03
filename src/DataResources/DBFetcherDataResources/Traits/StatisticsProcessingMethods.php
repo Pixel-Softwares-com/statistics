@@ -2,6 +2,7 @@
 
 namespace Statistics\DataResources\DBFetcherDataResources\Traits;
 
+use Exception;
 use Statistics\DataResources\DBFetcherDataResources\DBFetcherDataResource;
 use DataResourceInstructors\OperationComponents\OperationConditions\AggregationConditions\HavingCondition;
 use DataResourceInstructors\OperationComponents\OperationConditions\WhereConditions\WhereConditionGroups\WhereConditionGroup;
@@ -124,7 +125,7 @@ trait StatisticsProcessingMethods
      * @param RelationshipLoader $relationship
      * @param JoinClause $joinQuery
      * @return void
-     * @throws JsonException
+     * @throws Exception
      */
     protected function setRelationshipJoinConditions(RelationshipLoader $relationship , JoinClause $joinQuery): void
     {
@@ -141,7 +142,7 @@ trait StatisticsProcessingMethods
     /**
      * @param RelationshipLoader $relationship
      * @return void
-     * @throws JsonException
+     * @throws Exception
      */
     protected function joinRelationship(RelationshipLoader $relationship): void
     {
@@ -157,7 +158,7 @@ trait StatisticsProcessingMethods
 
     /**
      * @return void
-     * @throws JsonException
+     * @throws Exception
      */
     protected function joinRelationships(): void
     {
@@ -237,7 +238,7 @@ trait StatisticsProcessingMethods
 
     /**
      * @return void
-     * @throws JsonException
+     * @throws Exception
      */
     protected function setStatistics() : void
     {
