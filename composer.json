@@ -23,7 +23,7 @@
     "extra": {
       "laravel": {
         "providers": [
-          "Statistics\\ServiceProvider\\StatisticsServiceProvider"
+          "Statistics\\ServiceProviders\\StatisticsServiceProvider"
         ]
       }
   },
