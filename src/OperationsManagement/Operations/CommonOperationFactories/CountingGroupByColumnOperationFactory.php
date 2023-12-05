@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\Operations\CommonOperationFactories;
+namespace Statistics\OperationsManagement\Operations\CommonOperationFactories;
 
 use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
 use DataResourceInstructors\OperationComponents\Columns\GroupingByColumn;

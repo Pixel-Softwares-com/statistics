@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\Operations\CommonOperationFactories;
+namespace Statistics\OperationsManagement\Operations\CommonOperationFactories;
 
 use Statistics\DateProcessors\DateProcessor;
 use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\GlobalDateProcessor;

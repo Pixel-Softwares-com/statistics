@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\Operations\CommonOperationFactories;
+namespace Statistics\OperationsManagement\Operations\CommonOperationFactories;
 
 use Statistics\Helpers\Helpers;
 use Statistics\Interfaces\ModelInterfaces\StatisticsProviderModel;
