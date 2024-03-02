@@ -1,5 +1,5 @@
 <?php
-namespace Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers;
+namespace Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\DateGroupedChartCountQueryCustomizers;
 
 
 class YearCountQueryCustomizer extends DateGroupedChartCountQueryCustomizer

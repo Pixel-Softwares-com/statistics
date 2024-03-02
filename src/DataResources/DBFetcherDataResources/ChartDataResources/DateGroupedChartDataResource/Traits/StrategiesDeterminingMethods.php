@@ -4,10 +4,6 @@ namespace Statistics\DataResources\DBFetcherDataResources\ChartDataResources\Dat
 
 use Statistics\DateProcessors\DateProcessorTypes\DateGroupedChartDateProcessors\RangePeriodDateProcessor;
 use Statistics\DateProcessors\NeededDateProcessorDeterminers\NeededDateProcessorDeterminer;
-use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\DayCountQueryCustomizer;
-use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\MonthCountQueryCustomizer;
-use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\QuarterCountQueryCustomizer;
-use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\YearCountQueryCustomizer;
 use Statistics\QueryCustomizationStrategies\QueryCustomizationStrategy;
 
 trait StrategiesDeterminingMethods
@@ -15,22 +11,30 @@ trait StrategiesDeterminingMethods
 
     protected function getQuarterAggregationOpStrategy() : QueryCustomizationStrategy
     {
-        return QuarterCountQueryCustomizer::Singleton( $this->query, $this->currentOperationGroup , $this->currentOperation, $this->dateProcessor);
+        /** @var QueryCustomizationStrategy $queryCustomizerClass  */
+        $queryCustomizerClass = $this->getQuarterAggregationOpStrategyClass();
+        return $queryCustomizerClass::Singleton( $this->query, $this->currentOperationGroup , $this->currentOperation, $this->dateProcessor);
     }
 
     protected function getYearAggregationOpStrategy() : QueryCustomizationStrategy
     {
-        return YearCountQueryCustomizer::Singleton( $this->query , $this->currentOperationGroup,$this->currentOperation, $this->dateProcessor);
+        /** @var QueryCustomizationStrategy $queryCustomizerClass  */
+        $queryCustomizerClass = $this->getYearAggregationOpStrategyClass();
+        return $queryCustomizerClass::Singleton( $this->query , $this->currentOperationGroup,$this->currentOperation, $this->dateProcessor);
     }
 
     protected function getMonthAggregationOpStrategy() : QueryCustomizationStrategy
     {
-        return MonthCountQueryCustomizer::Singleton(  $this->query , $this->currentOperationGroup,$this->currentOperation, $this->dateProcessor);
+        /** @var QueryCustomizationStrategy $queryCustomizerClass  */
+        $queryCustomizerClass = $this->getMonthAggregationOpStrategyClass();
+        return $queryCustomizerClass::Singleton(  $this->query , $this->currentOperationGroup,$this->currentOperation, $this->dateProcessor);
     }
 
     protected function getDayAggregationOpStrategy() : QueryCustomizationStrategy
     {
-        return DayCountQueryCustomizer::Singleton( $this->query , $this->currentOperationGroup, $this->currentOperation, $this->dateProcessor);
+        /** @var QueryCustomizationStrategy $queryCustomizerClass  */
+        $queryCustomizerClass = $this->getDayAggregationOpStrategyClass();
+        return $queryCustomizerClass::Singleton( $this->query , $this->currentOperationGroup, $this->currentOperation, $this->dateProcessor);
     }
 
     protected function getRangeAggregationOpStrategy() : QueryCustomizationStrategy

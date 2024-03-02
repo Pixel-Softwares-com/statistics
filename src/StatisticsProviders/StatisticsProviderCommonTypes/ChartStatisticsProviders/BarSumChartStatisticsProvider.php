@@ -2,9 +2,10 @@
 
 namespace Statistics\StatisticsProviders\StatisticsProviderCommonTypes\ChartStatisticsProviders;
 
+use DataResourceInstructors\OperationTypes\SumOperation;
 use Statistics\DataProcessors\DataProcessor;
 use Statistics\DataProcessors\DBFetchedDataProcessors\ChartDataProcessors\DateGroupedChartDataProcessor;
-use Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroupedChartDataResource\DateGroupedChartDataResourceTypes\DateGroupedCountedChartDataResource;
+use Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroupedChartDataResource\DateGroupedChartDataResourceTypes\DateGroupedSumChartDataResource;
 use Statistics\DateProcessors\NeededDateProcessorDeterminers\DateGroupedDateProcessorDeterminer;
 use Statistics\DateProcessors\NeededDateProcessorDeterminers\NeededDateProcessorDeterminer;
 use Statistics\Interfaces\StatisticsProvidersInterfaces\HasDefaultAdvancedOperations;
@@ -17,7 +18,7 @@ use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 use Statistics\Interfaces\ModelInterfaces\StatisticsProviderModel;
 
 
-abstract class BarChartStatisticsProvider extends StatisticsProviderDecorator implements HasDefaultAdvancedOperations , NeedsModelClass
+abstract class BarSumChartStatisticsProvider extends StatisticsProviderDecorator implements HasDefaultAdvancedOperations , NeedsModelClass
 {
     public function __construct(?StatisticsProviderDecorator $statisticsProvider = null)
     {
@@ -25,13 +26,19 @@ abstract class BarChartStatisticsProvider extends StatisticsProviderDecorator im
         parent::__construct($statisticsProvider);
     }
 
+    /**
+     * @return array
+     * Array of AggregationColumn objects
+     */
+    abstract protected function getSumColumnsArray() : array;
+
     public function getStatisticsTypeName(): string
     {
-        return "barChart";
+        return "barSumChart";
     }
     protected function getDataResourceOrdersByPriorityClasses()  :array
     {
-        return [DateGroupedCountedChartDataResource::class];
+        return [DateGroupedSumChartDataResource::class];
     }
 
     protected function getDataProcessorInstance(): DataProcessor
@@ -62,22 +69,29 @@ abstract class BarChartStatisticsProvider extends StatisticsProviderDecorator im
         return Column::create( $this->getDateColumnName() )->setResultProcessingColumnAlias("DateColumn");
     }
 
-    protected function getDateGroupedRowsCount() : OperationGroup
+    protected function getSumOperations() : array
+    {
+        return array_map(function($column)
+               {
+                    if($column instanceof AggregationColumn)
+                    {
+                        return SumOperation::create()->addAggregationColumn($column);
+                    }
+               } , $this->getSumColumnsArray());
+    }
+
+    protected function getSumOperationGroup() : OperationGroup
     {
         $dateColumn = $this->getDateColumn();
-
-        $idColumn = AggregationColumn::create($this->model->getKeyName());
-        $countingOp = CountOperation::create()->addAggregationColumn($idColumn);
-
         return OperationGroup::create($this->model->getTable())
                              ->enableDateSensitivity($dateColumn)
-                             ->addOperation($countingOp);
+                             ->setOperations( $this->getSumOperations() );
     }
 
     public function getDefaultAdvancedOperations() : array
     {
         return [
-            $this->getDateGroupedRowsCount()
+            $this->getSumOperationGroup()
         ];
     }
 

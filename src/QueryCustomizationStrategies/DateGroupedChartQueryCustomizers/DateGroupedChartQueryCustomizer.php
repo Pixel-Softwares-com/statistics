@@ -2,14 +2,14 @@
 
 namespace Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers;
 
-use Statistics\DateProcessors\DateProcessor;
 use DataResourceInstructors\OperationComponents\Columns\Column;
 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
 use DataResourceInstructors\OperationTypes\AggregationOperation;
-use Statistics\QueryCustomizationStrategies\QueryCustomizationStrategy;
 use Illuminate\Database\Query\Builder;
+use Statistics\DateProcessors\DateProcessor;
+use Statistics\QueryCustomizationStrategies\QueryCustomizationStrategy;
 
-abstract class DateGroupedChartCountQueryCustomizer extends QueryCustomizationStrategy
+abstract class DateGroupedChartQueryCustomizer extends QueryCustomizationStrategy
 {
 
     protected Column $dateColumn;
@@ -18,7 +18,7 @@ abstract class DateGroupedChartCountQueryCustomizer extends QueryCustomizationSt
      * @param Column $dateColumn
      * @return $this
      */
-    public function setDateColumn(Column $dateColumn): DateGroupedChartCountQueryCustomizer
+    public function setDateColumn(Column $dateColumn): DateGroupedChartQueryCustomizer
     {
         $this->dateColumn = $dateColumn;
         return $this;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers;
+namespace Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\DateGroupedChartCountQueryCustomizers;
 
 
 class DayCountQueryCustomizer extends DateGroupedChartCountQueryCustomizer

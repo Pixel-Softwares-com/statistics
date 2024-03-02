@@ -4,11 +4,17 @@ namespace Statistics\DataResources\DBFetcherDataResources\ChartDataResources\Dat
 
 use Statistics\DataResources\DBFetcherDataResources\DBFetcherDataResource;
 use Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroupedChartDataResource\Traits\StrategiesDeterminingMethods;
+use Statistics\QueryCustomizationStrategies\QueryCustomizationStrategy;
 
 
-class DateGroupedChartDataResource extends DBFetcherDataResource
+abstract class DateGroupedChartDataResource extends DBFetcherDataResource
 {
 
     use StrategiesDeterminingMethods ;
+
+    abstract protected function getDayAggregationOpStrategyClass() : string;
+    abstract protected function getMonthAggregationOpStrategyClass() : string;
+    abstract protected function getQuarterAggregationOpStrategyClass() : string;
+    abstract protected function getYearAggregationOpStrategyClass() : string;
 
 }

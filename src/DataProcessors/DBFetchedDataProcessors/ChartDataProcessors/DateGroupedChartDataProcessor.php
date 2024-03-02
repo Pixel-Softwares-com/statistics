@@ -12,16 +12,16 @@ use Illuminate\Support\Arr;
 
 class DateGroupedChartDataProcessor extends DataProcessor
 {
-    protected AggregationOperation $countOperation  ;
+    protected AggregationOperation $currentOperation  ;
     public function setInstanceProps(array $dataToProcess, OperationGroup $operationGroup, ?DateProcessor $dateProcessor = null): DataProcessor
     {
         parent::setInstanceProps($dataToProcess, $operationGroup, $dateProcessor);
         return $this->setCurrentOperation();
     }
 
-    protected function getCountedColumn() : AggregationColumn
+    protected function getCurrentOperationAggColumnColumn() : AggregationColumn
     {
-        $columns = $this->countOperation->getAggregationColumns();
+        $columns = $this->currentOperation->getAggregationColumns();
         return Arr::first($columns);
     }
 
@@ -30,22 +30,22 @@ class DateGroupedChartDataProcessor extends DataProcessor
         $groupedOperations = $this->operationGroup->getOperations();
         if(empty($groupedOperations))
         {
-            $countOperation = new CountOperation();
+            $currentOperation = new CountOperation();
         }else{
-            $countOperation = Arr::first($groupedOperations);
+            $currentOperation = Arr::first($groupedOperations);
         }
-        $this->countOperation = $countOperation;
+        $this->currentOperation = $currentOperation;
         return $this;
     }
 
     protected function overrideWithDataKeyValuePairs() : void
     {
-        $countedColumnAlias = $this->getCountedColumn()->getResultProcessingColumnAlias();
+        $aggColumnAlias = $this->getCurrentOperationAggColumnColumn()->getResultProcessingColumnAlias();
         $dateColumnAlias = $this->operationGroup->getDateColumn()->getResultProcessingColumnAlias();
         foreach ($this->dataToProcess as $row)
         {
-            if(!array_key_exists($dateColumnAlias , $row) || !array_key_exists($countedColumnAlias , $row)){continue;}
-            $this->processedData[ $row[$dateColumnAlias] ] = $row[$countedColumnAlias];
+            if(!array_key_exists($dateColumnAlias , $row) || !array_key_exists($aggColumnAlias , $row)){continue;}
+            $this->processedData[ $row[$dateColumnAlias] ] = $row[$aggColumnAlias];
         }
     }
     protected function setDefaultDateIntervalPairs() : void
