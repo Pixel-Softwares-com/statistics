@@ -8,7 +8,7 @@ use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\Dat
 use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\DateGroupedChartCountQueryCustomizers\QuarterCountQueryCustomizer;
 use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\DateGroupedChartCountQueryCustomizers\YearCountQueryCustomizer;
 
-class DateGroupedCountedChartDataResource extends DateGroupedChartDataResource
+class DateGroupedCountChartDataResource extends DateGroupedChartDataResource
 {
 
     protected function getDayAggregationOpStrategyClass(): string
