@@ -5,31 +5,7 @@
 
 ### Operation Components :
 - There are two main types of these components :  
-  - Common operations factories : are used to encapsulate some high used and common operations to make the work faster and easier ,
-  They are inherited from CommonOperationFactory and its make method returns an OperationGroup instance ... so feel free to set another properties you want after getting it to make your work custom on your need.
-    Example : This code is used to getting count of all clients added in the date period coming from date filters based on their status .
-  
-         <?php
-        
-                  use App\CustomLibs\Statistics\StatisticsProviders\StatisticsProviderCommonTypes\BigBoxStatisticsProvider;
-                  use App\Models\WorkSector\Client;
-                  use App\CustomLibs\Statistics\OperationsManagement\Operations\OperationContainers\OperationGroups\OperationGroup;
-        
-                  class ClientBigBoxStatisticsProvider extends BigBoxStatisticsProvider
-                  {
-                      protected function getCountingClientGroupedByStatusOperationGroup() : OperationGroup
-                      {
-                          $groupingColumn = GroupingByColumn::create("status" , "status");
-                          return (new CountingGroupByColumnOperationFactory($groupingColumn))->setTableName("tableName")->make();
-                      }
-                      public function getAdditionalAdvancedOperations(): array
-                      {
-                          return [
-                              $this->getCountingClientGroupedByStatusOperationGroup()
-                          ]; /*Array Of OperationGroup objects */
-                      }
-                  }
-  
+ 
   - Columns & Conditions & Ordering : They are the easiest way to set OperationContainers and AggregationOperations properties without making any validation that will make the processing slower ,
     Example : When you need to group by a column or order by it , you may use Column typed object to instruct the OperationContainer which column must it use , 
     like in this code which is used to getting count of all clients added in the date period coming from date filters based on their status .

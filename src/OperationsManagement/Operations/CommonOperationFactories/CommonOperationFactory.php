@@ -19,6 +19,7 @@ abstract class CommonOperationFactory
     protected string $countedKeyName = "";
     protected ?Column $dateColumn = null;
 
+    abstract public function make() : OperationGroup;
 
     /**
      * @param Model $model
@@ -169,5 +170,5 @@ abstract class CommonOperationFactory
     {
 
     }
-    abstract public function make() : OperationGroup;
+
 }

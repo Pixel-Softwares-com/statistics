@@ -5,8 +5,8 @@
  
 ### Why it is required : 
 Generally you need to use  typed class to request it to do some statistical operations ,
-There are some common StatisticsProviders made ready to use for you ,
-But you maybe need to make a custom one .... The two ways will be explained in this documentation .
+There are some common StatisticsProviders made ready to use for you (They do some operations instead of you) ,
+But you maybe need to make a custom one and customize your operations yourself .... The two ways will be explained in this documentation .
 
 <hr>
 

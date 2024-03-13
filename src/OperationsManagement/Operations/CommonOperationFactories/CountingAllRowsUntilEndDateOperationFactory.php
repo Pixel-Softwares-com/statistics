@@ -2,6 +2,7 @@
 
 namespace Statistics\OperationsManagement\Operations\CommonOperationFactories;
 
+use DataResourceInstructors\OperationTypes\AggregationOperation;
 use Statistics\DateProcessors\DateProcessor;
 use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\GlobalDateProcessor;
 use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
@@ -31,6 +32,34 @@ class CountingAllRowsUntilEndDateOperationFactory extends CommonOperationFactory
             $operationGroup->where( AndWhereCondition::create($this->getDateColumnConveniently() , $this->dateProcessor->getEndingDate() , "<") );
         }
     }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    protected function processAggregationResultLabel() : string
+    {
+        $AggregationResultLabel = $this->getAggregationResultLabel() ;
+        if(!$AggregationResultLabel){$AggregationResultLabel = "All " . $this->getTableTitleConveniently() ;}
+        return $AggregationResultLabel;
+    }
+
+    /**
+     * @return AggregationColumn
+     * @throws Exception
+     */
+    protected function initCountedColumn() : AggregationColumn
+    {
+        $AggregationResultLabel = $this->processAggregationResultLabel();
+        return AggregationColumn::create($this->getCountedKeyNameConveniently())->setResultLabel($AggregationResultLabel);
+    }
+    /**
+     * @throws Exception
+     */
+    protected function prepareCountingOperation() : AggregationOperation
+    {
+        return  CountOperation::create()->addAggregationColumn( $this->initCountedColumn() );
+    }
     /**
      * @param string $resultKey
      * @return OperationGroup
@@ -38,14 +67,8 @@ class CountingAllRowsUntilEndDateOperationFactory extends CommonOperationFactory
      */
     public function make(string $resultKey = ""): OperationGroup
     {
-        $AggregationResultLabel = $this->getAggregationResultLabel() ;
-        if(!$AggregationResultLabel){$AggregationResultLabel = "All " . $this->getTableTitleConveniently() ;}
-
-        $countedKey = AggregationColumn::create($this->getCountedKeyNameConveniently())->setResultLabel($AggregationResultLabel);
-        $countOperation = CountOperation::create()->addAggregationColumn($countedKey);
-
         $operationGroup = OperationGroup::create($this->getTableNameConveniently())
-                                        ->addOperation($countOperation)
+                                        ->addOperation( $this->prepareCountingOperation() )
                                         ->setResultArrayKey($resultKey);
         $this->setDateCondition($operationGroup);
         return $operationGroup;

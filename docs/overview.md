@@ -1,6 +1,6 @@
 # Statistics Structure
 
-### This structure works with Bridge design pattern , That means each type deals with another type as a abstract type or an interface
+### This structure works with Bridge design pattern , That means each type deals with another type as an abstract type or an interface
 
 <hr>
 
@@ -109,4 +109,4 @@ Each of these child classes has a specific way to get statistical data but the s
   - OperationConditions ( AggregationConditions , JoinConditions  , WhereConditions) .
   - Ordering
   
-- OperationsTempHolders Classes : They are a temporary boxes to hold the OperationGroups before passing them to DataResource object .
+- OperationsTempHolders Classes : They are temporary boxes to hold the OperationGroups before passing them to DataResource object .
