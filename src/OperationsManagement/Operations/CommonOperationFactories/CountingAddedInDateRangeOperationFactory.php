@@ -3,7 +3,6 @@
 namespace Statistics\OperationsManagement\Operations\CommonOperationFactories;
 
 use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
-use DataResourceInstructors\OperationComponents\Columns\Column;
 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
 use DataResourceInstructors\OperationTypes\AggregationOperation;
 use DataResourceInstructors\OperationTypes\CountOperation;

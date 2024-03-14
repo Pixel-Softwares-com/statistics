@@ -48,38 +48,104 @@ Optional method to set only Model object (if required by the CommonOperationFact
 
 
 #### Statistics structure's ready CommonOperationFactories class :
+
+##### CountingAddedInDateRangeOperationFactory
+It is used to make an OperationGroup for :
+- Doing counting operation on the table key column (by default 'id') .
+- Enabling date condition on the defined Date Column (by default 'created_at') : between start -> end date values those come from request filters .
+
+
 ##### CountingGroupByColumnOperationFactory : 
-- It is used faking an OperationGroup for doing counting operation on the table key column with date condition on the defined Date Column 
-And grouping the results on the GroupingByColumn that passed to its constructor .
-- If the 'AggregationResultLabel' hasn't been changed  , It will use GroupingByColumn 's getResultProcessingColumnAlias method to set the counting operation value result label .
+- It does what CountingAddedInDateRangeOperationFactory does +  Grouping the results on the GroupingByColumn that passed to its constructor .
+
+Note :If the 'AggregationResultLabel' hasn't been changed  ,
+It will use GroupingByColumn 's getResultProcessingColumnAlias method to set the counting operation value result label .
 
 ##### CountingAllRowsUntilEndDateOperationFactory
-- CountingAddedInDateRangeOperationFactory
+It is used to make an OperationGroup for :
+- Doing counting operation on the table key column (by default 'id') .
+- Setting date condition on the defined Date Column (by default 'created_at') : all rows before until the end date value that comes from request filters .
+
 
   Each of these factories returns an OperationGroup instance when 'make' method is called ,
-  So use the public methods above to change the OperationGroup faking behaviors ,
+  So use the public methods above to change the OperationGroup making behaviors before calling make method,
   And feel free to set another properties you want on the result OperationGroup to make your work custom as you need .
-  
 
-  Example : This code is used to getting count of all clients added in the date period coming from date filters based on their status .
+Example : This code is used to getting count of all clients added in the date range coming from date filters .
 
         <?php
        
-                 use App\CustomLibs\Statistics\StatisticsProviders\StatisticsProviderCommonTypes\BigBoxStatisticsProvider;
+                 use Statistics\StatisticsProviders\StatisticsProviderCommonTypes\BigBoxStatisticsProvider;
+                 use Statistics\OperationsManagement\Operations\CommonOperationFactories\CountingAddedInDateRangeOperationFactory;
                  use App\Models\WorkSector\Client;
-                 use App\CustomLibs\Statistics\OperationsManagement\Operations\OperationContainers\OperationGroups\OperationGroup;
+                 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
+       
+                 class ClientBigBoxStatisticsProvider extends BigBoxStatisticsProvider
+                 {
+                     protected function getCountingClientOperationGroup() : OperationGroup
+                     {
+                        /** getting all added clients count between start - end date request filter values */
+                         return (new CountingAddedInDateRangeOperationFactory())->setTableName("clients_table_name")->make();
+                     }
+                     public function getAdditionalAdvancedOperations(): array
+                     {
+                         return [
+                             $this->getCountingClientOperationGroup()
+                         ]; /*Array Of OperationGroup objects */
+                     }
+                 }
+
+  Example : This code is used to getting count of all clients added in the date range coming from date filters
+            based on their status (grouping results on status column value).
+
+        <?php
+       
+                 use Statistics\StatisticsProviders\StatisticsProviderCommonTypes\BigBoxStatisticsProvider;
+                 use Statistics\OperationsManagement\Operations\CommonOperationFactories\CountingGroupByColumnOperationFactory;
+                 use App\Models\WorkSector\Client;
+                 use DataResourceInstructors\OperationComponents\Columns\GroupingByColumn;
+                 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
        
                  class ClientBigBoxStatisticsProvider extends BigBoxStatisticsProvider
                  {
                      protected function getCountingClientGroupedByStatusOperationGroup() : OperationGroup
                      {
+                        /** 
+                            getting all added clients count between start - end date request filter values 
+                            and grouping the results on status value
+                        */
                          $groupingColumn = GroupingByColumn::create("status" , "status");
-                         return (new CountingGroupByColumnOperationFactory($groupingColumn))->setTableName("tableName")->make();
+                         return (new CountingGroupByColumnOperationFactory($groupingColumn))->setTableName("clients_table_name")->make();
                      }
                      public function getAdditionalAdvancedOperations(): array
                      {
                          return [
                              $this->getCountingClientGroupedByStatusOperationGroup()
+                         ]; /*Array Of OperationGroup objects */
+                     }
+                 }
+
+
+
+Example : This code is used to getting count of all clients added in the database until the end date coming from date filters .
+
+        <?php
+       
+                 use Statistics\StatisticsProviders\StatisticsProviderCommonTypes\BigBoxStatisticsProvider;
+                 use Statistics\OperationsManagement\Operations\CommonOperationFactories\CountingAllRowsUntilEndDateOperationFactory;
+                 use App\Models\WorkSector\Client;
+                 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
+       
+                 class ClientBigBoxStatisticsProvider extends BigBoxStatisticsProvider
+                 {
+                     protected function getCountingClientUntilEndDateOperationGroup() : OperationGroup
+                     {
+                         return (new CountingAllRowsUntilEndDateOperationFactory())->setTableName("clients_table_name")->make();
+                     }
+                     public function getAdditionalAdvancedOperations(): array
+                     {
+                         return [
+                             $this->getCountingClientUntilEndDateOperationGroup()
                          ]; /*Array Of OperationGroup objects */
                      }
                  }
