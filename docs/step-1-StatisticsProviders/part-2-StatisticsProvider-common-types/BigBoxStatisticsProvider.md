@@ -9,6 +9,10 @@ Implementing getAdditionalAdvancedOperations method :
 - This provider (( Doesn't )) contain (( ANY )) default statistical operations because it is inherited from CustomizableStatisticsProvider StatisticsProvider ,
   And implements App\CustomLibs\Statistics\Interfaces\StatisticsProvidersInterfaces\NeedsAdditionalAdvancedOperations interface  ,
   So it expects to receive the desired statistical operations from the child classes will be inherited from  itself .
+- It expects an array of DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup objects  (Look at OperationManagement docs part ) ,
+So Compose those OperationGroups as you like , 
+And return them from the method NeedsAdditionalAdvancedOperations interface requires ,
+and the result array will be wrapped in 'total' named key .
 
 - The result array will be wrapped in 'total' named key ,
   So use it when you need to wrap some operation results in 'total' key and feel free to request any operations you need.

@@ -28,39 +28,9 @@ And wraps them inside each other.
 - Ex for DataResources : DBFetcherDataResource Who will do the statistics of the required operations using the Database.
   You can develop another DataResource later to do the statistics of the required operations using the Cache ( for instance ).
 
-### - StatisticsProvider Main Types :
-#### BigBoxStatisticsProvider
-* Uses DBFetcherDataResource typed DBFetcherGlobalDataResource object for doing statistics by database .
-* Doesn't have any default operations  , can be used to add operations and advanced operations and return the result data as associative array of data.
-
-#### ChartStatisticsProvider
-*  Uses DBFetcherDataResource typed ChartDBFetcherDataResource for doing statistics by database .
-*  Doesn't expect any operations from its child class ... It does the statistics grouped by time period .
-
-#### SmallBoxesStatisticsProvider
-* Uses DBFetcherDataResource typed DBFetcherGlobalDataResource object for doing statistics by database .
-* It has many default operations :
-    - Counting of all rows in the given model's database table .
-    - Counting of all rows in the given model's database table <b>those are added into the table in a specific time period <b>.
 
 <hr>
 
-### DataResource Class :
-- It is an abstract class to force all child classes to define some methods called by StatisticsProvider classes.
-- It expects DataResourceOperationsTempHolder object in constructor , DataProcessor object from child classes .
-
-### DataResource Types :
-#### DBFetcherDataResource class
-- It will do the statistics of the required operations using the Database.
-- It deals with OperationManagement , QueryCustomizationStrategy , DateProcessor , DataProcessor To do the required statistics .
-
-##### DBFetcherDataResource Child Classes :
-- DBFetcherGlobalDataResource : It has the normal functionality of DBFetcherDataResource
-- ChartDBFetcherDataResource : It defines specific QueryCustomizationStrategy , DateProcessor , DataProcessor
-  types to achieve its specific job .
-Each of these child classes has a specific way to get statistical data but the style of result is the same.
-
-<hr>
 
 ### DateProcessor Class :
 - It is an abstract class to force all child classes to define some methods called by DataResource Classes .
@@ -84,29 +54,3 @@ Each of these child classes has a specific way to get statistical data but the s
     - DateGroupedDBFetchedDataProcessor : It uses the DateProcessor to generate a time period and using it in the final data array to get a statistics data array grouped by date .
 
 <hr> 
-
-###  QueryCustomizationStrategy Class :
-- It is an abstract class to customize the query using the sql string provided form QueryCustomizationStrategy child classes ,
-  and force all child classes to define some methods called by DataResource Classes .
-
-### - QueryCustomizationStrategy Types :
-#### CountingQueryCustomizer : Provide The Sql For Counting Column Operation .
-#### SumQueryCustomizer : Provide The Sql For getting total value of Column .
-#### AverageQueryCustomizer : Provide The Sql For getting average value of Column .
-####  Other Types Provided Date Based Sql Customizing Functionality for ChartDBFetcherDataResource .
-
-<hr>
-
-### - OperationManagement Structure :
-#### Operations Classes : They are the classes used to instruct DataResource Classes the required operations they must do .
-* OperationContainers
-  - OperationGroup
-  - RelationshipLoader
-* OperationTypes
-  - AggregationOperation ( AverageOperation , CountOperation , SumOperation)
-* QueryComponents
-  - Columns ( Column , AggregationColumn ,  GroupingByColumn ) .
-  - OperationConditions ( AggregationConditions , JoinConditions  , WhereConditions) .
-  - Ordering
-  
-- OperationsTempHolders Classes : They are temporary boxes to hold the OperationGroups before passing them to DataResource object .
