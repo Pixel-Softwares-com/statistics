@@ -18,7 +18,7 @@ abstract class StatisticsBuilderBaseService
     /**
      * @return void
      */
-    protected function setStatisticsProviderProps() : void
+    protected function customizeCurrentStatisticsProviderInitializing() : void
     {
         return;
     }
@@ -34,7 +34,7 @@ abstract class StatisticsBuilderBaseService
             if($StatisticsProviderDecoratorClass instanceof StatisticsProviderDecorator)
             {
                 $this->statisticsProvider = $StatisticsProviderDecoratorClass;
-                $this->setStatisticsProviderProps();
+                $this->customizeCurrentStatisticsProviderInitializing();
             }
         }
     }

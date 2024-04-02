@@ -11,12 +11,25 @@ trait DataProcessorSingleInstanceMethods
     protected static array $instances = [];
     public function setInstanceProps(array $dataToProcess , OperationGroup $operationGroup  , ?DateProcessor $dateProcessor = null) : DataProcessor
     {
-        $this->dataToProcess = $dataToProcess;
-        $this->dateProcessor = $dateProcessor;
-        $this->processedData = [];
-        return $this->setOperationGroup($operationGroup);
+        return $this->setDataToProcess($dataToProcess)->setDateProcessor($dateProcessor)
+                    ->setInitProcessedData()->setOperationGroup($operationGroup);
     }
 
+    public function setInitProcessedData() : self
+    {
+        $this->processedData = [];
+        return $this;
+    }
+    public function setDateProcessor(?DateProcessor $dateProcessor = null) : self
+    {
+        $this->dateProcessor = $dateProcessor;
+        return $this;
+    }
+    public function setDataToProcess(array $dataToProcess) : self
+    {
+        $this->dataToProcess = $dataToProcess;
+        return $this;
+    }
     /**
      * @return DataProcessor
      */

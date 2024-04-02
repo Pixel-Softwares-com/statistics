@@ -20,6 +20,7 @@ abstract class StatisticsProviderDecorator
     use StatisticsProviderAbstractMethods , StatisticsProviderOperationsMethods , DataResourceInitMethods;
 
     protected array $data = [] ;
+    protected array $currentStatisticsProviderData = [];
     protected ?Model $model = null;
     protected ?StatisticsProviderDecorator $statisticsProvider = null;
     protected Generator $dataResourcesList;
@@ -78,7 +79,33 @@ abstract class StatisticsProviderDecorator
         $this->setCurrentDataResource();
     }
 
+    protected function mergeCurrentProviderData() : void
+    {
+        $currentProviderData =  $this->getCurrentStatisticsProviderData();
+        $StatisticsTypeName = $this->getStatisticsTypeName();
 
+        if(array_key_exists( $StatisticsTypeName , $this->data ))
+        {
+            $this->data[ $StatisticsTypeName ] = array_merge( $this->data[ $StatisticsTypeName ] , $currentProviderData );
+        }else{
+            $this->data[ $StatisticsTypeName ] = $currentProviderData;
+        }
+    }
+    /**
+     * @return void
+     * @throws ReflectionException
+     */
+    protected function setCurrentStatisticsProviderData(): void
+    {
+        $this->currentStatisticsProviderData = $this->getCalculatedStatistics();
+    }
+    /**
+     * @return array
+     */
+    public function getCurrentStatisticsProviderData(): array
+    {
+        return $this->currentStatisticsProviderData;
+    }
     /**
      * @return $this
      * @throws Exception
@@ -97,7 +124,8 @@ abstract class StatisticsProviderDecorator
         /**
          * Here ... the statistics presented by child class is still need to calculating , and it will be achieved by  getCalculatedStatistics method
          */
-        $this->data[$this->getStatisticsTypeName()] = $this->getCalculatedStatistics();
+        $this->setCurrentStatisticsProviderData();
+        $this->mergeCurrentProviderData();
         return $this;
     }
 
@@ -105,6 +133,7 @@ abstract class StatisticsProviderDecorator
     {
         return $this->dataResource?->getStatistics() ?? [];
     }
+
     /**
      * @return array
      * @throws Exception
