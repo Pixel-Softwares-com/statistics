@@ -21,7 +21,7 @@ class GlobalDateProcessorDeterminer extends NeededDateProcessorDeterminer
             'quarter'   => QuarterPeriodDateProcessor::Singleton($this::$request),
             'year'      => YearPeriodDateProcessor::Singleton($this::$request),
             'range'     => RangePeriodDateProcessor::Singleton($this::$request),
-            default     => null,
+            default     => null, /** for all time date filter (we don't want to set date filter) */
         });
     }
 }

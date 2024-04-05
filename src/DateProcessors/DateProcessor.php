@@ -18,8 +18,16 @@ abstract class DateProcessor
     {
     }
 
-    public function setRequest(Request $request) : DateProcessor
+    protected function getCurrentRequestInstance() : Request
     {
+        return request();
+    }
+    public function setRequest(?Request $request = null) : DateProcessor
+    {
+        if(!$request)
+        {
+            $request = $this->getCurrentRequestInstance();
+        }
         $this->request = $request;
         return $this;
     }

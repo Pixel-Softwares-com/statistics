@@ -7,8 +7,10 @@ use DataResourceInstructors\OperationComponents\Columns\Column;
 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
 use DataResourceInstructors\OperationTypes\AggregationOperation;
 use DataResourceInstructors\OperationTypes\SumOperation;
+use ReflectionException;
 use Statistics\DataProcessors\DataProcessor;
 use Statistics\DataProcessors\DBFetchedDataProcessors\ChartDataProcessors\DateGroupedChartDataProcessor;
+use Statistics\DataResources\DataResourceBuilders\DateGroupedChartDataResourceBuilder;
 use Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroupedChartDataResource\DateGroupedChartDataResourceTypes\DateGroupedAvgChartDataResource;
 use Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroupedChartDataResource\DateGroupedChartDataResourceTypes\DateGroupedSumChartDataResource;
 use Statistics\DateProcessors\NeededDateProcessorDeterminers\DateGroupedDateProcessorDeterminer;
@@ -29,6 +31,15 @@ abstract class BarAvgChartStatisticsProvider extends StatisticsProviderDecorator
     }
 
     /**
+     * @throws ReflectionException
+     */
+    protected function getDataResourceBuildersOrdersByPriorityClasses(): array
+    {
+        return [
+            DateGroupedChartDataResourceBuilder::create()->useDataResourceClass(DateGroupedAvgChartDataResource::class)
+        ];
+    }
+    /**
      * @return AggregationColumn
      * Array of AggregationColumn objects
      */
@@ -38,20 +49,20 @@ abstract class BarAvgChartStatisticsProvider extends StatisticsProviderDecorator
     {
         return "barAvgChart";
     }
-    protected function getDataResourceOrdersByPriorityClasses()  :array
-    {
-        return [DateGroupedAvgChartDataResource::class];
-    }
-
-    protected function getDataProcessorInstance(): DataProcessor
-    {
-        return DateGroupedChartDataProcessor::Singleton();
-    }
-
-    protected function getNeededDateProcessorDeterminerInstance(): NeededDateProcessorDeterminer
-    {
-        return DateGroupedDateProcessorDeterminer::Singleton();
-    }
+//    protected function getDataResourceOrdersByPriorityClasses()  :array
+//    {
+//        return [DateGroupedAvgChartDataResource::class];
+//    }
+//
+//    protected function getDataProcessorInstance(): DataProcessor
+//    {
+//        return DateGroupedChartDataProcessor::Singleton();
+//    }
+//
+//    protected function getNeededDateProcessorDeterminerInstance(): NeededDateProcessorDeterminer
+//    {
+//        return DateGroupedDateProcessorDeterminer::Singleton();
+//    }
 
     protected function getDateColumnDefaultName() : string
     {

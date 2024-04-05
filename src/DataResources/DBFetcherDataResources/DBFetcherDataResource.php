@@ -33,15 +33,19 @@ abstract class DBFetcherDataResource extends DataResource
      */
     protected function setOperationGroupsArray(): DBFetcherDataResource
     {
-        $this->OperationGroupsArray = $this->operationsTempHolder->getOperationGroups();
+        $this->OperationGroupsArray = $this->operationsTempHolder?->getOperationGroups() ?? [];
         return $this;
     }
 
-
-    public function __construct(DataResourceOperationsTempHolder $operationsTempHolder , DataProcessor $dataProcessor , ?DateProcessor $dateProcessor = null)
+    public function setOperationsTempHolder(DataResourceOperationsTempHolder $operationsTempHolder): DataResource
     {
-        parent::__construct($operationsTempHolder , $dataProcessor , $dateProcessor);
-        $this->setRequest()->setOperationGroupsArray();
+        parent::setOperationsTempHolder($operationsTempHolder);
+        return $this->setOperationGroupsArray();
+    }
+
+    public function __construct()
+    {
+        $this->setRequest();
     }
 
 }

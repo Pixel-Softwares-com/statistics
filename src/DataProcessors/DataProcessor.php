@@ -15,7 +15,7 @@ abstract class DataProcessor
     protected array $processedData = [];
     protected array $dataToProcess = [];
     protected  DateProcessor | DateGroupedChartDateProcessor | null $dateProcessor = null;
-    protected OperationGroup $operationGroup;
+    protected ?OperationGroup $operationGroup = null;
 
 
     protected function __construct()
@@ -65,6 +65,7 @@ abstract class DataProcessor
      */
     public function getProcessedData(): array
     {
+        $this->setInitProcessedData();
         $this->convertStdObjectsToDataPureArray();
         $this->processData();
         $this->wrapProcessedDataInResultKey();

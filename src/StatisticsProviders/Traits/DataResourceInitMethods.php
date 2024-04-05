@@ -4,7 +4,9 @@ namespace Statistics\StatisticsProviders\Traits;
 
 use CustomGenerators\GeneratorTypes\ValueGenerator;
 use Statistics\DataResources\DataResource;
+use Statistics\DataResources\DataResourceBuilders\DataResourceBuilder;
 use Statistics\Helpers\Helpers;
+use Statistics\Interfaces\DataResourceInterfaces\DataResourceBuilderInterfaces\NeedsOperationInstructors;
 use Statistics\Interfaces\StatisticsProvidersInterfaces\HasDefaultAdvancedOperations;
 use Statistics\Interfaces\StatisticsProvidersInterfaces\HasDefaultOperations;
 use Statistics\Interfaces\StatisticsProvidersInterfaces\NeedsAdditionalAdvancedOperations;
@@ -18,10 +20,10 @@ use ReflectionException;
 trait DataResourceInitMethods
 {
 
-    protected function setDataResourceList(): StatisticsProviderDecorator
+    protected function setDataResourceBuilderList(): StatisticsProviderDecorator
     {
-        $dataResourceClasses = $this->getDataResourceOrdersByPriorityClasses();
-        $this->dataResourcesList = new ValueGenerator($dataResourceClasses);
+        $dataResourceClasses = $this->getDataResourceBuildersOrdersByPriorityClasses();
+        $this->dataResourcesBuilderList = new ValueGenerator($dataResourceClasses);
         return $this;
     }
 
@@ -83,6 +85,7 @@ trait DataResourceInitMethods
      */
     protected function initOperationsTempHolder(string $dataResourceClass ) : void
     {
+        /** @var DataResource $dataResourceClass  */
         $operationTempHolderClass = $dataResourceClass::getAcceptedOperationTempHolderClass();
         $this->InheritanceOfClassOrFail($operationTempHolderClass , OperationsTempHolder::class);
         $this->operationsTempHolder = new $operationTempHolderClass();
@@ -90,15 +93,14 @@ trait DataResourceInitMethods
     }
 
     /**
-     * @param string $dataResourceClass
-     * @return DataResource|null
-     * @throws Exception
      * @throws ReflectionException
      */
-    protected function getDataResourceInstance(string $dataResourceClass) : DataResource | null
+    protected function setOperationsTempHolder(DataResourceBuilder | NeedsOperationInstructors $dataResourceBuilder) : void
     {
-        $this->initOperationsTempHolder($dataResourceClass);
-        return new $dataResourceClass($this->operationsTempHolder , $this->dataProcessor , $this->dateProcessor);
+        $dataResourceClass = $dataResourceBuilder->getDataResourceClass();
+        $this->InheritanceOfClassOrFail($dataResourceClass , DataResource::class);
+        $this->initOperationsTempHolder( $dataResourceClass );
+        $dataResourceBuilder->setOperationsTempHolder( $this->operationsTempHolder );
     }
     /**
      * @param string $childClass
@@ -116,20 +118,42 @@ trait DataResourceInitMethods
             throw new $exceptionClass("The Given  " . $childClass . "  Class Is Not A Valid Inheritance Form  " . $abstractClass . " Class !");
         }
     }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function customizeOperationInstructorsNeeds(DataResourceBuilder $dataResourceBuilder) : void
+    {
+        if($dataResourceBuilder instanceof NeedsOperationInstructors)
+        {
+            $this->setOperationsTempHolder($dataResourceBuilder);
+        }
+    }
+
+    /**
+     * @throws ReflectionException
+     *
+     * A hook to customize a DataResourceBuilder object from child StatisticsProvider object
+     */
+    protected function initDataResourceBuilder(DataResourceBuilder | string $dataResourceBuilderClass = "") : DataResourceBuilder
+    {
+        if($dataResourceBuilderClass instanceof DataResourceBuilder)
+        {
+            return $dataResourceBuilderClass;
+        }
+        $this->InheritanceOfClassOrFail($dataResourceBuilderClass , DataResourceBuilder::class);
+        return $dataResourceBuilderClass::Create();
+    }
     /**
      * @throws Exception
      * @throws ReflectionException
      */
     protected function setCurrentDataResource() : void
     {
-        $dataResourceClass = $this->dataResourcesList->current();
-        if($dataResourceClass)
-        {
-            $this->InheritanceOfClassOrFail($dataResourceClass , DataResource::class);
-            $this->dataResource = $this->getDataResourceInstance($dataResourceClass);
-            return;
-        }
-        $this->dataResource = null;
+        $dataResourceBuilderClass = $this->dataResourcesBuilderList->current();
+        $dataResourceBuilder = $this->initDataResourceBuilder($dataResourceBuilderClass);
+        $this->customizeOperationInstructorsNeeds($dataResourceBuilder);
+        $this->dataResource = $dataResourceBuilder->getDataResource();
     }
 
     /**
@@ -139,7 +163,7 @@ trait DataResourceInitMethods
      */
     protected function setNextDataResource() : void
     {
-        $this->dataResourcesList->next();
+        $this->dataResourcesBuilderList->next();
         $this->setCurrentDataResource();
     }
 

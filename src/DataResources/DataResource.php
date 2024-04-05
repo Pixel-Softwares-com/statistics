@@ -6,22 +6,19 @@ namespace Statistics\DataResources;
 use Statistics\DataProcessors\DataProcessor;
 use Statistics\DateProcessors\DateProcessor;
 use Statistics\OperationsManagement\OperationTempHolders\DataResourceOperationsTempHolder;
+use Statistics\OperationsManagement\OperationTempHolders\OperationsTempHolder;
 
 
 abstract class DataResource
 {
 
     protected array $statistics = [];
-    protected DataResourceOperationsTempHolder $operationsTempHolder;
-    protected DataProcessor $dataProcessor;
+    protected ?DataResourceOperationsTempHolder $operationsTempHolder = null;
+    protected ?DataProcessor $dataProcessor = null;
     protected ?DateProcessor $dateProcessor = null;
 
-
-    public function __construct(DataResourceOperationsTempHolder $operationsTempHolder , DataProcessor $dataProcessor , ?DateProcessor $dateProcessor = null)
-    {
-        $this->setOperationsTempHolder($operationsTempHolder)->setDataProcessor($dataProcessor)->setDateProcessor($dateProcessor);
-    }
     /**
+     *
      * @param DataResourceOperationsTempHolder $operationsTempHolder
      * @return $this
      */
@@ -31,11 +28,16 @@ abstract class DataResource
         return $this;
     }
 
+    static public function getAcceptedOperationTempHolderClass(): string
+    {
+        return OperationsTempHolder::class;
+    }
+
     /**
-     * @param DataProcessor $dataProcessor
+     * @param DataProcessor|null $dataProcessor
      * @return $this
      */
-    public function setDataProcessor(DataProcessor $dataProcessor): DataResource
+    public function setDataProcessor(?DataProcessor $dataProcessor = null): DataResource
     {
         $this->dataProcessor = $dataProcessor;
         return $this;
@@ -45,13 +47,12 @@ abstract class DataResource
      * @param DateProcessor|null $dateProcessor
      * @return $this
      */
-    public function setDateProcessor(?DateProcessor $dateProcessor): DataResource
+    public function setDateProcessor(?DateProcessor $dateProcessor = null): DataResource
     {
         $this->dateProcessor = $dateProcessor;
         return $this;
     }
 
-    abstract static public function getAcceptedOperationTempHolderClass() : string;
     abstract protected function setStatistics() : void;
 
     public function getStatistics() : array

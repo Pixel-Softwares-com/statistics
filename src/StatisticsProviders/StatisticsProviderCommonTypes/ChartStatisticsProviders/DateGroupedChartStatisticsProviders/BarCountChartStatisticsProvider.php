@@ -6,9 +6,12 @@ use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
 use DataResourceInstructors\OperationComponents\Columns\Column;
 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
 use DataResourceInstructors\OperationTypes\CountOperation;
+use ReflectionException;
 use Statistics\DataProcessors\DataProcessor;
 use Statistics\DataProcessors\DBFetchedDataProcessors\ChartDataProcessors\DateGroupedChartDataProcessor;
+use Statistics\DataResources\DataResourceBuilders\DateGroupedChartDataResourceBuilder;
 use Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroupedChartDataResource\DateGroupedChartDataResourceTypes\DateGroupedCountChartDataResource;
+use Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroupedChartDataResource\DateGroupedChartDataResourceTypes\DateGroupedSumChartDataResource;
 use Statistics\DateProcessors\NeededDateProcessorDeterminers\DateGroupedDateProcessorDeterminer;
 use Statistics\DateProcessors\NeededDateProcessorDeterminers\NeededDateProcessorDeterminer;
 use Statistics\Interfaces\ModelInterfaces\StatisticsProviderModel;
@@ -29,20 +32,30 @@ abstract class BarCountChartStatisticsProvider extends StatisticsProviderDecorat
     {
         return "barChart";
     }
-    protected function getDataResourceOrdersByPriorityClasses()  :array
-    {
-        return [DateGroupedCountChartDataResource::class];
-    }
 
-    protected function getDataProcessorInstance(): DataProcessor
+    /**
+     * @throws ReflectionException
+     */
+    protected function getDataResourceBuildersOrdersByPriorityClasses(): array
     {
-        return DateGroupedChartDataProcessor::Singleton();
+        return [
+            DateGroupedChartDataResourceBuilder::create()->useDataResourceClass(DateGroupedCountChartDataResource::class)
+        ];
     }
+//    protected function getDataResourceOrdersByPriorityClasses()  :array
+//    {
+//        return [DateGroupedCountChartDataResource::class];
+//    }
+//
+//    protected function getDataProcessorInstance(): DataProcessor
+//    {
+//        return DateGroupedChartDataProcessor::Singleton();
+//    }
 
-    protected function getNeededDateProcessorDeterminerInstance(): NeededDateProcessorDeterminer
-    {
-        return DateGroupedDateProcessorDeterminer::Singleton();
-    }
+//    protected function getNeededDateProcessorDeterminerInstance(): NeededDateProcessorDeterminer
+//    {
+//        return DateGroupedDateProcessorDeterminer::Singleton();
+//    }
 
     protected function getDateColumnDefaultName() : string
     {

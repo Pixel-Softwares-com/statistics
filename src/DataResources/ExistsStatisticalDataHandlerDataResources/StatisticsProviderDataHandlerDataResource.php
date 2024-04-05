@@ -2,23 +2,13 @@
 
 namespace Statistics\DataResources\ExistsStatisticalDataHandlerDataResources;
 
-use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
-use DataResourceInstructors\OperationTypes\AggregationOperation;
-use Statistics\DataProcessors\DataProcessor;
 use Statistics\DataResources\DataResource;
-use Statistics\DateProcessors\DateProcessor;
-use Statistics\OperationsManagement\OperationTempHolders\DataResourceOperationsTempHolder;
-use Statistics\OperationsManagement\OperationTempHolders\OperationsTempHolder;
+use Statistics\Interfaces\NeedsStatisticsProvider;
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 
-class StatisticsProviderDataHandlerDataResource extends DataResource
+class StatisticsProviderDataHandlerDataResource extends DataResource implements NeedsStatisticsProvider
 {
-    protected StatisticsProviderDecorator $statisticsProvider ;
-    public function __construct(StatisticsProviderDecorator $statisticsProvider , DataResourceOperationsTempHolder $operationsTempHolder, DataProcessor $dataProcessor, ?DateProcessor $dateProcessor = null)
-    {
-        $this->setStatisticsProvider($statisticsProvider);
-        parent::__construct($operationsTempHolder, $dataProcessor, $dateProcessor);
-    }
+    protected ?StatisticsProviderDecorator $statisticsProvider = null;
 
     /**
      * @param StatisticsProviderDecorator $statisticsProvider
@@ -29,20 +19,23 @@ class StatisticsProviderDataHandlerDataResource extends DataResource
         $this->statisticsProvider = $statisticsProvider;
         return $this;
     }
-
-    static public function getAcceptedOperationTempHolderClass(): string
+    public function getStatisticsProvider(): StatisticsProviderDecorator
     {
-        return OperationsTempHolder::class;
+        return $this->statisticsProvider;
     }
 
-    protected function processData(array $data) : array
+    protected function processData(array $data = []) : array
     {
-        return $this->dataProcessor->setInstanceProps($data , $this->currentOperationGroup , $this->dateProcessor)
-            ->getProcessedData();
+        return $this->dataProcessor?->setDataToProcess($data )->getProcessedData() ?? $data;
     }
 
+    protected function getStatisticsProviderData() : array
+    {
+        return $this->statisticsProvider?->getCurrentStatisticsProviderData() ?? [];
+    }
     protected function setStatistics() : void
     {
-        $this->statistics = $this->processData( $this->statisticsProvider->getCurrentStatisticsProviderData() );;
+        $data = $this->getStatisticsProviderData();
+        $this->statistics = $this->processData($data);
     }
 }

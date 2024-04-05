@@ -15,11 +15,6 @@ trait StatisticsProviderAbstractMethods
      */
     abstract protected function getStatisticsTypeName() : string;
 
-    /**
-     * @return NeededDateProcessorDeterminer
-     */
-    abstract protected function getNeededDateProcessorDeterminerInstance() : NeededDateProcessorDeterminer;
 
-    abstract protected function getDataResourceOrdersByPriorityClasses()  :array;
-    abstract protected  function getDataProcessorInstance() : DataProcessor;
+    abstract protected function getDataResourceBuildersOrdersByPriorityClasses()  :array;
 }

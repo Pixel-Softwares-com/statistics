@@ -4,6 +4,7 @@ namespace Statistics\StatisticsProviders;
 
 use Statistics\DataProcessors\DataProcessor;
 use Statistics\DataProcessors\DBFetchedDataProcessors\GlobalDataProcessor;
+use Statistics\DataResources\DataResourceBuilders\GlobalDataResourceBuilder;
 use Statistics\DataResources\DBFetcherDataResources\GlobalDataResource\GlobalDataResource;
 use Statistics\DateProcessors\NeededDateProcessorDeterminers\GlobalDateProcessorDeterminer;
 use Statistics\DateProcessors\NeededDateProcessorDeterminers\NeededDateProcessorDeterminer;
@@ -14,16 +15,23 @@ use Statistics\DateProcessors\NeededDateProcessorDeterminers\NeededDateProcessor
  */
 abstract class CustomizableStatisticsProvider extends StatisticsProviderDecorator
 {
-    protected function getDataResourceOrdersByPriorityClasses()  :array
+    protected function getDataResourceBuildersOrdersByPriorityClasses(): array
     {
-        return [GlobalDataResource::class];
+        return [
+            GlobalDataResourceBuilder::class
+        ];
     }
-    protected function getDataProcessorInstance(): DataProcessor
-    {
-        return GlobalDataProcessor::Singleton();
-    }
-    protected function getNeededDateProcessorDeterminerInstance(): NeededDateProcessorDeterminer
-    {
-        return GlobalDateProcessorDeterminer::Singleton();
-    }
+
+//    protected function getDataResourceOrdersByPriorityClasses()  :array
+//    {
+//        return [GlobalDataResource::class];
+//    }
+//    protected function getDataProcessorInstance(): DataProcessor
+//    {
+//        return GlobalDataProcessor::Singleton();
+//    }
+//    protected function getNeededDateProcessorDeterminerInstance(): NeededDateProcessorDeterminer
+//    {
+//        return GlobalDateProcessorDeterminer::Singleton();
+//    }
 }

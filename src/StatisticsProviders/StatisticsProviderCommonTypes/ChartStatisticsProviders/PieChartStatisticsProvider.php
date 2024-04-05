@@ -2,8 +2,11 @@
 
 namespace Statistics\StatisticsProviders\StatisticsProviderCommonTypes\ChartStatisticsProviders;
 
+use ReflectionException;
 use Statistics\DataProcessors\DataProcessor;
 use Statistics\DataProcessors\DBFetchedDataProcessors\ChartDataProcessors\PercentageGroupedChartDataProcessor;
+use Statistics\DataProcessors\DBFetchedDataProcessors\GlobalDataProcessor;
+use Statistics\DataResources\DataResourceBuilders\GlobalDataResourceBuilder;
 use Statistics\Interfaces\StatisticsProvidersInterfaces\NeedsAdditionalAdvancedOperations;
 use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
 use DataResourceInstructors\OperationComponents\Columns\Column;
@@ -20,9 +23,23 @@ abstract class PieChartStatisticsProvider extends CustomizableStatisticsProvider
     {
         return "pieChart";
     }
-
-    protected function getDataProcessorInstance(): DataProcessor
+    public  static function getDataProcessorClass() : string
     {
-        return PercentageGroupedChartDataProcessor::Singleton();
+        return PercentageGroupedChartDataProcessor::class;
     }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function getDataResourceBuildersOrdersByPriorityClasses(): array
+    {
+        return [
+            GlobalDataResourceBuilder::create()->useDataProcessorClass( $this->getDataProcessorClass() )
+        ];
+    }
+
+//    protected function getDataProcessorInstance(): DataProcessor
+//    {
+//        return PercentageGroupedChartDataProcessor::Singleton();
+//    }
 }

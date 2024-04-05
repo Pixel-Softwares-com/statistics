@@ -23,10 +23,9 @@ trait StatisticsProcessingMethods
         $this->statistics = $data + $this->statistics;
     }
 
-    protected function processData(array $data) : array
+    protected function processData(array $data = []) : array
     {
-        return $this->dataProcessor->setInstanceProps($data , $this->currentOperationGroup , $this->dateProcessor)
-                                   ->getProcessedData();
+        return $this->dataProcessor?->setDataToProcess($data)->setOperationGroup($this->currentOperationGroup)->getProcessedData() ?? $data;
     }
 
     protected function setOrderingColumns(array $OrderingColumns = []) : void

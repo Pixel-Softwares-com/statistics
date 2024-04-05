@@ -9,11 +9,6 @@ use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
 trait DataProcessorSingleInstanceMethods
 {
     protected static array $instances = [];
-    public function setInstanceProps(array $dataToProcess , OperationGroup $operationGroup  , ?DateProcessor $dateProcessor = null) : DataProcessor
-    {
-        return $this->setDataToProcess($dataToProcess)->setDateProcessor($dateProcessor)
-                    ->setInitProcessedData()->setOperationGroup($operationGroup);
-    }
 
     public function setInitProcessedData() : self
     {

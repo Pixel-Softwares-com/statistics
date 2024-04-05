@@ -13,10 +13,12 @@ use Illuminate\Support\Arr;
 class DateGroupedChartDataProcessor extends DataProcessor
 {
     protected AggregationOperation $currentOperation  ;
-    public function setInstanceProps(array $dataToProcess, OperationGroup $operationGroup, ?DateProcessor $dateProcessor = null): DataProcessor
+
+    public function setOperationGroup(OperationGroup $operationGroup): DataProcessor
     {
-        parent::setInstanceProps($dataToProcess, $operationGroup, $dateProcessor);
-        return $this->setCurrentOperation();
+        parent::setOperationGroup($operationGroup);
+        $this->setCurrentOperation();
+        return $this;
     }
 
     protected function getCurrentOperationAggColumnColumn() : AggregationColumn

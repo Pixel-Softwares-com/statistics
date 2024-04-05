@@ -23,7 +23,7 @@ abstract class StatisticsProviderDecorator
     protected array $currentStatisticsProviderData = [];
     protected ?Model $model = null;
     protected ?StatisticsProviderDecorator $statisticsProvider = null;
-    protected Generator $dataResourcesList;
+    protected Generator $dataResourcesBuilderList;
     protected ?DataResource $dataResource = null;
     protected DataProcessor $dataProcessor;
     protected ?DateProcessor $dateProcessor = null;
@@ -46,24 +46,24 @@ abstract class StatisticsProviderDecorator
         $this->model = $model;
     }
 
-    protected function setDateProcessor() : StatisticsProviderDecorator
-    {
-        $this->dateProcessor = $this->getNeededDateProcessorDeterminerInstance()->getDateProcessorInstance();
-        return $this;
-    }
+//    protected function setDateProcessor() : StatisticsProviderDecorator
+//    {
+//        $this->dateProcessor = $this->getNeededDateProcessorDeterminerInstance()->getDateProcessorInstance();
+//        return $this;
+//    }
     /**
      * @return $this
      */
-    public function setDataProcessor(): StatisticsProviderDecorator
-    {
+//    public function setDataProcessor(): StatisticsProviderDecorator
+//    {
         /**
          * Note : When The StatisticsProvider child classes uses the same type od dataProcessor
          * No Error Or Wrong data will be got ... Because all of needed parameters will be passed
          * from DataResource Object when it needs to process a row of data
          */
-        $this->dataProcessor = $this->getDataProcessorInstance();
-        return $this;
-    }
+//        $this->dataProcessor = $this->getDataProcessorInstance();
+//        return $this;
+//    }
 
     /**
      * @param StatisticsProviderDecorator|null $statisticsProvider
@@ -73,9 +73,9 @@ abstract class StatisticsProviderDecorator
     public function __construct( ?StatisticsProviderDecorator $statisticsProvider = null)
     {
         $this->statisticsProvider = $statisticsProvider;
-        $this->setDataProcessor();
-        $this->setDateProcessor();
-        $this->setDataResourceList();
+//        $this->setDataProcessor();
+//        $this->setDateProcessor();
+        $this->setDataResourceBuilderList();
         $this->setCurrentDataResource();
     }
 
