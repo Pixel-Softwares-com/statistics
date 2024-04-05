@@ -41,7 +41,7 @@ abstract class DataProcessor
     }
     protected function getProcessedDataResultKey() : string
     {
-        return $this->operationGroup->getResultArrayKey();
+        return $this->operationGroup?->getResultArrayKey() ?? "";
     }
 
     protected function wrapProcessedDataInResultKey() : void

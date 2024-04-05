@@ -151,9 +151,15 @@ trait DataResourceInitMethods
     protected function setCurrentDataResource() : void
     {
         $dataResourceBuilderClass = $this->dataResourcesBuilderList->current();
-        $dataResourceBuilder = $this->initDataResourceBuilder($dataResourceBuilderClass);
-        $this->customizeOperationInstructorsNeeds($dataResourceBuilder);
-        $this->dataResource = $dataResourceBuilder->getDataResource();
+
+        if($dataResourceBuilderClass)
+        {
+            $dataResourceBuilder = $this->initDataResourceBuilder($dataResourceBuilderClass);
+            $this->customizeOperationInstructorsNeeds($dataResourceBuilder);
+            $this->dataResource = $dataResourceBuilder->getDataResource();
+            return;
+        }
+        $this->dataResource = null;
     }
 
     /**

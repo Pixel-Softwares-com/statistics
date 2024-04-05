@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\DataProcessors\DBFetchedDataProcessors;
+namespace Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors;
 
 abstract class BooleanKeysDataProcessor extends GlobalDataProcessor
 {

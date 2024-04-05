@@ -56,27 +56,23 @@ abstract class StatisticsProviderDecorator
      */
 //    public function setDataProcessor(): StatisticsProviderDecorator
 //    {
-        /**
-         * Note : When The StatisticsProvider child classes uses the same type od dataProcessor
-         * No Error Or Wrong data will be got ... Because all of needed parameters will be passed
-         * from DataResource Object when it needs to process a row of data
-         */
+    /**
+     * Note : When The StatisticsProvider child classes uses the same type od dataProcessor
+     * No Error Or Wrong data will be got ... Because all of needed parameters will be passed
+     * from DataResource Object when it needs to process a row of data
+     */
 //        $this->dataProcessor = $this->getDataProcessorInstance();
 //        return $this;
 //    }
 
     /**
      * @param StatisticsProviderDecorator|null $statisticsProvider
-     * @throws Exception
-     * @throws ReflectionException
      */
     public function __construct( ?StatisticsProviderDecorator $statisticsProvider = null)
     {
         $this->statisticsProvider = $statisticsProvider;
 //        $this->setDataProcessor();
 //        $this->setDateProcessor();
-        $this->setDataResourceBuilderList();
-        $this->setCurrentDataResource();
     }
 
     protected function mergeCurrentProviderData() : void
@@ -106,6 +102,15 @@ abstract class StatisticsProviderDecorator
     {
         return $this->currentStatisticsProviderData;
     }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function prepareDataResources() : void
+    {
+        $this->setDataResourceBuilderList();
+        $this->setCurrentDataResource();
+    }
     /**
      * @return $this
      * @throws Exception
@@ -113,6 +118,7 @@ abstract class StatisticsProviderDecorator
      */
     protected function setStatistics()  : StatisticsProviderDecorator
     {
+        $this->prepareDataResources();
         if($this->statisticsProvider)
         {
             /**

@@ -3,8 +3,8 @@
 namespace Statistics\StatisticsProviders\StatisticsProviderCommonTypes;
 
 use ReflectionException;
-use Statistics\DataProcessors\DBFetchedDataProcessors\GlobalDataProcessor;
-use Statistics\DataResources\DataResourceBuilders\DataResourceBuilder;
+use Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\GlobalDataProcessor;
+use Statistics\DataResources\DataResourceBuilders\StatisticsProviderDataHandlerResourceBuilder;
 use Statistics\Interfaces\NeedsStatisticsProvider;
 use Statistics\StatisticsProviders\CustomizableStatisticsProvider;
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
@@ -36,18 +36,15 @@ abstract class StatisticsProviderDataReProcessorStatisticsProvider extends Custo
     }
 
     /**
-     * @param DataResourceBuilder|string $dataResourceBuilderClass
-     * @return DataResourceBuilder
      * @throws ReflectionException
      */
-    protected function initDataResourceBuilder(DataResourceBuilder|string $dataResourceBuilderClass = ""): DataResourceBuilder
+    protected function getDataResourceBuildersOrdersByPriorityClasses(): array
     {
-        $dataResourceBuilder = parent::initDataResourceBuilder();
-        $dataResourceBuilder->useDataProcessorClass( $this->getDataProcessorClass() );
-        if($dataResourceBuilder instanceof NeedsStatisticsProvider)
-        {
-            $dataResourceBuilder->setStatisticsProvider( $this->getStatisticsProvider() );
-        }
-        return $dataResourceBuilder;
+        return [
+            StatisticsProviderDataHandlerResourceBuilder::create()
+                ->setStatisticsProvider( $this->getStatisticsProvider() )
+                ->useDataProcessorClass( $this->getDataProcessorClass() )
+        ];
     }
+
 }

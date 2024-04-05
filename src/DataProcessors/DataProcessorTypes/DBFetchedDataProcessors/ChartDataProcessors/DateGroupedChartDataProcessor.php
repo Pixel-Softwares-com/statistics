@@ -1,14 +1,13 @@
 <?php
 
-namespace Statistics\DataProcessors\DBFetchedDataProcessors\ChartDataProcessors;
+namespace Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\ChartDataProcessors;
 
-use Statistics\DataProcessors\DataProcessor;
-use Statistics\DateProcessors\DateProcessor;
 use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
 use DataResourceInstructors\OperationTypes\AggregationOperation;
 use DataResourceInstructors\OperationTypes\CountOperation;
 use Illuminate\Support\Arr;
+use Statistics\DataProcessors\DataProcessor;
 
 class DateGroupedChartDataProcessor extends DataProcessor
 {

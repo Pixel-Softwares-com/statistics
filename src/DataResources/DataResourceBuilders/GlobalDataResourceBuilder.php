@@ -3,7 +3,7 @@
 namespace Statistics\DataResources\DataResourceBuilders;
 
 use ReflectionException;
-use Statistics\DataProcessors\DBFetchedDataProcessors\GlobalDataProcessor;
+use Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\GlobalDataProcessor;
 use Statistics\DataResources\DataResource;
 use Statistics\DataResources\DataResourceBuilders\Traits\DataProcessorSettingMethods;
 use Statistics\DataResources\DataResourceBuilders\Traits\DateProcessorSettingMethods;

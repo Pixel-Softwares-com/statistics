@@ -1,13 +1,13 @@
 <?php
 
-namespace Statistics\DataProcessors\DBFetchedDataProcessors;
+namespace Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors;
 
-use Statistics\DataProcessors\DataProcessor;
-use Statistics\DataProcessors\RequiredValuesValidators\ColumnRequiredValuesValidator;
-use Statistics\DataProcessors\RequiredValuesValidators\RequiredValuesValidator;
 use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
 use DataResourceInstructors\OperationTypes\AggregationOperation;
 use Illuminate\Support\Str;
+use Statistics\DataProcessors\DataProcessor;
+use Statistics\DataProcessors\RequiredValuesValidators\ColumnRequiredValuesValidator;
+use Statistics\DataProcessors\RequiredValuesValidators\RequiredValuesValidator;
 
 class GlobalDataProcessor extends DataProcessor
 {

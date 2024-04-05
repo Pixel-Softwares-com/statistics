@@ -2,9 +2,11 @@
 
 namespace Statistics\DataResources\DataResourceBuilders;
 
-use Statistics\DataProcessors\DBFetchedDataProcessors\GlobalDataProcessor;
+use ReflectionException;
+use Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\GlobalDataProcessor;
 use Statistics\DataResources\DataResource;
 use Statistics\DataResources\DataResourceBuilders\Traits\DataProcessorSettingMethods;
+use Statistics\DataResources\ExistsStatisticalDataHandlerDataResources\StatisticsProviderDataHandlerDataResource;
 use Statistics\Interfaces\NeedsStatisticsProvider;
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 
@@ -12,6 +14,7 @@ class StatisticsProviderDataHandlerResourceBuilder extends DataResourceBuilder i
 {
     use DataProcessorSettingMethods;
     protected string $dataProcessorClass = GlobalDataProcessor::class;
+    protected string $dataResourceClass = StatisticsProviderDataHandlerDataResource::class;
 
     protected ?StatisticsProviderDecorator $statisticsProvider = null;
 
@@ -38,6 +41,9 @@ class StatisticsProviderDataHandlerResourceBuilder extends DataResourceBuilder i
         return $dataResource;
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public function getDataResource(): DataResource
     {
         return $this->initDataResource()->setDataProcessor($this->initDataProcessor());

@@ -91,7 +91,7 @@ abstract class DataResourceBuilder
      */
     public function useDataResourceClass(string $dataResourceClass) : self
     {
-        $this->checkDataResourceClassType();
+        $this->checkDataResourceClassType($dataResourceClass);
         $this->dataResourceClass = $dataResourceClass;
         return $this;
     }

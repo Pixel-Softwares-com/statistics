@@ -3,16 +3,9 @@
 namespace Statistics\StatisticsProviders\StatisticsProviderCommonTypes\ChartStatisticsProviders;
 
 use ReflectionException;
-use Statistics\DataProcessors\DataProcessor;
-use Statistics\DataProcessors\DBFetchedDataProcessors\ChartDataProcessors\PercentageGroupedChartDataProcessor;
-use Statistics\DataProcessors\DBFetchedDataProcessors\GlobalDataProcessor;
+use Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\ChartDataProcessors\PercentageGroupedChartDataProcessor;
 use Statistics\DataResources\DataResourceBuilders\GlobalDataResourceBuilder;
 use Statistics\Interfaces\StatisticsProvidersInterfaces\NeedsAdditionalAdvancedOperations;
-use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
-use DataResourceInstructors\OperationComponents\Columns\Column;
-use DataResourceInstructors\OperationComponents\Columns\GroupingByColumn;
-use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
-use DataResourceInstructors\OperationTypes\CountOperation;
 use Statistics\StatisticsProviders\CustomizableStatisticsProvider;
 
 
