@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\DataProcessors\RequiredValuesValidators\Traits;
+namespace Statistics\DataProcessors\DataProcessingFuncs\RequiredValuesValidators\Traits;
 
 trait Getters
 {

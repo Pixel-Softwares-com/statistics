@@ -15,18 +15,5 @@ abstract class CustomizableStatisticsProvider extends StatisticsProviderDecorato
         return [
             GlobalDataResourceBuilder::class
         ];
-    }
-
-//    protected function getDataResourceOrdersByPriorityClasses()  :array
-//    {
-//        return [GlobalDataResource::class];
-//    }
-//    protected function getDataProcessorInstance(): DataProcessor
-//    {
-//        return GlobalDataProcessor::Singleton();
-//    }
-//    protected function getNeededDateProcessorDeterminerInstance(): NeededDateProcessorDeterminer
-//    {
-//        return GlobalDateProcessorDeterminer::Singleton();
-//    }
+    } 
 }

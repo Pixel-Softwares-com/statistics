@@ -2,8 +2,8 @@
 
 namespace Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\ChartDataProcessors;
 
+use Statistics\DataProcessors\DataProcessingFuncs\Traits\NumericValuesPercentageCalculatingMethods;
 use Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\GlobalDataProcessor;
-use Statistics\DataProcessors\Traits\NumericValuesPercentageCalculatingMethods;
 
 class PercentageGroupedChartDataProcessor extends GlobalDataProcessor
 {

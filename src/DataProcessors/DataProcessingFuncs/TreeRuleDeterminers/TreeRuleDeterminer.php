@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\DataProcessors\TreeRuleDeterminers;
+namespace Statistics\DataProcessors\DataProcessingFuncs\TreeRuleDeterminers;
 
 abstract class TreeRuleDeterminer
 {

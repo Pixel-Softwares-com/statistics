@@ -1,8 +1,8 @@
 <?php
 
-namespace Statistics\DataProcessors\ValueTreeNodes\Traits;
+namespace Statistics\DataProcessors\DataProcessingFuncs\ValueTreeNodes\Traits;
 
-use Statistics\DataProcessors\ValueTreeNodes\ValueTreeNode;
+use Statistics\DataProcessors\DataProcessingFuncs\ValueTreeNodes\ValueTreeNode;
 
 trait Setters
 {

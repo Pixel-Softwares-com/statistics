@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\DataProcessors\ValueTreeNodes\Traits;
+namespace Statistics\DataProcessors\DataProcessingFuncs\ValueTreeNodes\Traits;
 
 trait Getters
 {

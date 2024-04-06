@@ -1,10 +1,9 @@
 <?php
 
-namespace Statistics\DataProcessors\Traits;
+namespace Statistics\DataProcessors\DataProcessingFuncs\Traits;
 
 use Statistics\DataProcessors\DataProcessor;
 use Statistics\DateProcessors\DateProcessor;
-use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
 
 trait DataProcessorSingleInstanceMethods
 {

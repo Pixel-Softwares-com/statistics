@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\DataProcessors\Traits;
+namespace Statistics\DataProcessors\DataProcessingFuncs\Traits;
 
 trait NumericValuesPercentageCalculatingMethods
 {

@@ -2,11 +2,10 @@
 
 namespace Statistics\DataProcessors;
 
-use Statistics\DataProcessors\Traits\DataProcessorSingleInstanceMethods;
+use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
+use Statistics\DataProcessors\DataProcessingFuncs\Traits\DataProcessorSingleInstanceMethods;
 use Statistics\DateProcessors\DateProcessor;
 use Statistics\DateProcessors\DateProcessorTypes\DateGroupedChartDateProcessors\DateGroupedChartDateProcessor;
-use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
-use Illuminate\Support\Str;
 
 abstract class DataProcessor
 {

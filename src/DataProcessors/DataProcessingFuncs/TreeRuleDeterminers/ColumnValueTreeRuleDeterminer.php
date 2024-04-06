@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\DataProcessors\TreeRuleDeterminers;
+namespace Statistics\DataProcessors\DataProcessingFuncs\TreeRuleDeterminers;
 
 class ColumnValueTreeRuleDeterminer extends TreeRuleDeterminer
 {

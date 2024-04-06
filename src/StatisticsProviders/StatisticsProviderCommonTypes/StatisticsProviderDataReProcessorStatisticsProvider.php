@@ -19,12 +19,12 @@ abstract class StatisticsProviderDataReProcessorStatisticsProvider extends Custo
      */
     public function setStatisticsProvider(StatisticsProviderDecorator $statisticsProvider): self
     {
-        $this->statisticsProvider = $statisticsProvider;
+        $this->statisticsProviderToReProcessing = $statisticsProvider;
         return $this;
     }
     public function getStatisticsProvider(): StatisticsProviderDecorator
     {
-        return $this->statisticsProvider;
+        return $this->statisticsProviderToReProcessing;
     }
     /**
      * @return string

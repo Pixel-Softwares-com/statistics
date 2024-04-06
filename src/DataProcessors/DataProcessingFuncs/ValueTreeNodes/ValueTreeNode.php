@@ -1,9 +1,9 @@
 <?php
 
-namespace Statistics\DataProcessors\ValueTreeNodes;
+namespace Statistics\DataProcessors\DataProcessingFuncs\ValueTreeNodes;
 
-use Statistics\DataProcessors\ValueTreeNodes\Traits\Setters;
-use Statistics\DataProcessors\ValueTreeNodes\Traits\Getters;
+use Statistics\DataProcessors\DataProcessingFuncs\ValueTreeNodes\Traits\Getters;
+use Statistics\DataProcessors\DataProcessingFuncs\ValueTreeNodes\Traits\Setters;
 
 abstract class ValueTreeNode
 {

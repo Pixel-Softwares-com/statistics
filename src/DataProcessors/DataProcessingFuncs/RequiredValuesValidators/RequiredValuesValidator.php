@@ -1,9 +1,9 @@
 <?php
 
-namespace Statistics\DataProcessors\RequiredValuesValidators;
+namespace Statistics\DataProcessors\DataProcessingFuncs\RequiredValuesValidators;
 
-use Statistics\DataProcessors\ValueTrees\ValueTree;
-use Statistics\DataProcessors\RequiredValuesValidators\Traits\Getters;
+use Statistics\DataProcessors\DataProcessingFuncs\RequiredValuesValidators\Traits\Getters;
+use Statistics\DataProcessors\DataProcessingFuncs\ValueTrees\ValueTree;
 
 abstract class RequiredValuesValidator
 {

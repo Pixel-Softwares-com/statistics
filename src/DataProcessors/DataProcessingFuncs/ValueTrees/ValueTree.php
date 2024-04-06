@@ -1,8 +1,8 @@
 <?php
 
-namespace Statistics\DataProcessors\ValueTrees;
+namespace Statistics\DataProcessors\DataProcessingFuncs\ValueTrees;
 
-use Statistics\DataProcessors\TreeRuleDeterminers\TreeRuleDeterminer;
+use Statistics\DataProcessors\DataProcessingFuncs\TreeRuleDeterminers\TreeRuleDeterminer;
 
 abstract class ValueTree
 {

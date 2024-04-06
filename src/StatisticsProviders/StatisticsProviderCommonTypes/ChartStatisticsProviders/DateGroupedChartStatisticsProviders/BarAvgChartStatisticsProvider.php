@@ -43,20 +43,6 @@ abstract class BarAvgChartStatisticsProvider extends StatisticsProviderDecorator
     {
         return "barAvgChart";
     }
-//    protected function getDataResourceOrdersByPriorityClasses()  :array
-//    {
-//        return [DateGroupedAvgChartDataResource::class];
-//    }
-//
-//    protected function getDataProcessorInstance(): DataProcessor
-//    {
-//        return DateGroupedChartDataProcessor::Singleton();
-//    }
-//
-//    protected function getNeededDateProcessorDeterminerInstance(): NeededDateProcessorDeterminer
-//    {
-//        return DateGroupedDateProcessorDeterminer::Singleton();
-//    }
 
     protected function getDateColumnDefaultName() : string
     {

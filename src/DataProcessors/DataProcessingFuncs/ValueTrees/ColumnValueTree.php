@@ -1,11 +1,11 @@
 <?php
 
-namespace Statistics\DataProcessors\ValueTrees;
+namespace Statistics\DataProcessors\DataProcessingFuncs\ValueTrees;
 
-use Statistics\DataProcessors\TreeRuleDeterminers\ColumnValueTreeRuleDeterminer;
-use Statistics\DataProcessors\TreeRuleDeterminers\TreeRuleDeterminer;
-use Statistics\DataProcessors\ValueTreeNodes\ColumnValueTreeNode;
-use Statistics\DataProcessors\ValueTreeNodes\ValueTreeNode;
+use Statistics\DataProcessors\DataProcessingFuncs\TreeRuleDeterminers\ColumnValueTreeRuleDeterminer;
+use Statistics\DataProcessors\DataProcessingFuncs\TreeRuleDeterminers\TreeRuleDeterminer;
+use Statistics\DataProcessors\DataProcessingFuncs\ValueTreeNodes\ColumnValueTreeNode;
+use Statistics\DataProcessors\DataProcessingFuncs\ValueTreeNodes\ValueTreeNode;
 
 class ColumnValueTree extends ValueTree
 {

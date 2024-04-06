@@ -45,21 +45,6 @@ abstract class BarSumChartStatisticsProvider extends StatisticsProviderDecorator
         ];
     }
 
-//    protected function getDataResourceOrdersByPriorityClasses()  :array
-//    {
-//        return [DateGroupedSumChartDataResource::class];
-//    }
-//
-//    protected function getDataProcessorInstance(): DataProcessor
-//    {
-//        return DateGroupedChartDataProcessor::Singleton();
-//    }
-
-//    protected function getNeededDateProcessorDeterminerInstance(): NeededDateProcessorDeterminer
-//    {
-//        return DateGroupedDateProcessorDeterminer::Singleton();
-//    }
-
     protected function getDateColumnDefaultName() : string
     {
         return "created_at";

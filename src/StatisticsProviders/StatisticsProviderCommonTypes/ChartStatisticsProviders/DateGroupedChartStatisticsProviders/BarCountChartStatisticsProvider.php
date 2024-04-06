@@ -37,20 +37,6 @@ abstract class BarCountChartStatisticsProvider extends StatisticsProviderDecorat
             DateGroupedChartDataResourceBuilder::create()->useDataResourceClass(DateGroupedCountChartDataResource::class)
         ];
     }
-//    protected function getDataResourceOrdersByPriorityClasses()  :array
-//    {
-//        return [DateGroupedCountChartDataResource::class];
-//    }
-//
-//    protected function getDataProcessorInstance(): DataProcessor
-//    {
-//        return DateGroupedChartDataProcessor::Singleton();
-//    }
-
-//    protected function getNeededDateProcessorDeterminerInstance(): NeededDateProcessorDeterminer
-//    {
-//        return DateGroupedDateProcessorDeterminer::Singleton();
-//    }
 
     protected function getDateColumnDefaultName() : string
     {

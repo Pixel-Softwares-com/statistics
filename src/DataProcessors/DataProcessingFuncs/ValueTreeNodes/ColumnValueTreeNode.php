@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\DataProcessors\ValueTreeNodes;
+namespace Statistics\DataProcessors\DataProcessingFuncs\ValueTreeNodes;
 
 class ColumnValueTreeNode extends ValueTreeNode
 {

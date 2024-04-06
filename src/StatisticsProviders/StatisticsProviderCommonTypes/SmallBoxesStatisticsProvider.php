@@ -7,7 +7,7 @@ use Statistics\StatisticsProviders\CustomizableStatisticsProvider;
 
 abstract class SmallBoxesStatisticsProvider extends CustomizableStatisticsProvider implements NeedsAdditionalAdvancedOperations
 {
-    protected function getStatisticsTypeName(): string
+    public function getStatisticsTypeName(): string
     {
         return "smallBoxes";
     }
