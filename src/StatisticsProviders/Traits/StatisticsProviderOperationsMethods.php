@@ -9,16 +9,16 @@ use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 trait StatisticsProviderOperationsMethods
 {
 
-    protected function setAdvancedOperationsPayloadToProcess(array $advancedOperationsPayloadToProcess = [] ) : StatisticsProviderDecorator
-    {
-        $this->addAdvancedOperations($advancedOperationsPayloadToProcess);
-        return $this;
-    }
-    protected function setOperationsPayloadToProcess(array $operationsPayloadToProcess = []) : StatisticsProviderDecorator
-    {
-        $this->addOperations($operationsPayloadToProcess);
-        return $this;
-    }
+//    protected function setAdvancedOperationsPayloadToProcess(array $advancedOperationsPayloadToProcess = [] ) : StatisticsProviderDecorator
+//    {
+//        $this->addAdvancedOperations($advancedOperationsPayloadToProcess);
+//        return $this;
+//    }
+//    protected function setOperationsPayloadToProcess(array $operationsPayloadToProcess = []) : StatisticsProviderDecorator
+//    {
+//        $this->addOperations($operationsPayloadToProcess);
+//        return $this;
+//    }
 
     /**
      * @param  AggregationOperation $operation

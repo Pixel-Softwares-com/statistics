@@ -5,7 +5,9 @@ namespace Statistics\StatisticsProviders\StatisticsProviderCommonTypes\ChartStat
 use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
 use DataResourceInstructors\OperationComponents\Columns\Column;
 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
+use DataResourceInstructors\OperationTypes\AggregationOperation;
 use DataResourceInstructors\OperationTypes\CountOperation;
+use Exception;
 use ReflectionException;
 use Statistics\DataResources\DataResourceBuilders\DateGroupedChartDataResourceBuilder;
 use Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroupedChartDataResource\DateGroupedChartDataResourceTypes\DateGroupedCountChartDataResource;
@@ -17,6 +19,9 @@ use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 
 abstract class BarCountChartStatisticsProvider extends StatisticsProviderDecorator implements HasDefaultAdvancedOperations , NeedsModelClass
 {
+    /**
+     * @throws Exception
+     */
     public function __construct(?StatisticsProviderDecorator $statisticsProvider = null)
     {
         $this->setValidModel($this->getModelClass());
@@ -38,6 +43,20 @@ abstract class BarCountChartStatisticsProvider extends StatisticsProviderDecorat
         ];
     }
 
+    protected function getOperationGroupTableName() : string
+    {
+        return $this->model->getTable();
+    }
+    protected function getPrimaryKeyColumn() : AggregationColumn
+    {
+        return AggregationColumn::create($this->model->getKeyName());
+    }
+
+    protected function getCountingOperation() : AggregationOperation
+    {
+        $idColumn = $this->getPrimaryKeyColumn();
+        return CountOperation::create()->addAggregationColumn($idColumn);
+    }
     protected function getDateColumnDefaultName() : string
     {
         return "created_at";
@@ -56,14 +75,12 @@ abstract class BarCountChartStatisticsProvider extends StatisticsProviderDecorat
         return Column::create( $this->getDateColumnName() )->setResultProcessingColumnAlias("DateColumn");
     }
 
-    protected function getDateGroupedRowsCount() : OperationGroup
+    protected function getDateGroupedRowsCountOperationGroup() : OperationGroup
     {
         $dateColumn = $this->getDateColumn();
+        $countingOp = $this->getCountingOperation();
 
-        $idColumn = AggregationColumn::create($this->model->getKeyName());
-        $countingOp = CountOperation::create()->addAggregationColumn($idColumn);
-
-        return OperationGroup::create($this->model->getTable())
+        return OperationGroup::create( $this->getOperationGroupTableName() )
                              ->enableDateSensitivity($dateColumn)
                              ->addOperation($countingOp);
     }
@@ -71,7 +88,7 @@ abstract class BarCountChartStatisticsProvider extends StatisticsProviderDecorat
     public function getDefaultAdvancedOperations() : array
     {
         return [
-            $this->getDateGroupedRowsCount()
+            $this->getDateGroupedRowsCountOperationGroup()
         ];
     }
 

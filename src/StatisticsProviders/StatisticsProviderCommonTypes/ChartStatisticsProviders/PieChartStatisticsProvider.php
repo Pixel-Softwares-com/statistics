@@ -30,9 +30,4 @@ abstract class PieChartStatisticsProvider extends CustomizableStatisticsProvider
             GlobalDataResourceBuilder::create()->useDataProcessorClass( $this->getDataProcessorClass() )
         ];
     }
-
-//    protected function getDataProcessorInstance(): DataProcessor
-//    {
-//        return PercentageGroupedChartDataProcessor::Singleton();
-//    }
 }

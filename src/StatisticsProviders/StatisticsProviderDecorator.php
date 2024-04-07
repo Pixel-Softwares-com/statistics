@@ -25,7 +25,6 @@ abstract class StatisticsProviderDecorator
     protected ?StatisticsProviderDecorator $statisticsProvider = null;
     protected Generator $dataResourcesBuilderList;
     protected ?DataResource $dataResource = null;
-    protected DataProcessor $dataProcessor;
     protected ?DateProcessor $dateProcessor = null;
     protected ?OperationsTempHolder $operationsTempHolder = null;
 
@@ -45,36 +44,21 @@ abstract class StatisticsProviderDecorator
         }
         $this->model = $model;
     }
-
-//    protected function setDateProcessor() : StatisticsProviderDecorator
-//    {
-//        $this->dateProcessor = $this->getNeededDateProcessorDeterminerInstance()->getDateProcessorInstance();
-//        return $this;
-//    }
-    /**
-     * @return $this
-     */
-//    public function setDataProcessor(): StatisticsProviderDecorator
-//    {
-    /**
-     * Note : When The StatisticsProvider child classes uses the same type od dataProcessor
-     * No Error Or Wrong data will be got ... Because all of needed parameters will be passed
-     * from DataResource Object when it needs to process a row of data
-     */
-//        $this->dataProcessor = $this->getDataProcessorInstance();
-//        return $this;
-//    }
-
     /**
      * @param StatisticsProviderDecorator|null $statisticsProvider
      */
     public function __construct( ?StatisticsProviderDecorator $statisticsProvider = null)
     {
         $this->statisticsProvider = $statisticsProvider;
-//        $this->setDataProcessor();
-//        $this->setDateProcessor();
     }
 
+    /**
+     * @return array
+     */
+    public function getCurrentStatisticsProviderData(): array
+    {
+        return $this->currentStatisticsProviderData;
+    }
     protected function mergeCurrentProviderData() : void
     {
         $currentProviderData =  $this->getCurrentStatisticsProviderData();
@@ -87,6 +71,27 @@ abstract class StatisticsProviderDecorator
             $this->data[ $StatisticsTypeName ] = $currentProviderData;
         }
     }
+
+    protected function getCurrentDataResourceCalculatedStatistics() : array
+    {
+        return $this->dataResource?->getStatistics() ?? [];
+    }
+
+    /**
+     * @return array
+     * @throws Exception
+     * @throws ReflectionException
+     */
+    protected function getCalculatedStatistics(): array
+    {
+        $data = $this->getCurrentDataResourceCalculatedStatistics();
+        if(empty($data) && $this->dataResource)
+        {
+            $this->setNextDataResource();
+            $data = $this->getCurrentDataResourceCalculatedStatistics();
+        }
+        return $data;
+    }
     /**
      * @return void
      * @throws ReflectionException
@@ -94,13 +99,6 @@ abstract class StatisticsProviderDecorator
     protected function setCurrentStatisticsProviderData(): void
     {
         $this->currentStatisticsProviderData = $this->getCalculatedStatistics();
-    }
-    /**
-     * @return array
-     */
-    public function getCurrentStatisticsProviderData(): array
-    {
-        return $this->currentStatisticsProviderData;
     }
 
     /**
@@ -133,27 +131,6 @@ abstract class StatisticsProviderDecorator
         $this->setCurrentStatisticsProviderData();
         $this->mergeCurrentProviderData();
         return $this;
-    }
-
-    protected function getCurrentDataResourceCalculatedStatistics() : array
-    {
-        return $this->dataResource?->getStatistics() ?? [];
-    }
-
-    /**
-     * @return array
-     * @throws Exception
-     * @throws ReflectionException
-     */
-    protected function getCalculatedStatistics(): array
-    {
-        $data = $this->getCurrentDataResourceCalculatedStatistics();
-        if(empty($data) && $this->dataResource)
-        {
-            $this->setNextDataResource();
-            $data = $this->getCurrentDataResourceCalculatedStatistics();
-        }
-        return $data;
     }
 
     /**

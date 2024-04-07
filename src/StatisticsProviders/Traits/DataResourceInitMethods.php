@@ -20,6 +20,24 @@ use ReflectionException;
 trait DataResourceInitMethods
 {
 
+
+    /**
+     * @param string $childClass
+     * @param string $abstractClass
+     * @return void
+     * @throws Exception
+     * @throws ReflectionException
+     */
+    protected function InheritanceOfClassOrFail(string $childClass , string $abstractClass) : void
+    {
+        $reflection = new ReflectionClass($childClass);
+        if(!$reflection->isSubclassOf($abstractClass))
+        {
+            $exceptionClass = Helpers::getExceptionClass();
+            throw new $exceptionClass("The Given  " . $childClass . "  Class Is Not A Valid Inheritance Form  " . $abstractClass . " Class !");
+        }
+    }
+
     protected function setDataResourceBuilderList(): StatisticsProviderDecorator
     {
         $dataResourceClasses = $this->getDataResourceBuildersOrdersByPriorityClasses();
@@ -27,53 +45,65 @@ trait DataResourceInitMethods
         return $this;
     }
 
-    protected function appendAdditionalAdvancedOperations(array $advancedOperations = []) : array
+    protected function appendAdditionalAdvancedOperations(array $advancedOperations = []) : void
+//    array
     {
         if($this instanceof NeedsAdditionalAdvancedOperations)
         {
-            $advancedOperations = array_merge($advancedOperations, $this->getAdditionalAdvancedOperations());
+            $this->addAdvancedOperations( $this->getAdditionalAdvancedOperations() );
+//            $advancedOperations = array_merge($advancedOperations, );
         }
-        return $advancedOperations;
+//        return $advancedOperations;
     }
-    protected function appendAdditionalOperations(array $operations = []) : array
+    protected function appendAdditionalOperations(array $operations = []) : void
+    //array
     {
         if($this instanceof NeedsAdditionalOperations)
         {
-            $operations = array_merge($operations, $this->getAdditionalOperations());
+            $this->addOperations( $this->getAdditionalOperations() );
+//            $operations = array_merge($operations, );
         }
-        return $operations;
+//        return $operations;
     }
-    protected function appendDefaultOperations(array $operations = []) : array
-    {
-        if($this instanceof HasDefaultOperations)
-        {
-            $operations = array_merge($operations , $this->getDefaultOperations());
-        }
-        return $operations ;
-    }
-    protected function appendDefaultAdvancedOperations(array $advancedOperations = []) : array
+
+    protected function appendDefaultAdvancedOperations(array $advancedOperations = []) : void
+    //array
     {
         if($this instanceof HasDefaultAdvancedOperations)
         {
-            $advancedOperations = array_merge($advancedOperations, $this->getDefaultAdvancedOperations());
+            $this->addAdvancedOperations( $this->getDefaultAdvancedOperations() );
+//            $advancedOperations = array_merge($advancedOperations,);
         }
-        return $advancedOperations ;
+//        return $advancedOperations ;
     }
-
+    protected function appendDefaultOperations(array $operations = []) : void
+//    array
+    {
+        if($this instanceof HasDefaultOperations)
+        {
+            $this->addOperations( $this->getDefaultOperations() );
+//            $operations = array_merge($operations , );
+        }
+//        return $operations ;
+    }
     protected function setOperationsTempHolderPayload() : void
     {
         $operations = [];
         $advancedOperations = [];
 
         /** Parent Default Operations & Advanced Operations  */
-        $operations = $this->appendDefaultOperations($operations);
-        $advancedOperations = $this->appendDefaultAdvancedOperations($advancedOperations);
+//        $operations =
+            $this->appendDefaultOperations($operations);
+//        $advancedOperations =
+            $this->appendDefaultAdvancedOperations($advancedOperations);
 
         /** Child step-1-StatisticsProviders Operations & Advanced Operations To Passing to Parent step-1-StatisticsProviders */
-        $operations = $this->appendAdditionalOperations($operations);
-        $advancedOperations = $this->appendAdditionalAdvancedOperations($advancedOperations);
+//        $operations =
+            $this->appendAdditionalOperations($operations);
+//        $advancedOperations =
+            $this->appendAdditionalAdvancedOperations($advancedOperations);
 
-        $this->setAdvancedOperationsPayloadToProcess($advancedOperations )->setOperationsPayloadToProcess( $operations );
+//        $this->setAdvancedOperationsPayloadToProcess($advancedOperations )->setOperationsPayloadToProcess( $operations );
     }
 
 
@@ -101,22 +131,6 @@ trait DataResourceInitMethods
         $this->InheritanceOfClassOrFail($dataResourceClass , DataResource::class);
         $this->initOperationsTempHolder( $dataResourceClass );
         $dataResourceBuilder->setOperationsTempHolder( $this->operationsTempHolder );
-    }
-    /**
-     * @param string $childClass
-     * @param string $abstractClass
-     * @return void
-     * @throws Exception
-     * @throws ReflectionException
-     */
-    protected function InheritanceOfClassOrFail(string $childClass , string $abstractClass) : void
-    {
-        $reflection = new ReflectionClass($childClass);
-        if(!$reflection->isSubclassOf($abstractClass))
-        {
-            $exceptionClass = Helpers::getExceptionClass();
-            throw new $exceptionClass("The Given  " . $childClass . "  Class Is Not A Valid Inheritance Form  " . $abstractClass . " Class !");
-        }
     }
 
     /**

@@ -57,7 +57,10 @@ abstract class BarSumChartStatisticsProvider extends StatisticsProviderDecorator
         }
         return $this->getDateColumnDefaultName();
     }
-
+    protected function getOperationGroupTableName() : string
+    {
+        return $this->model->getTable();
+    }
     protected function getDateColumn() : Column
     {
         return Column::create( $this->getDateColumnName() )->setResultProcessingColumnAlias("DateColumn");
@@ -71,7 +74,7 @@ abstract class BarSumChartStatisticsProvider extends StatisticsProviderDecorator
     protected function getSumOperationGroup() : OperationGroup
     {
         $dateColumn = $this->getDateColumn();
-        return OperationGroup::create($this->model->getTable())
+        return OperationGroup::create( $this->getOperationGroupTableName() )
                              ->enableDateSensitivity($dateColumn)
                              ->addOperation( $this->getSumOperation() );
     }
