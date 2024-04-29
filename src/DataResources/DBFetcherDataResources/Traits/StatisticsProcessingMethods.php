@@ -2,6 +2,7 @@
 
 namespace Statistics\DataResources\DBFetcherDataResources\Traits;
 
+use DataResourceInstructors\OperationComponents\OperationConditions\WhereConditions\WhereConditionTypes\WhereMethod;
 use Exception;
 use Statistics\DataResources\DBFetcherDataResources\DBFetcherDataResource;
 use DataResourceInstructors\OperationComponents\OperationConditions\AggregationConditions\HavingCondition;
@@ -66,8 +67,23 @@ trait StatisticsProcessingMethods
         }
     }
 
-    protected function setQueryConditions() : void
+    protected function setQueryWhereMethods() : void
     {
+        /**
+         * @var WhereMethod $whereMethod
+         */
+        foreach ($this->currentOperationGroup->getWhereMethods() as $whereMethod)
+        {
+            $whereMethodName = $whereMethod->getMethodName();
+            if( method_exists($this->query , $whereMethodName ) )
+            {
+                $this->query->{ $whereMethodName }( ...$whereMethod->getMethodParams() );
+            }
+        }
+    }
+    protected function setQueryWhereConditions() : void
+    {
+
         /**
          * @var WhereCondition $condition
          * @var WhereConditionGroup $conditionGroup
@@ -75,26 +91,40 @@ trait StatisticsProcessingMethods
         foreach ($this->currentOperationGroup->getWhereConditionGroups() as $conditionGroup)
         {
             $callback = function ($query) use ($conditionGroup)
-                        {
-                            foreach ($conditionGroup->getWhereConditions() as $condition)
-                            {
-                                $query->where(
-                                    $condition->getConditionColumn()->getColumnFullName() ,
-                                    $condition->getOperator(),
-                                    $condition->getConditionColumnValue(),
-                                    $condition->getConditionType()
-                                );
-                            }
-                        };
-            if($conditionGroup->getConditionGroupType() == "and")
             {
-                $this->query->where($callback);
-                continue;
-            }
-            $this->query->orWhere($callback);
+                foreach ($conditionGroup->getWhereConditions() as $condition)
+                {
+                    $query->where(
+                        $condition->getConditionColumn()->getColumnFullName() ,
+                        $condition->getOperator(),
+                        $condition->getConditionColumnValue(),
+                        $condition->getConditionType()
+                    );
+                }
+            };
+            $this->query->where($callback , null , null ,$conditionGroup->getConditionGroupType() );
         }
     }
+    protected function setQueryConditions() : void
+    {
+        $this->setQueryWhereConditions();
+        $this->setQueryWhereMethods();
+    }
 
+    protected function setRelationshipWhereMethods(RelationshipLoader $relationship , JoinClause $joinQuery): void
+    {
+        /**
+         * @var WhereMethod $whereMethod
+         */
+        foreach ($relationship->getWhereMethods() as $whereMethod)
+        {
+            $whereMethodName = $whereMethod->getMethodName();
+            if( method_exists($joinQuery , $whereMethodName ) )
+            {
+                $joinQuery->{ $whereMethodName }( ...$whereMethod->getMethodParams() );
+            }
+        }
+    }
     protected function setRelationshipWhereConditions(RelationshipLoader $relationship , JoinClause $joinQuery): void
     {
         foreach ($relationship->getWhereConditionGroups() as $conditionGroup)
@@ -111,15 +141,14 @@ trait StatisticsProcessingMethods
                     );
                 }
             };
-            if($conditionGroup->getConditionGroupType() == "and")
-            {
-                $joinQuery->where($callback);
-                continue;
-            }
-            $joinQuery->orWhere($callback);
+            $joinQuery->where($callback , null , null , $conditionGroup->getConditionGroupType());
         }
     }
-
+    protected function setRelationshipWheres(RelationshipLoader $relationship , JoinClause $joinQuery): void
+    {
+        $this->setRelationshipWhereConditions( $relationship ,  $joinQuery);
+        $this->setRelationshipWhereMethods( $relationship ,  $joinQuery);
+    }
     /**
      * @param RelationshipLoader $relationship
      * @param JoinClause $joinQuery
@@ -150,7 +179,7 @@ trait StatisticsProcessingMethods
             function (JoinClause $joinQuery) use ($relationship)
             {
                 $this->setRelationshipJoinConditions($relationship , $joinQuery);
-                $this->setRelationshipWhereConditions($relationship , $joinQuery);
+                $this->setRelationshipWheres($relationship , $joinQuery);
             }
         );
     }
@@ -261,6 +290,7 @@ trait StatisticsProcessingMethods
              * Result Data Processing Part
              */
 
+            $data = $this->processData($this->query->get()->dd());
             $data = $this->processData($this->query->get()->toArray());
             $this->mergeProcessedData($data);
         }
