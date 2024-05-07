@@ -24,6 +24,7 @@ class DateGroupedMixChartDataResource extends DateGroupedChartDataResource
      */
     protected function getDayAggregationOpStrategyClass(): string
     {
+        if(!$this->currentOperation) { $this->throwNonPassedOperationType(); }
         $class = (match($this->currentOperation::getOperationName())
         {
             CountOperation::getOperationName() =>  DayCountQueryCustomizer::class,
@@ -39,6 +40,7 @@ class DateGroupedMixChartDataResource extends DateGroupedChartDataResource
      */
     protected function getMonthAggregationOpStrategyClass(): string
     {
+        if(!$this->currentOperation) { $this->throwNonPassedOperationType(); }
         $class = (match($this->currentOperation::getOperationName())
         {
             CountOperation::getOperationName() => MonthCountQueryCustomizer::class,
@@ -54,6 +56,7 @@ class DateGroupedMixChartDataResource extends DateGroupedChartDataResource
      */
     protected function getQuarterAggregationOpStrategyClass(): string
     {
+        if(!$this->currentOperation) { $this->throwNonPassedOperationType(); }
         $class = (match($this->currentOperation::getOperationName())
         {
             CountOperation::getOperationName() => QuarterCountQueryCustomizer::class,
@@ -69,6 +72,7 @@ class DateGroupedMixChartDataResource extends DateGroupedChartDataResource
      */
     protected function getYearAggregationOpStrategyClass(): string
     {
+        if(!$this->currentOperation) { $this->throwNonPassedOperationType(); }
         $class = (match($this->currentOperation::getOperationName())
         {
             CountOperation::getOperationName() => YearCountQueryCustomizer::class,
@@ -86,5 +90,11 @@ class DateGroupedMixChartDataResource extends DateGroupedChartDataResource
     {
         throw new Exception("A non defined operation type was passed to DateGroupedMixChartDataResource class !");
     }
-
+    /**
+     * @throws Exception
+     */
+    protected function throwNonPassedOperationType() : void
+    {
+        throw new Exception("There is no operation type was passed to DateGroupedMixChartDataResource class !");
+    }
 }
