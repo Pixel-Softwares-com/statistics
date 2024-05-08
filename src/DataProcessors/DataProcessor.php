@@ -45,8 +45,7 @@ abstract class DataProcessor
 
     protected function wrapProcessedDataInResultKey() : void
     {
-        $key = $this->getProcessedDataResultKey();
-        if($key)
+        if($key = $this->getProcessedDataResultKey())
         {
             $this->processedData = [$key => $this->processedData];
         }
