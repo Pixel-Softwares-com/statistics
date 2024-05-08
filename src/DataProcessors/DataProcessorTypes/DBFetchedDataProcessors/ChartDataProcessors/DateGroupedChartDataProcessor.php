@@ -56,7 +56,7 @@ class DateGroupedChartDataProcessor extends DataProcessor
     {
         foreach ( $this->aggregationOperations as $operation)
         {
-            array_push($this->aggregatedColumns , ...($operation->getAggregationColumns()) );
+            $this->aggregatedColumns = array_merge($this->aggregatedColumns ,  $operation->getAggregationColumns() );
         }
     }
     protected function setDateColumn() : void
@@ -92,6 +92,11 @@ class DateGroupedChartDataProcessor extends DataProcessor
     {
         if ($dateColumnValue = $this->getDataRowDateColumnValue($dataRow))
         {
+//            if( array_key_exists($dateColumnValue , $this->processedData) )
+//            {
+//                $this->processedData[$dateColumnValue] = array_merge($this->processedData[$dateColumnValue] ,  $this->getDateGroupedAggregatedValues($dataRow));
+//                return ;
+//            }
             $this->processedData[$dateColumnValue] = $this->getDateGroupedAggregatedValues($dataRow);
         }
     }
