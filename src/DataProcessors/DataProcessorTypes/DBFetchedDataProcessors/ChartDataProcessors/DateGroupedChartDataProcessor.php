@@ -2,11 +2,9 @@
 
 namespace Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\ChartDataProcessors;
 
-use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
 use DataResourceInstructors\OperationComponents\Columns\Column;
 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
 use DataResourceInstructors\OperationTypes\AggregationOperation;
-use DataResourceInstructors\OperationTypes\CountOperation;
 use Illuminate\Support\Arr;
 use Statistics\DataProcessors\DataProcessor;
 

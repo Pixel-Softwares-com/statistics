@@ -2,6 +2,9 @@
 
 namespace Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroupedChartDataResource\DateGroupedChartDataResourceTypes;
 
+use DataResourceInstructors\OperationTypes\AverageOperation;
+use DataResourceInstructors\OperationTypes\CountOperation;
+use DataResourceInstructors\OperationTypes\SumOperation;
 use Exception;
 use Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroupedChartDataResource\DateGroupedChartDataResource;
 use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\DateGroupedChartAvgQueryCustomizers\DayAvgQueryCustomizer;
