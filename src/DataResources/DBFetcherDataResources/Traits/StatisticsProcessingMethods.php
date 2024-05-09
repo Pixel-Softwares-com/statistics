@@ -21,7 +21,7 @@ trait StatisticsProcessingMethods
 
     protected function mergeProcessedData(array $data) : void
     {
-        $this->statistics = $data + $this->statistics;
+        $this->statistics = array_merge_recursive(  $this->statistics , $data);
     }
 
     protected function processData(array $data = []) : array

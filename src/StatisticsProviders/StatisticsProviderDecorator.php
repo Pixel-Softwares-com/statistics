@@ -61,15 +61,14 @@ abstract class StatisticsProviderDecorator
     }
     protected function mergeCurrentProviderData() : void
     {
-        $currentProviderData =  $this->getCurrentStatisticsProviderData();
+        $dataToMerge =  $this->getCurrentStatisticsProviderData();
         $StatisticsTypeName = $this->getStatisticsTypeName();
 
         if(array_key_exists( $StatisticsTypeName , $this->data ))
         {
-            $this->data[ $StatisticsTypeName ] = array_merge( $this->data[ $StatisticsTypeName ] , $currentProviderData );
-        }else{
-            $this->data[ $StatisticsTypeName ] = $currentProviderData;
+            $dataToMerge = array_merge( $this->data[ $StatisticsTypeName ] , $dataToMerge );
         }
+        $this->data[ $StatisticsTypeName ] = $dataToMerge;
     }
 
     protected function getCurrentDataResourceCalculatedStatistics() : array
