@@ -2,6 +2,7 @@
 
 namespace Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\ChartDataProcessors;
 
+use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
 use DataResourceInstructors\OperationComponents\Columns\Column;
 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
 use DataResourceInstructors\OperationTypes\AggregationOperation;
@@ -68,18 +69,18 @@ class DateGroupedChartDataProcessor extends DataProcessor
     {
         $this->dateColumn = $this->operationGroup->getDateColumn();
     }
-    protected function getAggregatedColumnValue(array $dataRow , string $columnAlias) : string | int
+    protected function getAggregatedColumnValue(array $dataRow , AggregationColumn $column ) : string | int
     {
-        return $dataRow[ $columnAlias ] ?? 0;
+        return $dataRow[ $column->getResultProcessingColumnAlias() ] ?? 0;
     }
 
     protected function getDateGroupedAggregatedValues(array $dataRow) : string | int | array
     {
         $values = [];
+        /** @var AggregationColumn $column  */
         foreach ($this->aggregatedColumns as $column)
         {
-            $columnAlias  = $column->getResultProcessingColumnAlias();
-            $values[$columnAlias] =  $this->getAggregatedColumnValue($dataRow , $columnAlias)  ;
+            $values[$column->getResultLabel() ] =  $this->getAggregatedColumnValue($dataRow  , $column)  ;
         }
 
         if (count($this->aggregatedColumns) == 1)
