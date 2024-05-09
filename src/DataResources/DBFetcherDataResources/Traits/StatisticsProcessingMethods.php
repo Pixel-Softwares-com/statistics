@@ -36,11 +36,18 @@ trait StatisticsProcessingMethods
             $this->query->orderBy($column , $orderingStyle);
         }
     }
+    protected function isColumnInGroupedBy(string $columnAlias) : bool
+    {
+        return in_array( $columnAlias , $this->currentOperationGroup->getGroupedByColumnAliases() );
+    }
     protected function setSelectedColumns(): void
     {
         foreach ($this->currentOperationGroup->getSelectingNeededColumnFullNames() as $column => $alias)
         {
-            $this->query->addSelect(DB::raw($column . " as " . $alias));
+            if($this->isColumnInGroupedBy($alias))
+            {
+                $this->query->addSelect(DB::raw($column . " as " . $alias));
+            }
         }
     }
 
@@ -289,7 +296,6 @@ trait StatisticsProcessingMethods
             /**
              * Result Data Processing Part
              */
-            $this->query->dump();
             $data = $this->processData($this->query->get()->toArray());
             $this->mergeProcessedData($data);
         }
