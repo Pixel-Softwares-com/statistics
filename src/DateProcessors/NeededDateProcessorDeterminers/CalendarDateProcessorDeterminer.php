@@ -11,12 +11,14 @@ use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\YearPeriod
 
 class CalendarDateProcessorDeterminer extends NeededDateProcessorDeterminer
 {
+
     public function getDateProcessorInstance(): DateProcessor|null
     {
         return (match($this->getPeriodTypeRequestValue())
         {
-            'range'     => RangePeriodDateProcessor::Singleton($this::$request),
-            default     => null, /** for all time date filter (we don't want to set date filter) */
+            'all-time'       => null, /** for all time date filter (we don't want to set date filter) */
+            default     => RangePeriodDateProcessor::Singleton($this::$request),
+
         });
     }
 }
