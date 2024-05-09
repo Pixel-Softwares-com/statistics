@@ -98,6 +98,7 @@ class DateGroupedChartDataProcessor extends DataProcessor
     {
         if ($dateColumnValue = $this->getDataRowDateColumnValue($dataRow))
         {
+            dd(4);
 //            if( array_key_exists($dateColumnValue , $this->processedData) )
 //            {
 //                $this->processedData[$dateColumnValue] = array_merge($this->processedData[$dateColumnValue] ,  $this->getDateGroupedAggregatedValues($dataRow));
