@@ -29,24 +29,6 @@ class DateGroupedChartDataProcessor extends DataProcessor
         return $this;
     }
 
-//    protected function getCurrentOperationAggColumn(): AggregationColumn
-//    {
-//        $columns = $this->currentOperation->getAggregationColumns();
-//        return Arr::first($columns);
-//    }
-
-//    protected function setCurrentOperation() : DateGroupedChartDataProcessor
-//    {
-//        $groupedOperations = $this->operationGroup->getOperations();
-//        if(empty($groupedOperations))
-//        {
-//            $currentOperation = new CountOperation();
-//        }else{
-//            $currentOperation = Arr::first($groupedOperations);
-//        }
-//        $this->currentOperation = $currentOperation;
-//        return $this;
-//    }
     protected function setAggregationOperations(): DateGroupedChartDataProcessor
     {
         $this->aggregationOperations = $this->operationGroup->getOperations();
@@ -98,12 +80,6 @@ class DateGroupedChartDataProcessor extends DataProcessor
     {
         if ($dateColumnValue = $this->getDataRowDateColumnValue($dataRow))
         {
-            dd(4);
-//            if( array_key_exists($dateColumnValue , $this->processedData) )
-//            {
-//                $this->processedData[$dateColumnValue] = array_merge($this->processedData[$dateColumnValue] ,  $this->getDateGroupedAggregatedValues($dataRow));
-//                return ;
-//            }
             $this->processedData[$dateColumnValue] = $this->getDateGroupedAggregatedValues($dataRow);
         }
     }
