@@ -289,7 +289,7 @@ trait StatisticsProcessingMethods
             /**
              * Result Data Processing Part
              */
-
+            $this->query->dump();
             $data = $this->processData($this->query->get()->toArray());
             $this->mergeProcessedData($data);
         }
