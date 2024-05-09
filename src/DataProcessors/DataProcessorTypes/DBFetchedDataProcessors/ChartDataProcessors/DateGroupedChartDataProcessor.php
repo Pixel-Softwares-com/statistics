@@ -52,8 +52,13 @@ class DateGroupedChartDataProcessor extends DataProcessor
         return $this;
     }
 
+    protected function initAggregatedColumnsArray() : void
+    {
+        $this->aggregatedColumns = [];
+    }
     protected function setAggregatedColumns(): void
     {
+        $this->initAggregatedColumnsArray();
         foreach ( $this->aggregationOperations as $operation)
         {
             $this->aggregatedColumns = array_merge($this->aggregatedColumns ,  $operation->getAggregationColumns() );
