@@ -17,6 +17,10 @@ class GlobalDataProcessor extends DataProcessor
         $this->columnRequiredValuesValidator = new ColumnRequiredValuesValidator($this->dataToProcess , $this->operationGroup->getColumnsForProcessingRequiredValues());
         return $this->columnRequiredValuesValidator;
     }
+    protected function setProcessedColumnFinalValue(string $aggregationValueLabel , int | array $aggregationValue )
+    {
+        $this->processedData[$aggregationValueLabel] = $aggregationValue;
+    }
 
     protected function processAggregationOperationColumnLabel(string $columnLabel , array $dataRow = []) : string
     {
@@ -38,7 +42,7 @@ class GlobalDataProcessor extends DataProcessor
         {
             $aggregationValue = $this->getAggregatingValue($columnAlias , $row);
             $aggregationValueLabel = $this->processAggregationOperationColumnLabel($columnLabel , $row);
-            $this->processedData[$aggregationValueLabel] = $aggregationValue;
+            $this->setProcessedColumnFinalValue($aggregationValueLabel , $aggregationValue);
         }
     }
 
@@ -60,7 +64,7 @@ class GlobalDataProcessor extends DataProcessor
     }
     protected function processMissedData() : void
     {
-          $this->dataToProcess = array_merge($this->dataToProcess , $this->initRequiredValuesValidator()->getMissedDataRows() );
+        $this->dataToProcess = array_merge($this->dataToProcess , $this->initRequiredValuesValidator()->getMissedDataRows() );
     }
     protected function prepareDataToProcess() : void
     {
