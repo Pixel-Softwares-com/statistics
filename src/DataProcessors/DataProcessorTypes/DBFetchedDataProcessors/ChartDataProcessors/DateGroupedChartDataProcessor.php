@@ -35,43 +35,47 @@ class DateGroupedChartDataProcessor extends DataProcessor
         return $this;
     }
 
-    protected function initAggregatedColumnsArray() : void
+    protected function initAggregatedColumnsArray(): void
     {
         $this->aggregatedColumns = [];
     }
+
     protected function setAggregatedColumns(): void
     {
         $this->initAggregatedColumnsArray();
-        foreach ( $this->aggregationOperations as $operation)
-        {
-            $this->aggregatedColumns = array_merge($this->aggregatedColumns ,  $operation->getAggregationColumns() );
+        foreach ($this->aggregationOperations as $operation) {
+            $this->aggregatedColumns = array_merge($this->aggregatedColumns, $operation->getAggregationColumns());
         }
     }
-    protected function setDateColumn() : void
+
+    protected function setDateColumn(): void
     {
         $this->dateColumn = $this->operationGroup->getDateColumn();
     }
-    protected function getAggregatedColumnValue(array $dataRow , AggregationColumn $column ) : string | int
+
+    protected function getAggregatedColumnValue(array $dataRow, AggregationColumn $column): string|int
     {
-        return $dataRow[ $column->getResultProcessingColumnAlias() ] ?? 0;
+        return $dataRow[$column->getResultProcessingColumnAlias()] ?? 0;
     }
 
-    protected function getDateGroupedAggregatedValues(array $dataRow) : string | int | array
+    protected function getDateGroupedAggregatedValues(array $dataRow): string|int|array
     {
         $values = [];
-        /** @var AggregationColumn $column  */
-        foreach ($this->aggregatedColumns as $column)
-        {
-            $values[$column->getResultLabel() ] =  $this->getAggregatedColumnValue($dataRow  , $column)  ;
+        /** @var AggregationColumn $column */
+        foreach ($this->aggregatedColumns as $column) {
+            $values[$column->getResultLabel()] = $this->getAggregatedColumnValue($dataRow, $column);
         }
 
-        if (count($this->aggregatedColumns) == 1)
-        {
-            return Arr::first( $values);
+        if (count($this->aggregatedColumns) == 1) {
+            return Arr::first($values);
         }
         return $values;
     }
 
+    protected function setDateColumnFinalValue(string $dateColumnValue ,  string|int|array $value) : void
+    {
+        $this->processedData[$dateColumnValue] = $value;
+    }
     protected function getDataRowDateColumnValue(array $dataRow = []) : ?string
     {
         return $dataRow[ $this->dateColumn->getResultProcessingColumnAlias() ] ?? null;
@@ -80,7 +84,7 @@ class DateGroupedChartDataProcessor extends DataProcessor
     {
         if ($dateColumnValue = $this->getDataRowDateColumnValue($dataRow))
         {
-            $this->processedData[$dateColumnValue] = $this->getDateGroupedAggregatedValues($dataRow);
+            $this->setDateColumnFinalValue( $dateColumnValue ,   $this->getDateGroupedAggregatedValues($dataRow));
         }
     }
     protected function overrideWithDataKeyValuePairs() : void
@@ -94,7 +98,7 @@ class DateGroupedChartDataProcessor extends DataProcessor
     {
         foreach ($this->dateProcessor->getIntervalBetweenDates() as $date)
         {
-            $this->processedData[ $date ] = 0;
+            $this->setDateColumnFinalValue( $date ,   0);
         }
     }
     protected function processData(): void
