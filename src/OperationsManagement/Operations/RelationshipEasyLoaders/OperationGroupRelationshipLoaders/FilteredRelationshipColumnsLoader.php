@@ -27,9 +27,30 @@ class FilteredRelationshipColumnsLoader extends OperationGroupRelationshipLoader
         $this->relationshipFilterKey  = $relationshipFilterKey ;
         return $this;
     }
+
+    /**
+     * @throws Exception
+     */
+    protected function checkClassType(string $class) : void
+    {
+        if(!is_subclass_of($class , FilteredRelationshipDetector::class))
+        {
+            throw new Exception("The provided FilteredRelationshipDetector class is not valid ");
+        }
+    }
+    protected function getFilteredRelationshipDetectorClass() : string
+    {
+        return FilteredRelationshipDetector::class;
+    }
+
+    /**
+     * @throws Exception
+     */
     protected function initFilteredRelationshipDetector() : FilteredRelationshipDetector
     {
-        $detector = new FilteredRelationshipDetector();
+        $detectorClass = $this->getFilteredRelationshipDetectorClass();
+        $this->checkClassType($detectorClass);
+        $detector = new $detectorClass;
         if($this->relationshipFilterKey )
         {
             $detector->useRelationshipFilterKey($this->relationshipFilterKey );
