@@ -4,6 +4,7 @@ namespace Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\Ope
 
 use Exception;
 use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\FilteredRelationshipDetectors\FilteredRelationshipDetector;
+use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\FilteredRelationshipDetectors\Interfaces\DetectsFilteredRelationship;
 
 class FilteredRelationshipColumnsLoader extends OperationGroupRelationshipLoader
 {
@@ -28,14 +29,18 @@ class FilteredRelationshipColumnsLoader extends OperationGroupRelationshipLoader
         return $this;
     }
 
+    protected function throwNotValidFilteredRelationshipDetectorClass() : void
+    {
+        throw new Exception("The provided FilteredRelationshipDetector class is not valid ");
+    }
     /**
      * @throws Exception
      */
-    protected function checkFilteredRelationshipDetectorType(string $class) : void
+    protected function checkFilteredRelationshipDetectorType($object ) : void
     {
-        if(!is_subclass_of($class , FilteredRelationshipDetector::class))
+        if(!$object instanceof  DetectsFilteredRelationship )
         {
-            throw new Exception("The provided FilteredRelationshipDetector class is not valid ");
+            $this->throwNotValidFilteredRelationshipDetectorClass();
         }
     }
     protected function getFilteredRelationshipDetectorClass() : string
@@ -46,11 +51,24 @@ class FilteredRelationshipColumnsLoader extends OperationGroupRelationshipLoader
     /**
      * @throws Exception
      */
-    protected function initFilteredRelationshipDetector() : FilteredRelationshipDetector
+    protected function initFilteredRelationshipDetectorObject() : FilteredRelationshipDetector
     {
         $detectorClass = $this->getFilteredRelationshipDetectorClass();
-        $this->checkFilteredRelationshipDetectorType($detectorClass);
+        if(!class_exists($detectorClass))
+        {
+            $this->throwNotValidFilteredRelationshipDetectorClass();
+        }
+
         $detector = new $detectorClass;
+        $this->checkFilteredRelationshipDetectorType($detector);
+        return $detector;
+    }
+    /**
+     * @throws Exception
+     */
+    protected function initFilteredRelationshipDetector() : FilteredRelationshipDetector
+    {
+        $detector = $this->initFilteredRelationshipDetectorObject();
         if($this->relationshipFilterKey )
         {
             $detector->useRelationshipFilterKey($this->relationshipFilterKey );

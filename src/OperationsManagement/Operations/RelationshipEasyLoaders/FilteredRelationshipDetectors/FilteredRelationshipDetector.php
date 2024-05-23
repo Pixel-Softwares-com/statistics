@@ -5,9 +5,10 @@ namespace Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\Fil
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\FilteredRelationshipDetectors\Interfaces\DetectsFilteredRelationship;
 use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\RelationshipDescribers\RelationshipDescriber;
 
-class FilteredRelationshipDetector
+class FilteredRelationshipDetector implements DetectsFilteredRelationship
 {
     protected string $relationshipFilterKey = "relationship_filter_key";
     protected array $relationshipDescriberClasses = [];

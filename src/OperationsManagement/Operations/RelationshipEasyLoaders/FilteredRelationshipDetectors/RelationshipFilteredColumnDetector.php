@@ -4,9 +4,10 @@ namespace Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\Fil
 
 use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
 use Illuminate\Http\Request;
+use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\FilteredRelationshipDetectors\Interfaces\DetectsRelationshipColumn;
 use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\RelationshipDescribers\RelationshipDescriber;
 
-class RelationshipFilteredColumnDetector
+class RelationshipFilteredColumnDetector implements DetectsRelationshipColumn
 {
     protected ?RelationshipDescriber $relationshipDescriber = null;
     protected string $columnFilterKeyName = "relationship_column_filter_key";

@@ -5,6 +5,7 @@ namespace Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\Ope
 use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
 use DataResourceInstructors\OperationTypes\AggregationOperation;
 use Exception;
+use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\FilteredRelationshipDetectors\Interfaces\DetectsRelationshipColumn;
 use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\FilteredRelationshipDetectors\RelationshipFilteredColumnDetector;
 
 trait RelationshipFilteredColumnMethods
@@ -14,11 +15,18 @@ trait RelationshipFilteredColumnMethods
     /**
      * @throws Exception
      */
-    protected function checkRelationshipFilteredColumnDetectorType(string $class) : void
+    protected function throwNotValidRelationshipFilteredColumnDetector() : void
     {
-        if(!is_subclass_of($class , RelationshipFilteredColumnDetector::class))
+        throw new Exception("The provided RelationshipFilteredColumnDetector class is not valid ");
+    }
+    /**
+     * @throws Exception
+     */
+    protected function checkRelationshipFilteredColumnDetectorType(string $object) : void
+    {
+        if(! $object instanceof DetectsRelationshipColumn)
         {
-            throw new Exception("The provided RelationshipFilteredColumnDetector class is not valid ");
+            $this->throwNotValidRelationshipFilteredColumnDetector();
         }
     }
     protected function getRelationshipFilteredColumnDetectorClass() : string
@@ -33,8 +41,14 @@ trait RelationshipFilteredColumnMethods
     protected function initRelationshipFilteredColumnDetector() : RelationshipFilteredColumnDetector
     {
         $detectorClass = $this->getRelationshipFilteredColumnDetectorClass();
-        $this->checkRelationshipFilteredColumnDetectorType($detectorClass);
+        if(!class_exists($detectorClass))
+        {
+            $this->throwNotValidRelationshipFilteredColumnDetector();
+        }
+
         $detector = new $detectorClass($this->relationshipDescriber);
+        $this->checkRelationshipFilteredColumnDetectorType($detector);
+
         if($this->columnFilterKeyName)
         {
             $detector->useColumnFilterKeyName($this->columnFilterKeyName);
