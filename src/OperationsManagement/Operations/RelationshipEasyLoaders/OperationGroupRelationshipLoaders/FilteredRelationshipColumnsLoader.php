@@ -31,7 +31,7 @@ class FilteredRelationshipColumnsLoader extends OperationGroupRelationshipLoader
     /**
      * @throws Exception
      */
-    protected function checkClassType(string $class) : void
+    protected function checkFilteredRelationshipDetectorType(string $class) : void
     {
         if(!is_subclass_of($class , FilteredRelationshipDetector::class))
         {
@@ -49,7 +49,7 @@ class FilteredRelationshipColumnsLoader extends OperationGroupRelationshipLoader
     protected function initFilteredRelationshipDetector() : FilteredRelationshipDetector
     {
         $detectorClass = $this->getFilteredRelationshipDetectorClass();
-        $this->checkClassType($detectorClass);
+        $this->checkFilteredRelationshipDetectorType($detectorClass);
         $detector = new $detectorClass;
         if($this->relationshipFilterKey )
         {

@@ -5,7 +5,6 @@ namespace Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\Ope
 use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
 use DataResourceInstructors\OperationTypes\AggregationOperation;
 use Exception;
-use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\FilteredRelationshipDetectors\FilteredRelationshipDetector;
 use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\FilteredRelationshipDetectors\RelationshipFilteredColumnDetector;
 
 trait RelationshipFilteredColumnMethods
@@ -15,7 +14,7 @@ trait RelationshipFilteredColumnMethods
     /**
      * @throws Exception
      */
-    protected function checkClassType(string $class) : void
+    protected function checkRelationshipFilteredColumnDetectorType(string $class) : void
     {
         if(!is_subclass_of($class , RelationshipFilteredColumnDetector::class))
         {
@@ -34,7 +33,7 @@ trait RelationshipFilteredColumnMethods
     protected function initRelationshipFilteredColumnDetector() : RelationshipFilteredColumnDetector
     {
         $detectorClass = $this->getRelationshipFilteredColumnDetectorClass();
-        $this->checkClassType($detectorClass);
+        $this->checkRelationshipFilteredColumnDetectorType($detectorClass);
         $detector = new $detectorClass($this->relationshipDescriber);
         if($this->columnFilterKeyName)
         {
@@ -60,14 +59,26 @@ trait RelationshipFilteredColumnMethods
     {
         return $this->columnFilterKeyName;
     }
+
+    /**
+     * @throws Exception
+     */
     protected function getFilteredColumn() : AggregationColumn
     {
         return $this->initRelationshipFilteredColumnDetector()->getRelationshipColumn();
     }
+
+    /**
+     * @throws Exception
+     */
     protected function getOperation() : AggregationOperation
     {
         return $this->relationshipDescriber->getColumnStatisticalOperation( $this->getFilteredColumn() );
     }
+
+    /**
+     * @throws Exception
+     */
     protected function getStatisticalOperations(): array
     {
         return [
