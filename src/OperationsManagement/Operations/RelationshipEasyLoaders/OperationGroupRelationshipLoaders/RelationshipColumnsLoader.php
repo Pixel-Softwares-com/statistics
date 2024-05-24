@@ -12,6 +12,4 @@ class RelationshipColumnsLoader extends OperationGroupRelationshipLoader
         parent::__construct($operationGroup);
         $this->setRelationshipDescriber($relationshipDescriber);
     }
-
-
 }

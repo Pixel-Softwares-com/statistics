@@ -6,6 +6,5 @@ use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\Operation
 
 class FilteredRelationshipFilteredColumnLoader extends FilteredRelationshipColumnsLoader
 {
-
     use RelationshipFilteredColumnMethods;
 }

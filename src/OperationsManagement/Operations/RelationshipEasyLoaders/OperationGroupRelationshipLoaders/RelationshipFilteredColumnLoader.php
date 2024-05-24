@@ -8,5 +8,4 @@ use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\Operation
 class RelationshipFilteredColumnLoader extends RelationshipColumnsLoader
 {
     use RelationshipFilteredColumnMethods;
-
 }

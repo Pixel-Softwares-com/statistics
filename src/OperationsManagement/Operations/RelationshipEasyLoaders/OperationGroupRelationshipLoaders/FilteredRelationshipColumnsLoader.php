@@ -29,6 +29,10 @@ class FilteredRelationshipColumnsLoader extends OperationGroupRelationshipLoader
         return $this;
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
     protected function throwNotValidFilteredRelationshipDetectorClass() : void
     {
         throw new Exception("The provided FilteredRelationshipDetector class is not valid ");

@@ -26,6 +26,12 @@ class FilteredRelationshipDetector implements DetectsFilteredRelationship
         $this->relationshipDescriberClasses = $relationshipDescriberClasses;
         return $this;
     }
+
+    protected function getRelationshipDescriberClasses() : array
+    {
+        return $this->relationshipDescriberClasses;
+    }
+
     protected function getDefaultRelationshipDescriberClass() : string
     {
         return Arr::first( $this->relationshipDescriberClasses );
@@ -34,21 +40,32 @@ class FilteredRelationshipDetector implements DetectsFilteredRelationship
     {
         return $this->getRequest()->filter[ $this->relationshipFilterKey ] ?? null;
     }
-    protected function getRelationshipDescriberClasses() : array
+    protected function getFilteredRelationshipDescriberClass() : ?string
     {
-        return $this->relationshipDescriberClasses;
+        return $this->relationshipDescriberClasses[ $this->getRelationshipFilterValue() ] ?? null;
     }
-
+    protected function getDescriberClass() : string
+    {
+        return  $this->getFilteredRelationshipDescriberClass()
+                ??
+                $this->getDefaultRelationshipDescriberClass();
+    }
+    /**
+     * @throws Exception
+     */
+    protected function checkRelationshipDescriberClasses() : void
+    {
+        if(empty($this->relationshipDescriberClasses))
+        {
+            throw new Exception("No relationship describer classes passed to match with relationship request filter value !");
+        }
+    }
     /**
      * @throws Exception
      */
     public function getRelationshipDescriber() : ?RelationshipDescriber
     {
-        $relationshipFilterValue = $this->getRelationshipFilterValue();
-
-        $describerClass = $this->relationshipDescriberClasses[$relationshipFilterValue]
-                          ??
-                          $this->getDefaultRelationshipDescriberClass();
-        return RelationshipDescriber::initDescriber($describerClass);
+        $this->checkRelationshipDescriberClasses();
+        return RelationshipDescriber::initDescriber( $this->getDescriberClass() );
     }
 }

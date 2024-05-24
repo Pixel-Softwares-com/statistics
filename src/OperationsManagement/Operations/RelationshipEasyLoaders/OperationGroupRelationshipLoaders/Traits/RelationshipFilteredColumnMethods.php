@@ -7,6 +7,8 @@ use DataResourceInstructors\OperationTypes\AggregationOperation;
 use Exception;
 use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\FilteredRelationshipDetectors\Interfaces\DetectsRelationshipColumn;
 use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\FilteredRelationshipDetectors\RelationshipFilteredColumnDetector;
+use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\OperationGroupRelationshipLoaders\FilteredRelationshipFilteredColumnLoader;
+use Statistics\OperationsManagement\Operations\RelationshipEasyLoaders\OperationGroupRelationshipLoaders\RelationshipFilteredColumnLoader;
 
 trait RelationshipFilteredColumnMethods
 {
@@ -34,7 +36,6 @@ trait RelationshipFilteredColumnMethods
         return RelationshipFilteredColumnDetector::class;
     }
 
-
     /**
      * @throws Exception
      */
@@ -58,7 +59,7 @@ trait RelationshipFilteredColumnMethods
 
     /**
      * @param string|null $columnFilterKeyName
-     * @return $this
+     * @return RelationshipFilteredColumnLoader|FilteredRelationshipFilteredColumnLoader|RelationshipFilteredColumnMethods
      */
     public function useColumnFilterKeyName(?string $columnFilterKeyName = null): self
     {
