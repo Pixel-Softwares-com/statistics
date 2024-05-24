@@ -24,7 +24,7 @@ trait RelationshipFilteredColumnMethods
     /**
      * @throws Exception
      */
-    protected function checkRelationshipFilteredColumnDetectorType(string $object) : void
+    protected function checkRelationshipFilteredColumnDetectorType($object) : void
     {
         if(! $object instanceof DetectsRelationshipColumn)
         {

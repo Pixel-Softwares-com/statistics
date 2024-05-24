@@ -4,7 +4,7 @@ namespace Statistics\Interfaces;
 
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 
-interface NeedsStatisticsProvider
+interface RequiresStatisticsProvider
 {
     public function setStatisticsProvider(StatisticsProviderDecorator $statisticsProvider);
     public function getStatisticsProvider() : StatisticsProviderDecorator;

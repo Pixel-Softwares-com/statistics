@@ -40,7 +40,7 @@ class FilteredRelationshipColumnsLoader extends OperationGroupRelationshipLoader
     /**
      * @throws Exception
      */
-    protected function checkFilteredRelationshipDetectorType($object ) : void
+    protected function checkFilteredRelationshipDetectorType($object) : void
     {
         if(!$object instanceof  DetectsFilteredRelationship )
         {

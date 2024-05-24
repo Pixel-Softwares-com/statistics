@@ -2,29 +2,41 @@
 
 namespace Statistics\StatisticsProviders\StatisticsProviderCommonTypes;
 
-use ReflectionException;
+use Exception;
 use Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\GlobalDataProcessor;
 use Statistics\DataResources\DataResourceBuilders\StatisticsProviderDataHandlerResourceBuilder;
-use Statistics\Interfaces\NeedsStatisticsProvider;
+use Statistics\Interfaces\StatisticsProvidersInterfaces\HasReformulatableData;
+use Statistics\Interfaces\StatisticsProvidersInterfaces\ReformulatesStatisticsProviderData;
 use Statistics\StatisticsProviders\CustomizableStatisticsProvider;
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 
-abstract class StatisticsProviderDataReProcessorStatisticsProvider extends CustomizableStatisticsProvider implements NeedsStatisticsProvider
+abstract class StatisticsProviderDataReProcessorStatisticsProvider extends CustomizableStatisticsProvider implements ReformulatesStatisticsProviderData
 {
-    protected ?StatisticsProviderDecorator $statisticsProviderToReProcessing = null;
+    protected StatisticsProviderDecorator | HasReformulatableData | null $reformulatableStatisticsProvider = null;
+
+    public function setReformulatableStatisticsProvider(HasReformulatableData $reformulatableStatisticsProvider) : void
+    {
+        $this->reformulatableStatisticsProvider = $reformulatableStatisticsProvider;
+    }
 
     /**
-     * @param StatisticsProviderDecorator $statisticsProvider
-     * @return $this
+     * @throws Exception
      */
-    public function setStatisticsProvider(StatisticsProviderDecorator $statisticsProvider): self
+    protected function checkReformulatableStatisticsProvider() : void
     {
-        $this->statisticsProviderToReProcessing = $statisticsProvider;
-        return $this;
+        if(!$this->reformulatableStatisticsProvider)
+        {
+            throw new Exception("No ReformulatableStatisticsProvider bound to this StatisticsProvider type .... No data to be reformatted !");
+        }
     }
-    public function getStatisticsProvider(): StatisticsProviderDecorator
+
+    /**
+     * @throws Exception
+     */
+    public function getReformulatableStatisticsProvider() : HasReformulatableData
     {
-        return $this->statisticsProviderToReProcessing;
+        $this->checkReformulatableStatisticsProvider();
+        return $this->reformulatableStatisticsProvider;
     }
     /**
      * @return string
@@ -36,14 +48,19 @@ abstract class StatisticsProviderDataReProcessorStatisticsProvider extends Custo
     }
 
     /**
-     * @throws ReflectionException
+     * @return array
+     * @throws Exception
      */
     protected function getDataResourceBuildersOrdersByPriorityClasses(): array
     {
+        /**
+         * @var StatisticsProviderDecorator $statisticsProvider
+         */
+        $statisticsProvider =  $this->getReformulatableStatisticsProvider() ;
         return [
             StatisticsProviderDataHandlerResourceBuilder::create()
-                ->setStatisticsProvider( $this->getStatisticsProvider() )
-                ->useDataProcessorClass( $this->getDataProcessorClass() )
+                                                        ->setStatisticsProvider($statisticsProvider)
+                                                        ->useDataProcessorClass( $this->getDataProcessorClass() )
         ];
     }
 

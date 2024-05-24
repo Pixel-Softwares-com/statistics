@@ -2,6 +2,7 @@
 
 namespace Statistics\StatisticsBuilderBaseService;
 
+use Statistics\StatisticsBuilderBaseService\BuildingHelpers\StatisticsProviderReformulatingParametersBinder;
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 use Exception;
 use ReflectionException;
@@ -12,9 +13,30 @@ use ReflectionException;
 abstract class StatisticsBuilderBaseService
 {
     protected ?StatisticsProviderDecorator $statisticsProvider = null;
+    protected ?StatisticsProviderReformulatingParametersBinder $StatisticsProviderParametersBinder = null;
 
     abstract protected function getStatisticsProviderTypeClasses() : array;
 
+    /**
+     * @throws ReflectionException
+     */
+    protected function getStatisticsProvidersData() : array
+    {
+        return $this->statisticsProvider?->getStatistics() ?? [];
+    }
+    protected function initStatisticsProviderReformulatingParametersBinder() : StatisticsProviderReformulatingParametersBinder
+    {
+        if(!$this->StatisticsProviderParametersBinder)
+        {
+            $this->StatisticsProviderParametersBinder = StatisticsProviderReformulatingParametersBinder::initBinder();
+        }
+        return $this->StatisticsProviderParametersBinder;
+    }
+
+    protected function bindStatisticsProviderReformulatingParameters() :void
+    {
+        $this->initStatisticsProviderReformulatingParametersBinder()->bind();
+    }
     /**
      * @return void
      */
@@ -23,19 +45,32 @@ abstract class StatisticsBuilderBaseService
         return;
     }
 
+    protected function prepareReformulatingParameterBinding(StatisticsProviderDecorator $StatisticsProviderDecorator) : void
+    {
+        $this->initStatisticsProviderReformulatingParametersBinder()->categoryStatisticsProvider($StatisticsProviderDecorator);
+    }
+    protected function decorateStatisticsProvider(StatisticsProviderDecorator $StatisticsProviderDecorator) : void
+    {
+        $this->statisticsProvider = $StatisticsProviderDecorator;
+    }
+    protected function initStatisticsProvider(string $StatisticsProviderDecoratorClass) : ?StatisticsProviderDecorator
+    {
+        if(class_exists($StatisticsProviderDecoratorClass) && is_subclass_of($StatisticsProviderDecoratorClass , StatisticsProviderDecorator::class))
+        {
+            return new $StatisticsProviderDecoratorClass($this->statisticsProvider);
+        }
+        return null;
+    }
     /**
      * @param string $StatisticsProviderDecoratorClass
      */
     protected function buildStatisticsProvider(string $StatisticsProviderDecoratorClass)  : void
     {
-        if(class_exists($StatisticsProviderDecoratorClass))
+        if($StatisticsProviderDecorator = $this->initStatisticsProvider($StatisticsProviderDecoratorClass))
         {
-            $StatisticsProviderDecoratorClass = new $StatisticsProviderDecoratorClass($this->statisticsProvider);
-            if($StatisticsProviderDecoratorClass instanceof StatisticsProviderDecorator)
-            {
-                $this->statisticsProvider = $StatisticsProviderDecoratorClass;
+                $this->decorateStatisticsProvider($StatisticsProviderDecorator);
+                $this->prepareReformulatingParameterBinding($StatisticsProviderDecorator);
                 $this->customizeCurrentStatisticsProviderInitializing();
-            }
         }
     }
 
@@ -58,7 +93,8 @@ abstract class StatisticsBuilderBaseService
     public function getStatistics()  :array
     {
         $this->buildStatisticsProviders();
-        return $this->statisticsProvider?->getStatistics() ?? [];
+        $this->bindStatisticsProviderReformulatingParameters();
+        return $this->getStatisticsProvidersData();
     }
 
 }

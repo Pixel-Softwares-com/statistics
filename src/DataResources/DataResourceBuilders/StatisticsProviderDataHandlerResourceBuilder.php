@@ -2,15 +2,16 @@
 
 namespace Statistics\DataResources\DataResourceBuilders;
 
+use Exception;
 use ReflectionException;
 use Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\GlobalDataProcessor;
 use Statistics\DataResources\DataResource;
 use Statistics\DataResources\DataResourceBuilders\Traits\DataProcessorSettingMethods;
 use Statistics\DataResources\ExistsStatisticalDataHandlerDataResources\StatisticsProviderDataHandlerDataResource;
-use Statistics\Interfaces\NeedsStatisticsProvider;
+use Statistics\Interfaces\RequiresStatisticsProvider;
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 
-class StatisticsProviderDataHandlerResourceBuilder extends DataResourceBuilder implements NeedsStatisticsProvider
+class StatisticsProviderDataHandlerResourceBuilder extends DataResourceBuilder implements RequiresStatisticsProvider
 {
     use DataProcessorSettingMethods;
     protected string $dataProcessorClass = GlobalDataProcessor::class;
@@ -27,14 +28,34 @@ class StatisticsProviderDataHandlerResourceBuilder extends DataResourceBuilder i
         $this->statisticsProvider = $statisticsProvider;
         return $this;
     }
+
+    /**
+     * @throws Exception
+     */
     public function getStatisticsProvider(): StatisticsProviderDecorator
     {
         return $this->statisticsProvider;
     }
+
+    /**
+     * @throws Exception
+     */
+    protected function checkStatisticsProvider() : void
+    {
+        if(!$this->statisticsProvider)
+        {
+            throw new Exception("No StatisticsProvider Passed to StatisticsProviderDataHandlerResourceBuilder .. It requires to receive a StatisticsProvider instance to work !");
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
     protected function initDataResource(): DataResource
     {
         $dataResource = parent::initDataResource();
-        if($dataResource instanceof NeedsStatisticsProvider && $this->statisticsProvider)
+        $this->checkStatisticsProvider();
+        if($dataResource instanceof RequiresStatisticsProvider )
         {
             $dataResource->setStatisticsProvider( $this->getStatisticsProvider() );
         }
@@ -43,6 +64,7 @@ class StatisticsProviderDataHandlerResourceBuilder extends DataResourceBuilder i
 
     /**
      * @throws ReflectionException
+     * @throws Exception
      */
     public function getDataResource(): DataResource
     {
