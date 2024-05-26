@@ -44,12 +44,22 @@ abstract class StatisticsProviderDecorator
         }
         $this->model = $model;
     }
+
     /**
      * @param StatisticsProviderDecorator|null $statisticsProvider
      */
-    public function __construct( ?StatisticsProviderDecorator $statisticsProvider = null)
+    public function setStatisticsProvider(?StatisticsProviderDecorator $statisticsProvider = null): self
     {
         $this->statisticsProvider = $statisticsProvider;
+        return $this;
+    }
+
+    /**
+     * @return StatisticsProviderDecorator|null
+     */
+    public function getStatisticsProvider(): ?StatisticsProviderDecorator
+    {
+        return $this->statisticsProvider;
     }
 
     /**

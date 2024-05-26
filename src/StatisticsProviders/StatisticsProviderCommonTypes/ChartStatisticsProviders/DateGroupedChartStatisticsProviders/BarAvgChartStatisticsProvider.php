@@ -21,7 +21,6 @@ abstract class BarAvgChartStatisticsProvider extends StatisticsProviderDecorator
     public function __construct(?StatisticsProviderDecorator $statisticsProvider = null)
     {
         $this->setValidModel($this->getModelClass());
-        parent::__construct($statisticsProvider);
     }
 
     /**

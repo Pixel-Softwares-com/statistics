@@ -4,7 +4,7 @@ namespace Statistics\DataResources\ExistsStatisticalDataHandlerDataResources;
 
 use Exception;
 use Statistics\DataResources\DataResource;
-use Statistics\Interfaces\RequiresStatisticsProvider;
+use Statistics\Interfaces\DataResourceInterfaces\RequiresStatisticsProvider;
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 
 class StatisticsProviderDataHandlerDataResource extends DataResource implements RequiresStatisticsProvider

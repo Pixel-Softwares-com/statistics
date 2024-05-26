@@ -8,7 +8,7 @@ use Statistics\DataProcessors\DataProcessorTypes\DBFetchedDataProcessors\GlobalD
 use Statistics\DataResources\DataResource;
 use Statistics\DataResources\DataResourceBuilders\Traits\DataProcessorSettingMethods;
 use Statistics\DataResources\ExistsStatisticalDataHandlerDataResources\StatisticsProviderDataHandlerDataResource;
-use Statistics\Interfaces\RequiresStatisticsProvider;
+use Statistics\Interfaces\DataResourceInterfaces\RequiresStatisticsProvider;
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 
 class StatisticsProviderDataHandlerResourceBuilder extends DataResourceBuilder implements RequiresStatisticsProvider

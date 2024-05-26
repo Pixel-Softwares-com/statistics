@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics\Interfaces;
+namespace Statistics\Interfaces\DataResourceInterfaces;
 
 use Statistics\StatisticsProviders\StatisticsProviderDecorator;
 

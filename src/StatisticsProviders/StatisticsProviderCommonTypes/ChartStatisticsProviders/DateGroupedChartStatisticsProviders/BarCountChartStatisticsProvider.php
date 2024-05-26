@@ -25,7 +25,6 @@ abstract class BarCountChartStatisticsProvider extends StatisticsProviderDecorat
     public function __construct(?StatisticsProviderDecorator $statisticsProvider = null)
     {
         $this->setValidModel($this->getModelClass());
-        parent::__construct($statisticsProvider);
     }
 
     public function getStatisticsTypeName(): string
