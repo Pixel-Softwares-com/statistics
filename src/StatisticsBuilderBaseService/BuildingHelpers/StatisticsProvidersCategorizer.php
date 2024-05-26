@@ -115,7 +115,8 @@ class StatisticsProvidersCategorizer implements Arrayable
 
     public function toArray()
     {
-        return array_merge($this->normalPrioritedStatisticsProviders , $this->ReformatorStatisticsProviders , $this->ReforulatableStatisticsProviders);
+        return array_merge($this->ReforulatableStatisticsProviders ,  $this->ReformatorStatisticsProviders , $this->normalPrioritedStatisticsProviders);
+        return array_merge( $this->ReformatorStatisticsProviders , $this->ReforulatableStatisticsProviders , $this->normalPrioritedStatisticsProviders);
     }
 
     /**

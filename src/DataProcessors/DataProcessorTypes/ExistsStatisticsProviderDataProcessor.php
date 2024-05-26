@@ -16,12 +16,12 @@ class ExistsStatisticsProviderDataProcessor extends DataProcessor
 
     protected function setProcessedDataResultKey(array $dataToProcess): void
     {
-        $this->ProcessedDataResultKey =  array_key_first($dataToProcess);
+        $this->ProcessedDataResultKey =  array_key_first($dataToProcess) ?? "";
     }
     public function setDataToProcess(array $dataToProcess): self
     {
         $this->setProcessedDataResultKey($dataToProcess);
-        return parent::setDataToProcess( Arr::first( $dataToProcess ) );
+        return parent::setDataToProcess( Arr::first( $dataToProcess ) ?? [] );
     }
 
     public function getProcessedData(): array
