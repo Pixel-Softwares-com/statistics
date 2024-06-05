@@ -1325,24 +1325,24 @@
         },
         {
             "name": "muhammedaldrubi/data-resource-instructors",
-            "version": "1.0.3",
-            "version_normalized": "1.0.3.0",
+            "version": "1.0.6",
+            "version_normalized": "1.0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MuhammedALDRUBI/data-resource-instructors.git",
-                "reference": "59df0e299e213b1caec58669295276fefa67dd48"
+                "reference": "7cadc397a7bf6413f0238ecdde4135cfceabc608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MuhammedALDRUBI/data-resource-instructors/zipball/59df0e299e213b1caec58669295276fefa67dd48",
-                "reference": "59df0e299e213b1caec58669295276fefa67dd48",
+                "url": "https://api.github.com/repos/MuhammedALDRUBI/data-resource-instructors/zipball/7cadc397a7bf6413f0238ecdde4135cfceabc608",
+                "reference": "7cadc397a7bf6413f0238ecdde4135cfceabc608",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "^8.75",
                 "php": "^7.3|^8.0"
             },
-            "time": "2024-04-29T12:19:04+00:00",
+            "time": "2024-06-05T04:10:21+00:00",
             "type": "library",
             "extra": {
                 "laravel": {
@@ -1368,7 +1368,7 @@
             ],
             "description": "description",
             "support": {
-                "source": "https://github.com/MuhammedALDRUBI/data-resource-instructors/tree/1.0.3",
+                "source": "https://github.com/MuhammedALDRUBI/data-resource-instructors/tree/1.0.6",
                 "issues": "https://github.com/MuhammedALDRUBI/data-resource-instructors/issues"
             },
             "install-path": "../muhammedaldrubi/data-resource-instructors"
@@ -2415,23 +2415,23 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v7.0.7",
-            "version_normalized": "7.0.7.0",
+            "version": "v7.1.0",
+            "version_normalized": "7.1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "b08a4ad89e84b29cec285b7b1f781a7ae51cf4bc"
+                "reference": "843f2f7ac5e4c5bf0ec77daef23ca6d4d8922adc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/b08a4ad89e84b29cec285b7b1f781a7ae51cf4bc",
-                "reference": "b08a4ad89e84b29cec285b7b1f781a7ae51cf4bc",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/843f2f7ac5e4c5bf0ec77daef23ca6d4d8922adc",
+                "reference": "843f2f7ac5e4c5bf0ec77daef23ca6d4d8922adc",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2"
             },
-            "time": "2024-04-18T09:29:19+00:00",
+            "time": "2024-04-18T09:32:20+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2463,7 +2463,7 @@
             "description": "Converts CSS selectors to XPath expressions",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/css-selector/tree/v7.0.7"
+                "source": "https://github.com/symfony/css-selector/tree/v7.1.0"
             },
             "funding": [
                 {
