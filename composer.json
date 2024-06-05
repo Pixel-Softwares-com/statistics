@@ -12,7 +12,7 @@
   "require": {
     "php": "^7.3|^8.0",
     "laravel/framework": "^8.75",
-    "muhammedaldrubi/data-resource-instructors": "^1.0",
+    "muhammedaldrubi/data-resource-instructors": "^1.0.6",
     "muhammedaldrubi/custom-generators": "^1.0"
   },
   "autoload": {
