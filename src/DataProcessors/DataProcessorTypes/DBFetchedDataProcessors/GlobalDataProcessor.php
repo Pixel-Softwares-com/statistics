@@ -35,7 +35,7 @@ class GlobalDataProcessor extends DataProcessor
     }
     protected function sliceValidResultLabel(string $resultLabelToSlice , AggregationColumn $column ) : string
     {
-        return substr( $resultLabelToSlice, 0,    $column->getResultLabelMaxLength()  );
+        return substr( $resultLabelToSlice, 0,    $column->getResultLabelMaxLength() ) . "...";
     }
     protected function getColumnResultLabelAltValue(AggregationColumn $column , array $dataRow = []) : string
     {

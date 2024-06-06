@@ -2,10 +2,12 @@
 
 namespace Statistics\StatisticsProviders;
 
+use App\Services\Statistics\DashboardStatistics\DashboardStatisticsProviders\GeneralStatistics\SafeHoursIndexStatisticsProvider\SafeHoursIndexStatisticsProvider;
 use Statistics\DataProcessors\DataProcessor;
 use Statistics\DataResources\DataResource;
 use Statistics\DateProcessors\DateProcessor;
 use Statistics\Helpers\Helpers;
+use Statistics\Interfaces\StatisticsProvidersInterfaces\ReformulatesStatisticsProviderData;
 use Statistics\OperationsManagement\OperationTempHolders\OperationsTempHolder;
 use Statistics\StatisticsProviders\Traits\DataResourceInitMethods;
 use Statistics\StatisticsProviders\Traits\StatisticsProviderAbstractMethods;
@@ -126,6 +128,12 @@ abstract class StatisticsProviderDecorator
     protected function setStatistics()  : StatisticsProviderDecorator
     {
         $this->prepareDataResources();
+
+        /**
+         * Here ... the statistics presented by child class is still need to calculating , and it will be achieved by  getCalculatedStatistics method
+         */
+        $this->setCurrentStatisticsProviderData();
+
         if($this->statisticsProvider)
         {
             /**
@@ -134,10 +142,6 @@ abstract class StatisticsProviderDecorator
             $this->data = $this->statisticsProvider->getStatistics();
         }
 
-        /**
-         * Here ... the statistics presented by child class is still need to calculating , and it will be achieved by  getCalculatedStatistics method
-         */
-        $this->setCurrentStatisticsProviderData();
         $this->mergeCurrentProviderData();
         return $this;
     }

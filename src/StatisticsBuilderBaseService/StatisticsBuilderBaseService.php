@@ -41,7 +41,7 @@ abstract class StatisticsBuilderBaseService
     protected function bindStatisticsProviderReformulatingParameters() :void
     {
         $this->initStatisticsProviderReformulatingParametersBinder()
-             ->bind( $this->initStatisticsProvidersCategorizer() );
+            ->bind( $this->initStatisticsProvidersCategorizer() );
     }
     /**
      * @return void
@@ -74,12 +74,16 @@ abstract class StatisticsBuilderBaseService
     protected function getOrderedValidStatisticsProviders() : array
     {
         return $this->initStatisticsProvidersCategorizer()
-                     ->setStatisticsProvidersClass( $this->getStatisticsProviderTypeClasses() )
-                     ->getOrderedValidStatisticsProviders();
+            ->setStatisticsProvidersClass( $this->getStatisticsProviderTypeClasses() )
+            ->getOrderedValidStatisticsProviders();
+    }
+    protected function getDecoratableOrderedValidStatisticsProvidersArray() : array
+    {
+        return array_reverse( $this->getOrderedValidStatisticsProviders() );
     }
     protected function buildStatisticsProviders()  :void
     {
-        foreach ($this->getOrderedValidStatisticsProviders() as $provider )
+        foreach ($this->getDecoratableOrderedValidStatisticsProvidersArray() as $provider )
         {
             $this->setStatisticsProviderProps($provider); // setting default props
             $this->decorateStatisticsProvider($provider); // implementing decorator design pattern
