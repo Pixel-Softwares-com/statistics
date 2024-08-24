@@ -1,0 +1,40 @@
+{
+  "name": "muhammedaldrubi/statistics",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Pixel Company",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "php": "^7.3|^8.0",
+    "laravel/framework": "^8.75",
+    "muhammedaldrubi/data-resource-instructors": "^1.0.6",
+    "muhammedaldrubi/custom-generators": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Statistics\\": "src/"
+    }
+  },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "Statistics\\ServiceProviders\\StatisticsServiceProvider"
+        ]
+      }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:MuhammedALDRUBI/data-resource-instructors.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:MuhammedALDRUBI/custom-generators.git"
+    }
+  ]
+}
