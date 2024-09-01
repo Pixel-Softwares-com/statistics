@@ -20,7 +20,7 @@ class GlobalDataProcessor extends DataProcessor
 
     protected function processDynamicColumnLabel(string $columnLabel, array $dataRow = []) : string
     {
-        if(Str::contains(":" , $columnLabel))
+        if(Str::contains( $columnLabel , ":"))
         {
             foreach ($this->operationGroup->getSelectingNeededColumnFullNames() as $alias)
             {
