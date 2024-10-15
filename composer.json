@@ -1,5 +1,5 @@
 {
-  "name": "muhammedaldrubi/statistics",
+  "name": "pixel-softwares/statistics",
   "description": "description",
   "minimum-stability": "stable",
   "license": "proprietary",
@@ -12,8 +12,8 @@
   "require": {
     "php": "^7.3|^8.0",
     "laravel/framework": "^8.75",
-    "muhammedaldrubi/data-resource-instructors": "^1.0.6",
-    "muhammedaldrubi/custom-generators": "^1.0"
+    "pixel-softwares/data-resource-instructors": "^1.0.7",
+    "pixel-softwares/custom-generators": "^1.0.1"
   },
   "autoload": {
     "psr-4": {
@@ -30,11 +30,11 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:MuhammedALDRUBI/data-resource-instructors.git"
+      "url": "git@github.com:Pixel-Softwares-com/data-resource-instructors.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:MuhammedALDRUBI/custom-generators.git"
+      "url": "git@github.com:Pixel-Softwares-com/custom-generators.git"
     }
   ]
 }

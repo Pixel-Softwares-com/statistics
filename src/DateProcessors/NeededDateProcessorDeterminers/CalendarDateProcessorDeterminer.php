@@ -2,12 +2,8 @@
 
 namespace Statistics\DateProcessors\NeededDateProcessorDeterminers;
 
-use Statistics\DateProcessors\DateProcessor;
-use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\DayPeriodDateProcessor;
-use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\MonthPeriodDateProcessor;
-use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\QuarterPeriodDateProcessor;
-use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\RangePeriodDateProcessor;
-use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\YearPeriodDateProcessor;
+use Statistics\DateProcessors\DateProcessor; 
+use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\RangePeriodDateProcessor; 
 
 class CalendarDateProcessorDeterminer extends NeededDateProcessorDeterminer
 {
