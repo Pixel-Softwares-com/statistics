@@ -7,6 +7,7 @@ use Statistics\DateProcessors\DateProcessorTypes\DateGroupedChartDateProcessors\
 use Statistics\DateProcessors\DateProcessorTypes\DateGroupedChartDateProcessors\MonthPeriodDateProcessor;
 use Statistics\DateProcessors\DateProcessorTypes\DateGroupedChartDateProcessors\QuarterPeriodDateProcessor;
 use Statistics\DateProcessors\DateProcessorTypes\DateGroupedChartDateProcessors\RangePeriodDateProcessor;
+use Statistics\DateProcessors\DateProcessorTypes\DateGroupedChartDateProcessors\SemiAnnaulPeriodDateProcessor;
 use Statistics\DateProcessors\DateProcessorTypes\DateGroupedChartDateProcessors\YearPeriodDateProcessor;
 
 class DateGroupedDateProcessorDeterminer extends NeededDateProcessorDeterminer
@@ -42,7 +43,10 @@ class DateGroupedDateProcessorDeterminer extends NeededDateProcessorDeterminer
             default                                                 => $this->getYearPeriodDateProcessor()
         };
     }
-
+    protected function getSemiAnnualPeriodDateProcessor() : DateProcessor
+    {
+        return SemiAnnaulPeriodDateProcessor::Singleton($this::$request);
+    }
     public function getDateProcessorInstance(): DateProcessor | null
     {
         return (match($this->getPeriodTypeRequestValue())
@@ -51,6 +55,7 @@ class DateGroupedDateProcessorDeterminer extends NeededDateProcessorDeterminer
             'quarter'                 => $this->getQuarterPeriodDateProcessor(),
             'year'                    => $this->getYearPeriodDateProcessor(),
             'range'                   => $this->getRangePeriodDateProcessor(),
+            'semi-annual'             => $this->getSemiAnnualPeriodDateProcessor(),
             default                   => $this->getDayPeriodDateProcessor(),
         });
     }
