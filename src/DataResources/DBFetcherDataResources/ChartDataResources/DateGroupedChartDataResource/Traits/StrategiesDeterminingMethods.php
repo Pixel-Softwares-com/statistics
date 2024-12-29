@@ -36,6 +36,12 @@ trait StrategiesDeterminingMethods
         $queryCustomizerClass = $this->getDayAggregationOpStrategyClass();
         return $queryCustomizerClass::Singleton( $this->query , $this->currentOperationGroup, $this->currentOperation, $this->dateProcessor);
     }
+  protected function getSemiAnnulAggregationOpStrategy() : QueryCustomizationStrategy
+    {
+        /** @var QueryCustomizationStrategy $queryCustomizerClass  */
+        $queryCustomizerClass = $this->getSemiAnnulAggregationOpStrategyClass();
+        return $queryCustomizerClass::Singleton( $this->query , $this->currentOperationGroup, $this->currentOperation, $this->dateProcessor);
+    }
 
     protected function getRangeAggregationOpStrategy() : QueryCustomizationStrategy
     {
@@ -53,10 +59,11 @@ trait StrategiesDeterminingMethods
     {
         return (match(NeededDateProcessorDeterminer::getPeriodTypeRequestValue())
         {
-            'month'     => $this->getMonthAggregationOpStrategy(),
-            'quarter'   => $this->getQuarterAggregationOpStrategy(),
-            'year'      => $this->getYearAggregationOpStrategy(),
-            'range'     => $this->getRangeAggregationOpStrategy(),
+            'month'           => $this->getMonthAggregationOpStrategy(),
+            'quarter'         => $this->getQuarterAggregationOpStrategy(),
+            'year'            => $this->getYearAggregationOpStrategy(),
+            'range'           => $this->getRangeAggregationOpStrategy(),
+            'semi-annaul'     => $this->getSemiAnnulAggregationOpStrategy(),
             default     => $this->getDayAggregationOpStrategy()
         });
     }

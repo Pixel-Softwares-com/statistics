@@ -7,7 +7,7 @@ use Carbon\CarbonPeriod;
 
 class SemiAnnaulPeriodDateProcessor extends DateGroupedChartDateProcessor
 {
-    const YearLengthToSUB = 2;
+    const YearLengthToSUB = 3;
     public function getStartingDateInstance(): Carbon
     {
         $endingDate = $this->endingDate ?? $this->getEndingDateInstance();
@@ -16,7 +16,7 @@ class SemiAnnaulPeriodDateProcessor extends DateGroupedChartDateProcessor
 
     public function getEndingDateInstance(): Carbon
     {
-        return Carbon::parseOrNow($this->getStartingDateRequestValue())->endOfYear();
+        return Carbon::parseOrNow($this->getEndingDateRequestValue())->endOfYear();
     }
 
     protected function getPeriodSingleDateFormat(Carbon $singleDate): string

@@ -6,6 +6,7 @@ use Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroup
 use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\DateGroupedChartCountQueryCustomizers\DayCountQueryCustomizer;
 use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\DateGroupedChartCountQueryCustomizers\MonthCountQueryCustomizer;
 use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\DateGroupedChartCountQueryCustomizers\QuarterCountQueryCustomizer;
+use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\DateGroupedChartCountQueryCustomizers\SemiAnnualCountQueryCustomizer;
 use Statistics\QueryCustomizationStrategies\DateGroupedChartQueryCustomizers\DateGroupedChartCountQueryCustomizers\YearCountQueryCustomizer;
 
 class DateGroupedCountChartDataResource extends DateGroupedChartDataResource
@@ -30,4 +31,9 @@ class DateGroupedCountChartDataResource extends DateGroupedChartDataResource
     {
         return YearCountQueryCustomizer::class;
     }
+    protected function getSemiAnnulAggregationOpStrategyClass(): string
+    {
+        return SemiAnnualCountQueryCustomizer::class;
+    }
+
 }
