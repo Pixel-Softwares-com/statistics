@@ -7,28 +7,39 @@ use Carbon\CarbonPeriod;
 
 class SemiAnnaulPeriodDateProcessor extends DateGroupedChartDateProcessor
 {
-    const YearLengthToSUB = 3;
+    const SemiAnnualLengthToSUB = 8; // Adjust for how many semi-annual periods you want to calculate (default: last 4 years)
+
+    /**
+     * Get the starting date for the semi-annual period calculation.
+     */
     public function getStartingDateInstance(): Carbon
     {
         $endingDate = $this->endingDate ?? $this->getEndingDateInstance();
-        return Carbon::make($endingDate)->subYears(static::YearLengthToSUB)->startOfYear();
+        return Carbon::make($endingDate)->subMonths(static::SemiAnnualLengthToSUB * 6)->startOfMonth();
     }
 
+    /**
+     * Get the ending date for the semi-annual period calculation.
+     */
     public function getEndingDateInstance(): Carbon
     {
-        return Carbon::parseOrNow($this->getEndingDateRequestValue())->endOfYear();
+        return Carbon::parseOrNow($this->getStartingDateRequestValue())->endOfMonth();
     }
 
+    /**
+     * Format a single date as a semi-annual period (e.g., "2024-H1" or "2024-H2").
+     */
     protected function getPeriodSingleDateFormat(Carbon $singleDate): string
     {
-        $month = $singleDate->month;
-        $half = ($month <= 6) ? 'H1' : 'H2'; // H1 for first half, H2 for second half
-        return $singleDate->format("Y") . " " . $half;
+        $semiAnnual = ceil($singleDate->month / 6); // Determine if the date is in H1 or H2
+        return $singleDate->year . "-H" . $semiAnnual;
     }
 
+    /**
+     * Define the interval between periods as 6 months.
+     */
     protected function getPeriodInterval(): CarbonInterval
     {
-        return CarbonInterval::months(6); // Interval for 6 months
+        return CarbonInterval::make("6 months");
     }
-
 }
