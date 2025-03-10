@@ -8,6 +8,7 @@ use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\MonthPerio
 use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\QuarterPeriodDateProcessor;
 use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\RangePeriodDateProcessor;
 use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\YearPeriodDateProcessor;
+use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\SemiAnnaulPeriodDateProcessor;
 
 class GlobalDateProcessorDeterminer extends NeededDateProcessorDeterminer
 {
@@ -16,11 +17,12 @@ class GlobalDateProcessorDeterminer extends NeededDateProcessorDeterminer
     {
         return (match($this->getPeriodTypeRequestValue())
         {
-            'day'       => DayPeriodDateProcessor::Singleton($this::$request),
-            'month'     => MonthPeriodDateProcessor::Singleton($this::$request),
-            'quarter'   => QuarterPeriodDateProcessor::Singleton($this::$request),
-            'year'      => YearPeriodDateProcessor::Singleton($this::$request),
-            'range'     => RangePeriodDateProcessor::Singleton($this::$request),
+            'day'             => DayPeriodDateProcessor::Singleton($this::$request),
+            'month'           => MonthPeriodDateProcessor::Singleton($this::$request),
+            'quarter'         => QuarterPeriodDateProcessor::Singleton($this::$request),
+            'year'            => YearPeriodDateProcessor::Singleton($this::$request),
+            'range'           => RangePeriodDateProcessor::Singleton($this::$request),
+            'semi-annual'     => SemiAnnaulPeriodDateProcessor::Singleton($this::$request),
             default     => null, /** for all time date filter (we don't want to set date filter) */
         });
     }
