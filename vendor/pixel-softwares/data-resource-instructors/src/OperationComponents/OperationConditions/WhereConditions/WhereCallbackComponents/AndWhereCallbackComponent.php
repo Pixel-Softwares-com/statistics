@@ -2,7 +2,7 @@
 
 namespace DataResourceInstructors\OperationComponents\OperationConditions\WhereConditions\WhereCallbackComponents;
 
-class AndWhereCallbackComponent
+class AndWhereCallbackComponent extends WhereCallbackComponent
 {
     public function getConditionGroupType() : string
     {

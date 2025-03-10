@@ -19,9 +19,10 @@ abstract class WhereCallbackComponent
 
     abstract public function getConditionGroupType() : string;
 
-    public function setCallback(callable $callback) : void
+    public function setCallback(callable $callback) : self
     {
         $this->callback = $callback;
+        return $this;
     }
 
     public function getCallback() : string
