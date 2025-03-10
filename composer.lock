@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9f9f8c87b2d2972cb0f054c5d9e9317",
+    "content-hash": "2b7991bae6b52870f1e4d79eb697e353",
     "packages": [
         {
             "name": "brick/math",
@@ -1242,93 +1242,6 @@
             "time": "2024-04-12T20:52:51+00:00"
         },
         {
-            "name": "muhammedaldrubi/custom-generators",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MuhammedALDRUBI/custom-generators.git",
-                "reference": "e233d6ca6e9b89a9b443b9263916bfcfd7e2be3f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MuhammedALDRUBI/custom-generators/zipball/e233d6ca6e9b89a9b443b9263916bfcfd7e2be3f",
-                "reference": "e233d6ca6e9b89a9b443b9263916bfcfd7e2be3f",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "^8.75",
-                "php": "^7.3|^8.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "CustomGenerators\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Pixel Company",
-                    "email": "email@example.com"
-                }
-            ],
-            "description": "description",
-            "support": {
-                "source": "https://github.com/MuhammedALDRUBI/custom-generators/tree/1.0.0",
-                "issues": "https://github.com/MuhammedALDRUBI/custom-generators/issues"
-            },
-            "time": "2023-12-02T17:20:55+00:00"
-        },
-        {
-            "name": "muhammedaldrubi/data-resource-instructors",
-            "version": "1.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MuhammedALDRUBI/data-resource-instructors.git",
-                "reference": "7cadc397a7bf6413f0238ecdde4135cfceabc608"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MuhammedALDRUBI/data-resource-instructors/zipball/7cadc397a7bf6413f0238ecdde4135cfceabc608",
-                "reference": "7cadc397a7bf6413f0238ecdde4135cfceabc608",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "^8.75",
-                "php": "^7.3|^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "DataResourceInstructors\\ServiceProviders\\DataResourceInstructorsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DataResourceInstructors\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Pixel Company",
-                    "email": "email@example.com"
-                }
-            ],
-            "description": "description",
-            "support": {
-                "source": "https://github.com/MuhammedALDRUBI/data-resource-instructors/tree/1.0.6",
-                "issues": "https://github.com/MuhammedALDRUBI/data-resource-instructors/issues"
-            },
-            "time": "2024-06-05T04:10:21+00:00"
-        },
-        {
             "name": "nesbot/carbon",
             "version": "2.72.3",
             "source": {
@@ -1722,6 +1635,93 @@
                 }
             ],
             "time": "2023-11-12T21:59:55+00:00"
+        },
+        {
+            "name": "pixel-softwares/custom-generators",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Pixel-Softwares-com/custom-generators.git",
+                "reference": "419c61dada5ba22469841ff59a523a7afeff6238"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Pixel-Softwares-com/custom-generators/zipball/419c61dada5ba22469841ff59a523a7afeff6238",
+                "reference": "419c61dada5ba22469841ff59a523a7afeff6238",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.75",
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CustomGenerators\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Pixel Company",
+                    "email": "email@example.com"
+                }
+            ],
+            "description": "description",
+            "support": {
+                "source": "https://github.com/Pixel-Softwares-com/custom-generators/tree/1.0.1",
+                "issues": "https://github.com/Pixel-Softwares-com/custom-generators/issues"
+            },
+            "time": "2024-10-15T08:55:59+00:00"
+        },
+        {
+            "name": "pixel-softwares/data-resource-instructors",
+            "version": "1.0.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Pixel-Softwares-com/data-resource-instructors.git",
+                "reference": "8a073346c096e3ba1c7bc154f6162fb26eee687a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Pixel-Softwares-com/data-resource-instructors/zipball/8a073346c096e3ba1c7bc154f6162fb26eee687a",
+                "reference": "8a073346c096e3ba1c7bc154f6162fb26eee687a",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.75",
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "DataResourceInstructors\\ServiceProviders\\DataResourceInstructorsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DataResourceInstructors\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Pixel Company",
+                    "email": "email@example.com"
+                }
+            ],
+            "description": "description",
+            "support": {
+                "source": "https://github.com/Pixel-Softwares-com/data-resource-instructors/tree/1.0.13",
+                "issues": "https://github.com/Pixel-Softwares-com/data-resource-instructors/issues"
+            },
+            "time": "2025-03-10T04:56:14+00:00"
         },
         {
             "name": "psr/clock",

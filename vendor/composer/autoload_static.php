@@ -347,11 +347,11 @@ class ComposerStaticInitb9f9f8c87b2d2972cb0f054c5d9e9317
         ),
         'DataResourceInstructors\\' => 
         array (
-            0 => __DIR__ . '/..' . '/muhammedaldrubi/data-resource-instructors/src',
+            0 => __DIR__ . '/..' . '/pixel-softwares/data-resource-instructors/src',
         ),
         'CustomGenerators\\' => 
         array (
-            0 => __DIR__ . '/..' . '/muhammedaldrubi/custom-generators/src',
+            0 => __DIR__ . '/..' . '/pixel-softwares/custom-generators/src',
         ),
         'Cron\\' => 
         array (

@@ -6,6 +6,7 @@ use DataResourceInstructors\OperationComponents\OperationConditions\WhereConditi
 use Exception;
 use Statistics\DataResources\DBFetcherDataResources\DBFetcherDataResource;
 use DataResourceInstructors\OperationComponents\OperationConditions\AggregationConditions\HavingCondition;
+use DataResourceInstructors\OperationComponents\OperationConditions\WhereConditions\WhereCallbackComponents\WhereCallbackComponent;
 use DataResourceInstructors\OperationComponents\OperationConditions\WhereConditions\WhereConditionGroups\WhereConditionGroup;
 use DataResourceInstructors\OperationComponents\OperationConditions\WhereConditions\WhereConditionTypes\WhereCondition;
 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
@@ -74,6 +75,33 @@ trait StatisticsProcessingMethods
         }
     }
 
+    protected function isWhereCallbackCallableOnDataResourceType(WhereCallbackComponent $whereCallabckComponent) :bool
+    {
+        return !array_key_exists(DBFetcherDataResource::class , $whereCallabckComponent->getExceptedDataResourceTypes());
+    }
+
+    protected function setQueryWhereCallabcks() : void
+    {
+        foreach ($this->currentOperationGroup->getWhereCallbackComponents() as $whereCallabckComponent)
+        {
+            /**
+             * @var WhereCallbackComponent $whereCallabckComponent
+             */
+            if(!$this->isWhereCallbackCallableOnDataResourceType($whereCallabckComponent))
+            {
+                continue;
+            }
+
+            $this->query->where(
+                                  $whereCallabckComponent->getCallback() ,
+                                  null ,
+                                  null ,
+                                  $whereCallabckComponent->getConditionGroupType() 
+                                );
+      
+        }
+    }
+
     protected function setQueryWhereMethods() : void
     {
         /**
@@ -116,6 +144,7 @@ trait StatisticsProcessingMethods
     {
         $this->setQueryWhereConditions();
         $this->setQueryWhereMethods();
+        $this->setQueryWhereCallabcks();
     }
 
     protected function setRelationshipWhereMethods(RelationshipLoader $relationship , JoinClause $joinQuery): void
