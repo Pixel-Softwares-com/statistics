@@ -21,7 +21,7 @@ class GroupingByColumn extends Column
     public function __construct(string $columnName , string $ResultProcessingColumnAlias )
     {
         parent::__construct($columnName);
-        $this->ResultProcessingColumnAlias = $ResultProcessingColumnAlias;
+        $this->setResultProcessingColumnAlias($ResultProcessingColumnAlias);
     }
 
     /**

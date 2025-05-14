@@ -37,6 +37,7 @@ trait StatisticsProcessingMethods
             $this->query->orderBy($column , $orderingStyle);
         }
     }
+    
     protected function isColumnInGroupedBy(string $columnAlias) : bool
     {
         return in_array( $columnAlias , $this->currentOperationGroup->getGroupedByColumnAliases() );
@@ -86,6 +87,8 @@ trait StatisticsProcessingMethods
         {
             /**
              * @var WhereCallbackComponent $whereCallabckComponent
+             * 
+             * filtering objects here to avoid reloop on  the array twice 
              */
             if(!$this->isWhereCallbackCallableOnDataResourceType($whereCallabckComponent))
             {
@@ -161,6 +164,7 @@ trait StatisticsProcessingMethods
             }
         }
     }
+
     protected function setRelationshipWhereConditions(RelationshipLoader $relationship , JoinClause $joinQuery): void
     {
         foreach ($relationship->getWhereConditionGroups() as $conditionGroup)
