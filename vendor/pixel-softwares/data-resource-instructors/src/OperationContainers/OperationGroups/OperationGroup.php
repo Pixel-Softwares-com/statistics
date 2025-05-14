@@ -114,14 +114,8 @@ class OperationGroup extends OperationContainer
 
     protected function setDateColumnTableNameConveniently(Column $column ,  ?RelationshipLoader $relationshipLoader = null ) : void
     {
-        if($relationshipLoader)
-        {
-            $tableName = $relationshipLoader->getTableName();
-        }else
-        {
-            $tableName = $this->tableName;
-        }
-
+        $tableName = !$relationshipLoader ? $this->tableName : $relationshipLoader->getTableName() ;
+        
         $column->setTableName($tableName);
     }
 

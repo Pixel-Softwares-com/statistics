@@ -154,6 +154,7 @@ abstract class OperationContainer
             $this->columnsForProcessingRequiredValues[] = $column;
         }
     }
+    
     protected function ColumnSelectingAndGroupingFunc(GroupingByColumn $column) : void
     {
         $column->setTableName($this->tableName);
@@ -220,12 +221,19 @@ abstract class OperationContainer
         {
             $orderingStyleConstant = OrderingTypes::ASC_ORDERING;
         }
+        
         return $orderingStyleConstant;
     }
+
+    protected function getOrderingColumnAlias(Column $column) : string
+    {
+        return $column->getResultProcessingColumnAlias() ?? $column->getColumnFullName();
+    }
+
     public function orderBy(Column $column , string $orderingStyleConstant = "") : OperationContainer
     {
         $column->setTableName($this->tableName);
-        $this->orderingColumns[$column->getColumnFullName()] = $this->processOrderingStyle($orderingStyleConstant);
+        $this->orderingColumns[$this->getOrderingColumnAlias($column)] = $this->processOrderingStyle($orderingStyleConstant);
         return $this;
     }
 

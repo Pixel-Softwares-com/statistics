@@ -6,7 +6,7 @@ class Column
 {
     protected string $columnName;
     protected string $tableName = "";
-    protected string $ResultProcessingColumnAlias = "";
+    protected ?string $ResultProcessingColumnAlias = null;
 
     public function __construct(string $columnName)
     {
@@ -17,12 +17,20 @@ class Column
         return new static(...$params);
     }
 
+    protected function generateColumnDefaultAlias() : string
+    {
+        return $this->columnName . rand(0 , 1000000) ;
+    }
+
     public function setResultProcessingColumnDefaultAlias() : Column
     {
-        if(!$this->ResultProcessingColumnAlias)
+        if(!$this->getResultProcessingColumnAlias())
         {
-            $this->ResultProcessingColumnAlias = $this->columnName . rand(0 , 1000000) ;
+            $alias = $this->generateColumnDefaultAlias();
+
+            $this->setResultProcessingColumnAlias($alias);
         }
+
         return $this;
     }
     /**
@@ -59,7 +67,7 @@ class Column
     /**
      * @return string
      */
-    public function getResultProcessingColumnAlias(): string
+    public function getResultProcessingColumnAlias(): ?string
     {
         return $this->ResultProcessingColumnAlias;
     }

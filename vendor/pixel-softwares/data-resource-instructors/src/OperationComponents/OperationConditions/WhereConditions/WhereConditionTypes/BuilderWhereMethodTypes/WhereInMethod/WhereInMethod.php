@@ -67,7 +67,7 @@ abstract class WhereInMethod extends WhereMethod
     public function getMethodParams(): array
     {
         return [
-            $this->getConditionColumn()->getColumnName() ,
+            $this->getConditionColumn()->getColumnFullName() ,
             $this->getConditionColumnValue() ,
             $this->getConditionType() ,
             $this->columnValueNotInArray

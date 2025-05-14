@@ -36,7 +36,7 @@ abstract class WhereColumnMethod extends WhereMethod
     public function getMethodParams(): array
     {
         return [
-            $this->getConditionColumn()->getColumnName() ,
+            $this->getConditionColumn()->getColumnFullName() ,
             $this->getOperator() ,
             $this->getConditionColumnValue() ,
             $this->getConditionType() 
