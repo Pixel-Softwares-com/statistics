@@ -2,12 +2,10 @@
 
 namespace Statistics\DataProcessors\DataProcessingFuncs\RequiredValuesValidators;
 
-use Statistics\DataProcessors\DataProcessingFuncs\RequiredValuesValidators\Traits\Getters;
 use Statistics\DataProcessors\DataProcessingFuncs\ValueTrees\ValueTree;
 
 abstract class RequiredValuesValidator
 {
-    use Getters;
     protected array $dataToCheck = [];
     protected array $missedDataRows = [];
     protected ?ValueTree $valueTree = null;
@@ -44,6 +42,12 @@ abstract class RequiredValuesValidator
         return $this;
     }
 
+    
+    public function getMissedDataRows() : array
+    {
+        return $this->missedDataRows;
+    }
+
     /**
      * @param array $requiredValues
      * @return $this
@@ -51,6 +55,7 @@ abstract class RequiredValuesValidator
     protected function setValueTree(array $requiredValues): RequiredValuesValidator
     {
         $this->valueTree = $this->getValueTreeInstance($requiredValues);
+        
         return $this;
     }
     /**

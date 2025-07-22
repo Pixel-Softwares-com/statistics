@@ -4,7 +4,6 @@ namespace Statistics\DataResources\DataResourceBuilders\Traits;
 
 use ReflectionException;
 use Statistics\DateProcessors\DateProcessor;
-use Statistics\DateProcessors\NeededDateProcessorDeterminers\DateGroupedDateProcessorDeterminer;
 use Statistics\DateProcessors\NeededDateProcessorDeterminers\NeededDateProcessorDeterminer;
 
 trait DateProcessorSettingMethods

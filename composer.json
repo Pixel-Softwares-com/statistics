@@ -10,10 +10,10 @@
     }
   ],
   "require": {
-    "php": "^7.3|^8.0",
-    "laravel/framework": "^8.75",
-    "pixel-softwares/data-resource-instructors": "^1.0.16",
-    "pixel-softwares/custom-generators": "^1.0.1"
+    "php": "^8.2",
+    "laravel/framework": "^12.0",
+    "pixel-softwares/data-resource-instructors": "^2.0.0",
+    "pixel-softwares/custom-generators": "^2.0.0"
   },
   "autoload": {
     "psr-4": {

@@ -24,22 +24,33 @@ class GlobalDataProcessor extends DataProcessor
         {
             foreach ($this->operationGroup->getSelectingNeededColumnFullNames() as $alias)
             {
-                $columnLabel = Str::replace( [":" . $alias , "_"] , [$dataRow[$alias] ?? "" , " "] , $columnLabel );
+                $columnLabel = Str::replace(
+                                             [":" . $alias , "_"] ,
+                                             [$dataRow[$alias] ?? "" , " "] ,
+                                             $columnLabel 
+                                           );
             }
         }
         return $columnLabel;
     }
+
     protected function isResultLabelOverTheCharLimit(AggregationColumn $column , string $columnProcessedLabel) : bool
     {
         return strlen($columnProcessedLabel) > $column->getResultLabelMaxLength();
     }
+
     protected function sliceValidResultLabel(string $resultLabelToSlice , AggregationColumn $column ) : string
     {
         return substr( $resultLabelToSlice, 0,    $column->getResultLabelMaxLength() ) . "...";
     }
+
     protected function getColumnResultLabelAltValue(AggregationColumn $column , array $dataRow = []) : string
     {
-        $columnAltLabel = $this->processDynamicColumnLabel( $column->getAlternativeShortResultLabel() , $dataRow );
+        $columnAltLabel = $this->processDynamicColumnLabel( 
+                                                            $column->getAlternativeShortResultLabel() ,
+                                                            $dataRow 
+                                                          );
+
         if($this->isResultLabelOverTheCharLimit($column , $columnAltLabel) )
         {
             return $this->sliceValidResultLabel($columnAltLabel , $column );
@@ -55,19 +66,26 @@ class GlobalDataProcessor extends DataProcessor
         }
         return $this->processDynamicColumnLabel($label, $dataRow);
     }
+
     protected function processAggregationOperationColumnLabel(AggregationColumn $column , array $dataRow = []) : string
     {
         $columnLabel = $this->processColumnPrimaryResultLabel($column , $dataRow);
-        if($column->isCharLengthLimited() && $this->isResultLabelOverTheCharLimit($column , $columnLabel) )
+        if(
+            $column->isCharLengthLimited() 
+            &&
+            $this->isResultLabelOverTheCharLimit($column , $columnLabel) 
+          )
         {
             return $this->getColumnResultLabelAltValue($column , $dataRow);
         }
         return $columnLabel;
     }
+
     protected function getAggregatingValue(string $aggregationColumnAlias ,array $dataRow = [] ) : int
     {
         return $dataRow[$aggregationColumnAlias] ?? 0;
     }
+
     protected function processAggregationOperationColumnLabels(AggregationColumn $column ) : void
     {
         $columnAlias = $column->getResultProcessingColumnAlias();
@@ -97,13 +115,18 @@ class GlobalDataProcessor extends DataProcessor
     }
     protected function initRequiredValuesValidator() : RequiredValuesValidator
     {
-        $this->columnRequiredValuesValidator = new ColumnRequiredValuesValidator($this->dataToProcess , $this->operationGroup->getColumnsForProcessingRequiredValues());
+        $this->columnRequiredValuesValidator 
+        =
+        new ColumnRequiredValuesValidator($this->dataToProcess , $this->operationGroup->getColumnsForProcessingRequiredValues());
+
         return $this->columnRequiredValuesValidator;
     }
+
     protected function processMissedData() : void
     {
         $this->dataToProcess = array_merge($this->dataToProcess , $this->initRequiredValuesValidator()->getMissedDataRows() );
     }
+    
     protected function prepareDataToProcess() : void
     {
         $this->processMissedData();

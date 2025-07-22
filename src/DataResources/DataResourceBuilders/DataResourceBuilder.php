@@ -27,6 +27,7 @@ abstract class DataResourceBuilder
     protected function InheritanceOfClassOrFail(string $childClass , string $abstractClass) : void
     {
         $reflection = new ReflectionClass($childClass);
+        
         if(!$reflection->isSubclassOf($abstractClass))
         {
             $exceptionClass = Helpers::getExceptionClass();
@@ -39,7 +40,10 @@ abstract class DataResourceBuilder
      */
     protected function checkDateProcessorDeterminerClassType(string $dateProcessorDeterminerClass) : void
     {
-        $this->InheritanceOfClassOrFail($dateProcessorDeterminerClass , NeededDateProcessorDeterminer::class);
+        $this->InheritanceOfClassOrFail(
+                                         $dateProcessorDeterminerClass ,
+                                         NeededDateProcessorDeterminer::class
+                                       );
     }
     /**
      * @param string $dateProcessorDeterminerClass

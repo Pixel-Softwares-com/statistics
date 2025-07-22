@@ -13,6 +13,7 @@ class ColumnValueTreeNode extends ValueTreeNode
     protected function getChildNodePropArray(ColumnValueTreeNode $node) : array
     {
         $nodeProps = $node->toArray();
+        
         foreach ($nodeProps as $index => $row)
         {
             $nodeProps[$index] = array_merge($this->getCurrentNodeProps() , $row);

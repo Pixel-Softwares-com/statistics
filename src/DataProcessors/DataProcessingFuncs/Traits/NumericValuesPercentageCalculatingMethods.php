@@ -19,9 +19,14 @@ trait NumericValuesPercentageCalculatingMethods
 
     protected function getProcessedKeyPercentageValue(int $aggregatingValue) : float
     {
-        if($this->totalOfNumericValue <= 0){$this->totalOfNumericValue = 1;}
+        if($this->totalOfNumericValue <= 0)
+        {
+            $this->totalOfNumericValue = 1;
+        }
+        
         return  round( floatVal($aggregatingValue * 100 / $this->totalOfNumericValue ) , 2  );
     }
+
     protected function setProcessedKeysPercentageValue() : void
     {
         foreach ($this->processedData as $key => $value)

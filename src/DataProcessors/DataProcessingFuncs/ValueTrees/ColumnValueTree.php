@@ -24,6 +24,10 @@ class ColumnValueTree extends ValueTree
         }
         return $clonedNodes;
     }
+
+    /**
+     * @todo why this method is empty
+     */
     protected function setParentChildNodes(ColumnValueTreeNode $parentNode  ) : void
     {
 

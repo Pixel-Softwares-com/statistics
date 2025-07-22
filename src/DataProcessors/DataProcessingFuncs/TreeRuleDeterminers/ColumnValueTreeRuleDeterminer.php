@@ -8,6 +8,7 @@ class ColumnValueTreeRuleDeterminer extends TreeRuleDeterminer
     {
         return 20;
     }
+
     protected function setValidValueRow(string $columnAlias , array $values) : void
     {
         $length = $this->getEachLevelAllowedElementLength();
@@ -15,6 +16,7 @@ class ColumnValueTreeRuleDeterminer extends TreeRuleDeterminer
 
         $this->treeValues[$columnAlias] = array_slice( $values, 0 , $length);
     }
+
     protected function setValidValueRows() : void
     {
         foreach ($this->treeValues as $columnAlias => $values)
@@ -22,15 +24,20 @@ class ColumnValueTreeRuleDeterminer extends TreeRuleDeterminer
             $this->setValidValueRow($columnAlias , $values);
         }
     }
+
     protected function setValuesAssocArray() : void
     {
         $assocArray = [];
         foreach ($this->treeValues as $column)
         {
-            $assocArray[$column->getResultProcessingColumnAlias()] = $column->getProcessingRequiredValues();
+            $assocArray[$column->getResultProcessingColumnAlias()] 
+            =
+            $column->getProcessingRequiredValues();
         }
+
         $this->treeValues = $assocArray;
     }
+
     public function setValidValuesArray(): void
     {
         $this->setValuesAssocArray();
@@ -42,10 +49,12 @@ class ColumnValueTreeRuleDeterminer extends TreeRuleDeterminer
     {
         return count($this->treeValues);
     }
+    
     public function setOldTreeDepth() : void
     {
         $this->oldTreeDepth =  $this->getCurrentTreeDepth();
     }
+
     public function setNewTreeDepth() : void
     {
         $this->newTreeDepth =  $this->getCurrentTreeDepth();
@@ -60,6 +69,7 @@ class ColumnValueTreeRuleDeterminer extends TreeRuleDeterminer
         }
         return $keyValueArray;
     }
+
     public function getCurrentTreeElementCount() : int
     {
         $AllValues = $this->getValuesIndexedArray();
@@ -73,6 +83,9 @@ class ColumnValueTreeRuleDeterminer extends TreeRuleDeterminer
 
             for($i=0;$i< $valuesCount - $CalculationIncludedArrayIndex ;$i++)
             {
+                /**
+                 * @todo to check later ... why  count($AllValues[$i]); not count($values);
+                 */
                 $ValueArraysCountCrossing *= count($AllValues[$i]);
             }
             $CalculationIncludedArrayIndex++;

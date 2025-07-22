@@ -3,7 +3,6 @@
 namespace DataResourceInstructors\Helpers;
 
 use Exception;
-use Illuminate\Support\MessageBag;
 
 class Helpers
 {

@@ -1,6 +1,7 @@
 <?php
 
 namespace CustomGenerators\GeneratorTypes;
+
 use Iterator;
 
 abstract class Generator implements Iterator

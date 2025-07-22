@@ -63,7 +63,9 @@ class DateGroupedChartDataProcessor extends DataProcessor
         $values = [];
         /** @var AggregationColumn $column */
         foreach ($this->aggregatedColumns as $column) {
-            $values[$column->getResultLabel()] = $this->getAggregatedColumnValue($dataRow, $column);
+            $values[$column->getResultLabel()] 
+            =
+            $this->getAggregatedColumnValue($dataRow, $column);
         }
 
         if (count($this->aggregatedColumns) == 1) {
@@ -76,17 +78,23 @@ class DateGroupedChartDataProcessor extends DataProcessor
     {
         $this->processedData[$dateColumnValue] = $value;
     }
+    
     protected function getDataRowDateColumnValue(array $dataRow = []) : ?string
     {
         return $dataRow[ $this->dateColumn->getResultProcessingColumnAlias() ] ?? null;
     }
+
     protected function processDataRow(array $dataRow = []): void
     {
         if ($dateColumnValue = $this->getDataRowDateColumnValue($dataRow))
         {
-            $this->setDateColumnFinalValue( $dateColumnValue ,   $this->getDateGroupedAggregatedValues($dataRow));
+            $this->setDateColumnFinalValue( 
+                                            $dateColumnValue ,
+                                            $this->getDateGroupedAggregatedValues($dataRow)
+                                          );
         }
     }
+
     protected function overrideWithDataKeyValuePairs() : void
     {
         foreach ($this->dataToProcess as $row)

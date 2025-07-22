@@ -13,9 +13,14 @@ trait NeedsOperationInstructorsMethods
     {
         /** @var DataResource $dataResourceClass  */
         $dataResourceClass = $this->dataResourceClass;
-        $defaultOperationTempHolderClass = $dataResourceClass::getAcceptedOperationTempHolderClass();
+
+        $defaultOperationTempHolderClass 
+        =
+        $dataResourceClass::getAcceptedOperationTempHolderClass();
+
         return new $defaultOperationTempHolderClass();
     }
+
     protected function prepareOperationsTempHolder() : void
     {
         if(!$this->getOperationsTempHolder())
@@ -23,10 +28,12 @@ trait NeedsOperationInstructorsMethods
             $this->setOperationsTempHolder( $this->getDefaultOperationTempHolder() );
         }
     }
+
     public function setOperationsTempHolder(DataResourceOperationsTempHolder $operationsTempHolder): void
     {
         $this->operationsTempHolder = $operationsTempHolder;
     }
+    
     public function getOperationsTempHolder(): DataResourceOperationsTempHolder
     {
         return $this->operationsTempHolder;
