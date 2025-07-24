@@ -19,7 +19,11 @@ class CountingAddedInDateRangeOperationFactory extends CommonOperationFactory
     protected function processAggregationResultLabel() : string
     {
         $AggregationResultLabel = $this->getAggregationResultLabel() ;
-        if(!$AggregationResultLabel){$AggregationResultLabel = "Added " . $this->getTableTitleConveniently() ;}
+        if(!$AggregationResultLabel)
+        {
+            $AggregationResultLabel = "Added " . $this->getTableTitleConveniently() ;
+        }
+
         return $AggregationResultLabel;
     }
 
@@ -30,15 +34,17 @@ class CountingAddedInDateRangeOperationFactory extends CommonOperationFactory
     protected function initCountedColumn() : AggregationColumn
     {
         $AggregationResultLabel = $this->processAggregationResultLabel();
-        return  AggregationColumn::create($this->getCountedKeyNameConveniently())->setResultLabel( $AggregationResultLabel );
+        return AggregationColumn::create($this->getCountedKeyNameConveniently())
+                                   ->setResultLabel( $AggregationResultLabel );
     }
     /**
      * @throws Exception
      */
     protected function prepareCountingOperation() : AggregationOperation
     {
-        return  CountOperation::create()->addAggregationColumn( $this->initCountedColumn() );
+        return CountOperation::create()->addAggregationColumn( $this->initCountedColumn() );
     }
+    
     /**
      * @param string $resultKey
      * @return OperationGroup

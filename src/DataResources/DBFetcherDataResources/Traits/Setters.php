@@ -15,7 +15,11 @@ trait Setters
 
     public function setRequest( ?Request $request = null) : DBFetcherDataResource
     {
-        if(!$request){$request = request();}
+        if(!$request)
+        {
+            $request = request();
+        }
+        
         $this->request = $request;
         return $this;
     }

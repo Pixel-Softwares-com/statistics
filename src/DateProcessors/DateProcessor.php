@@ -22,12 +22,14 @@ abstract class DateProcessor
     {
         return request();
     }
+
     public function setRequest(?Request $request = null) : DateProcessor
     {
         if(!$request)
         {
             $request = $this->getCurrentRequestInstance();
         }
+
         $this->request = $request;
         return $this;
     }
@@ -36,18 +38,22 @@ abstract class DateProcessor
     {
         return "from_date";
     }
+
     protected function getStartingDateRequestValue()  : string
     {
-        return $this->request->filter[ $this->getStartingDateRequestKey() ] ?? "";
+        $requestFilters = $this->request->filter ?? [];
+        return $requestFilters[ $this->getStartingDateRequestKey() ] ?? "";
     }
 
     protected function getEndingDateRequestKey() : string
     {
         return "to_date";
     }
+
     protected function getEndingDateRequestValue()  : string
     {
-        return $this->request->filter[ $this->getEndingDateRequestKey() ] ?? "";
+        $requestFilters = $this->request->filter ?? [];
+        return $requestFilters[ $this->getEndingDateRequestKey() ] ?? "";
     }
 
     protected function setStartingDate() : DateProcessor
@@ -55,15 +61,18 @@ abstract class DateProcessor
         $this->startingDate = $this->getStartingDateInstance();
         return $this;
     }
+
     protected function setEndingDate() : DateProcessor
     {
         $this->endingDate = $this->getEndingDateInstance();
         return $this;
     }
+
     public function getStartingDate() : Carbon
     {
         return $this->startingDate;
     }
+    
     public function getEndingDate() : Carbon
     {
         return $this->endingDate;

@@ -25,24 +25,28 @@ abstract class StatisticsBuilderBaseService
     {
         return $this->statisticsProvider?->getStatistics() ?? [];
     }
+
     protected function initStatisticsProviderReformulatingParametersBinder() : StatisticsProviderReformulatingParametersBinder
     {
         return StatisticsProviderReformulatingParametersBinder::initBinder();
     }
+
     protected function initStatisticsProvidersCategorizer() : StatisticsProvidersCategorizer
     {
         if(!$this->StatisticsProvidersCategorizer)
         {
             $this->StatisticsProvidersCategorizer = new StatisticsProvidersCategorizer();
         }
+
         return $this->StatisticsProvidersCategorizer;
     }
 
     protected function bindStatisticsProviderReformulatingParameters() :void
     {
         $this->initStatisticsProviderReformulatingParametersBinder()
-            ->bind( $this->initStatisticsProvidersCategorizer() );
+             ->bind( $this->initStatisticsProvidersCategorizer() );
     }
+
     /**
      * @return void
      */
@@ -74,13 +78,15 @@ abstract class StatisticsBuilderBaseService
     protected function getOrderedValidStatisticsProviders() : array
     {
         return $this->initStatisticsProvidersCategorizer()
-            ->setStatisticsProvidersClass( $this->getStatisticsProviderTypeClasses() )
-            ->getOrderedValidStatisticsProviders();
+                    ->setStatisticsProvidersClass( $this->getStatisticsProviderTypeClasses() )
+                    ->getOrderedValidStatisticsProviders();
     }
+
     protected function getDecoratableOrderedValidStatisticsProvidersArray() : array
     {
         return array_reverse( $this->getOrderedValidStatisticsProviders() );
     }
+
     protected function buildStatisticsProviders()  :void
     {
         foreach ($this->getDecoratableOrderedValidStatisticsProvidersArray() as $provider )
@@ -89,6 +95,7 @@ abstract class StatisticsBuilderBaseService
             $this->decorateStatisticsProvider($provider); // implementing decorator design pattern
             $this->customizeCurrentStatisticsProviderInitializing(); // hook method for child class
         }
+        
         $this->bindStatisticsProviderReformulatingParameters(); // Ensuring all necessary providers is properly passed as required.
     }
 

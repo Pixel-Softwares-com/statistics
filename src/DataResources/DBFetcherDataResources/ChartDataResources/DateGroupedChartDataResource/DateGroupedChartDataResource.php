@@ -4,7 +4,6 @@ namespace Statistics\DataResources\DBFetcherDataResources\ChartDataResources\Dat
 
 use Statistics\DataResources\DBFetcherDataResources\DBFetcherDataResource;
 use Statistics\DataResources\DBFetcherDataResources\ChartDataResources\DateGroupedChartDataResource\Traits\StrategiesDeterminingMethods;
-use Statistics\QueryCustomizationStrategies\QueryCustomizationStrategy;
 
 
 abstract class DateGroupedChartDataResource extends DBFetcherDataResource

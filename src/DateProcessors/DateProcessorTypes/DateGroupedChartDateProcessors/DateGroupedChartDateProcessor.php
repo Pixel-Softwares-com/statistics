@@ -22,9 +22,11 @@ abstract class DateGroupedChartDateProcessor extends DateProcessor
             return $this->getPeriodSingleDateFormat($singleDate);
         });
     }
+
     public function getIntervalBetweenDates(): array
     {
-        $interval = $this->getStartingDate()->toPeriod($this->getEndingDate() ,  $this->getPeriodInterval());
+        $interval = $this->getStartingDate()
+                         ->toPeriod($this->getEndingDate() ,  $this->getPeriodInterval());
         return iterator_to_array($this->getIntervalFinalForm($interval));
 
     }

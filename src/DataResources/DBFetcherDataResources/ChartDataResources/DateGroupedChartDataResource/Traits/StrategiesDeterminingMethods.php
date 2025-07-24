@@ -13,40 +13,72 @@ trait StrategiesDeterminingMethods
     {
         /** @var QueryCustomizationStrategy $queryCustomizerClass  */
         $queryCustomizerClass = $this->getQuarterAggregationOpStrategyClass();
-        return $queryCustomizerClass::Singleton( $this->query, $this->currentOperationGroup , $this->currentOperation, $this->dateProcessor);
+
+        return $queryCustomizerClass::Singleton( 
+                                                    $this->query,
+                                                    $this->currentOperationGroup ,
+                                                    $this->currentOperation,
+                                                    $this->dateProcessor
+                                               );
     }
 
     protected function getYearAggregationOpStrategy() : QueryCustomizationStrategy
     {
         /** @var QueryCustomizationStrategy $queryCustomizerClass  */
         $queryCustomizerClass = $this->getYearAggregationOpStrategyClass();
-        return $queryCustomizerClass::Singleton( $this->query , $this->currentOperationGroup,$this->currentOperation, $this->dateProcessor);
+        return $queryCustomizerClass::Singleton( 
+                                                    $this->query,
+                                                    $this->currentOperationGroup ,
+                                                    $this->currentOperation,
+                                                    $this->dateProcessor
+                                               );
     }
 
     protected function getMonthAggregationOpStrategy() : QueryCustomizationStrategy
     {
         /** @var QueryCustomizationStrategy $queryCustomizerClass  */
         $queryCustomizerClass = $this->getMonthAggregationOpStrategyClass();
-        return $queryCustomizerClass::Singleton(  $this->query , $this->currentOperationGroup,$this->currentOperation, $this->dateProcessor);
+        return $queryCustomizerClass::Singleton( 
+                                                    $this->query,
+                                                    $this->currentOperationGroup ,
+                                                    $this->currentOperation,
+                                                    $this->dateProcessor
+                                               );
     }
 
     protected function getDayAggregationOpStrategy() : QueryCustomizationStrategy
     {
         /** @var QueryCustomizationStrategy $queryCustomizerClass  */
         $queryCustomizerClass = $this->getDayAggregationOpStrategyClass();
-        return $queryCustomizerClass::Singleton( $this->query , $this->currentOperationGroup, $this->currentOperation, $this->dateProcessor);
+        return $queryCustomizerClass::Singleton( 
+                                                    $this->query,
+                                                    $this->currentOperationGroup ,
+                                                    $this->currentOperation,
+                                                    $this->dateProcessor
+                                               );
     }
   protected function getSemiAnnulAggregationOpStrategy() : QueryCustomizationStrategy
     {
         /** @var QueryCustomizationStrategy $queryCustomizerClass  */
         $queryCustomizerClass = $this->getSemiAnnulAggregationOpStrategyClass();
-        return $queryCustomizerClass::Singleton( $this->query , $this->currentOperationGroup, $this->currentOperation, $this->dateProcessor);
+        return $queryCustomizerClass::Singleton( 
+                                                    $this->query,
+                                                    $this->currentOperationGroup ,
+                                                    $this->currentOperation,
+                                                    $this->dateProcessor
+                                               );
     }
 
     protected function getRangeAggregationOpStrategy() : QueryCustomizationStrategy
     {
-        $periodLengthDays = RangePeriodDateProcessor::Singleton($this->request)->getPeriodLengthByDays();
-        return match(true) /** Any Condition Has True Value Will Be Reason To Return THe Convenient Strategy  */
+        /**
+         * @var RangePeriodDateProcessor $dataProcessor
+         */
+        $dataProcessor = RangePeriodDateProcessor::Singleton($this->request);
+        $periodLengthDays = $dataProcessor->getPeriodLengthByDays();
+
+        /** Any Condition Has True Value Will Be Reason To Return THe Convenient Strategy  */
+        return match(true) 
         {
             ($periodLengthDays <= 31)                               => $this->getDayAggregationOpStrategy(),
             ($periodLengthDays > 31 && $periodLengthDays <= 124)    => $this->getMonthAggregationOpStrategy(),

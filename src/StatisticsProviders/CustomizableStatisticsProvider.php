@@ -10,6 +10,7 @@ use Statistics\DataResources\DataResourceBuilders\GlobalDataResourceBuilder;
  */
 abstract class CustomizableStatisticsProvider extends StatisticsProviderDecorator
 {
+    
     protected function getDataResourceBuildersOrdersByPriorityClasses(): array
     {
         return [

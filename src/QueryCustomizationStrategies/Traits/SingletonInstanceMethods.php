@@ -12,13 +12,23 @@ use Illuminate\Database\Query\Builder;
 trait SingletonInstanceMethods
 {
     protected static array $instances = [];
+
     protected function setInstanceProps(Builder $query  , OperationGroup $currentOperationGroup , ?AggregationOperation $currentOperation = null ,  ?DateProcessor $dateProcessor = null) : QueryCustomizationStrategy
     {
-        return $this->initQueryBuilder($query)->setCurrentOperationGroup($currentOperationGroup)->setCurrentOperation($currentOperation)->setDateProcessor($dateProcessor);
+        return $this->initQueryBuilder($query)
+                    ->setCurrentOperationGroup($currentOperationGroup)
+                    ->setCurrentOperation($currentOperation)
+                    ->setDateProcessor($dateProcessor);
     }
+    
     protected static function createInstance(Builder $query , OperationGroup $currentOperationGroup , ?AggregationOperation $operation = null , ?DateProcessor $dateProcessor = null): QueryCustomizationStrategy
     {
-        return (new static())->setInstanceProps($query  , $currentOperationGroup , $operation , $dateProcessor);
+        return (new static())->setInstanceProps(
+                                                    $query  ,
+                                                    $currentOperationGroup ,
+                                                    $operation ,
+                                                    $dateProcessor
+                                                );
     }
 
     final public static function Singleton(Builder $query , OperationGroup $currentOperationGroup , ?AggregationOperation $operation = null , ?DateProcessor $dateProcessor = null) : QueryCustomizationStrategy

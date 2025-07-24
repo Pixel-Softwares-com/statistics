@@ -20,6 +20,6 @@ class RangePeriodDateProcessor extends DateProcessor
 
     public function getPeriodLengthByDays() : int
     {
-        return $this->getStartingDate()->diffInDays( $this->getEndingDate() );
+        return (int) $this->getStartingDate()->diffInDays( $this->getEndingDate() );
     }
 }

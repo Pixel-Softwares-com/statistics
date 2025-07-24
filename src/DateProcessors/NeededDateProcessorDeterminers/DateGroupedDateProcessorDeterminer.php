@@ -17,25 +17,38 @@ class DateGroupedDateProcessorDeterminer extends NeededDateProcessorDeterminer
     {
         return DayPeriodDateProcessor::Singleton($this::$request);
     }
+
     protected function getYearPeriodDateProcessor() : DateProcessor
     {
         return YearPeriodDateProcessor::Singleton($this::$request);
     }
+
     protected function getQuarterPeriodDateProcessor() : DateProcessor
     {
         return QuarterPeriodDateProcessor::Singleton($this::$request);
     }
+
     protected function getMonthPeriodDateProcessor() : DateProcessor
     {
         return MonthPeriodDateProcessor::Singleton($this::$request);
     }
-    protected function getRangePeriodDateProcessor() : DateProcessor
+
+    protected function getRangePeriodLengthDays() : int
     {
         /**
          * Range Period 's Convenient DateProcessor is Only That Compatible With The QueryCustomizer instance
+         * @var RangePeriodDateProcessor $rangePeriodDateProcessor
          */
-        $periodLengthDays = RangePeriodDateProcessor::Singleton($this::$request)->getPeriodLengthByDays();
-        return match(true) /** Any Condition Has True Value Will Be Reason To Return THe Convenient Strategy  */
+        $rangePeriodDateProcessor = RangePeriodDateProcessor::Singleton($this::$request);
+        return  $rangePeriodDateProcessor->getPeriodLengthByDays();
+    }
+
+    protected function getRangePeriodDateProcessor() : DateProcessor
+    {
+        $periodLengthDays = $this->getRangePeriodLengthDays();
+
+        /** Any Condition Has True Value Will Be Reason To Return THe Convenient Strategy  */
+        return match(true) 
         {
             ($periodLengthDays <= 31)                               =>  $this->getDayPeriodDateProcessor(),
             ($periodLengthDays > 31 && $periodLengthDays <= 124)    => $this->getMonthPeriodDateProcessor(),
@@ -43,10 +56,12 @@ class DateGroupedDateProcessorDeterminer extends NeededDateProcessorDeterminer
             default                                                 => $this->getYearPeriodDateProcessor()
         };
     }
+    
     protected function getSemiAnnualPeriodDateProcessor() : DateProcessor
     {
         return SemiAnnaulPeriodDateProcessor::Singleton($this::$request);
     }
+
     public function getDateProcessorInstance(): DateProcessor | null
     {
         return (match($this->getPeriodTypeRequestValue())

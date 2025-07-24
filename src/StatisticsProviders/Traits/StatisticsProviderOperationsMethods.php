@@ -31,6 +31,7 @@ trait StatisticsProviderOperationsMethods
         $this->operationsTempHolder->addOperation($tableName , $operation);
         return $this;
     }
+
     protected function addOperations( array $operations = []) : StatisticsProviderDecorator
     {
         foreach ($operations as $tableName => $operation)
@@ -42,6 +43,7 @@ trait StatisticsProviderOperationsMethods
         }
         return $this;
     }
+    
     /**
      * @param OperationGroup $operationGroup
      *

@@ -14,6 +14,7 @@ class StatisticsProvidersCategorizer implements Arrayable
     protected array $normalPrioritedStatisticsProviders = [];
     protected array $ReformatorStatisticsProviders = [];
     protected array $ReforulatableStatisticsProviders = [];
+
     public function __construct(array $statisticsProvidersClass = [])
     {
         $this->setStatisticsProvidersClass($statisticsProvidersClass);
@@ -42,6 +43,7 @@ class StatisticsProvidersCategorizer implements Arrayable
     {
         return $this->normalPrioritedStatisticsProviders;
     }
+
     /**
      * @param array $statisticsProvidersClass
      * @return $this
@@ -51,15 +53,18 @@ class StatisticsProvidersCategorizer implements Arrayable
         $this->statisticsProvidersClass = $statisticsProvidersClass;
         return $this;
     }
+
     protected function orderNormalPrioritedStatisticsProvider(StatisticsProviderDecorator $statisticsProvider) : void
     {
         $key = get_class($statisticsProvider);
         $this->normalPrioritedStatisticsProviders[ $key ] = $statisticsProvider;
     }
+
     public static function DoesItHaveReforulatableData(StatisticsProviderDecorator $statisticsProvider ) : bool
     {
         return $statisticsProvider instanceof HasReformulatableData;
     }
+
     protected function orderReformulatableSatisticsProvider(StatisticsProviderDecorator $statisticsProvider) : bool
     {
         if($this::DoesItHaveReforulatableData($statisticsProvider))
@@ -70,10 +75,12 @@ class StatisticsProvidersCategorizer implements Arrayable
         }
         return false;
     }
+
     public static function DoesItReformulateStatisticsProviderData(StatisticsProviderDecorator $statisticsProvider ) : bool
     {
         return $statisticsProvider instanceof ReformulatesStatisticsProviderData;
     }
+
     protected function orderReformatorSatisticsProvider(StatisticsProviderDecorator $statisticsProvider) : bool
     {
         if($this::DoesItReformulateStatisticsProviderData($statisticsProvider))
@@ -84,6 +91,7 @@ class StatisticsProvidersCategorizer implements Arrayable
         }
         return false;
     }
+
     protected function orderStatisticsProvider(StatisticsProviderDecorator $statisticsProvider) : void
     {
         if ( $this->orderReformatorSatisticsProvider($statisticsProvider) ) { return; }
@@ -94,14 +102,20 @@ class StatisticsProvidersCategorizer implements Arrayable
          */
         $this->orderNormalPrioritedStatisticsProvider($statisticsProvider);
     }
+
     protected function initProvider(string $statisticsProvidersClass = "") : ?StatisticsProviderDecorator
     {
-        if(class_exists($statisticsProvidersClass) && is_subclass_of($statisticsProvidersClass , StatisticsProviderDecorator::class))
+        if(
+            class_exists($statisticsProvidersClass) 
+            &&
+            is_subclass_of($statisticsProvidersClass , StatisticsProviderDecorator::class)
+          )
         {
             return new $statisticsProvidersClass();
         }
         return null;
     }
+
     protected function processClasses() : void
     {
         foreach ($this->statisticsProvidersClass as $statisticsProviderClass)
@@ -115,7 +129,11 @@ class StatisticsProvidersCategorizer implements Arrayable
 
     public function toArray()
     {
-        return array_merge($this->ReforulatableStatisticsProviders , $this->normalPrioritedStatisticsProviders,  $this->ReformatorStatisticsProviders );
+        return array_merge(
+                                $this->ReforulatableStatisticsProviders ,
+                                $this->normalPrioritedStatisticsProviders,
+                                $this->ReformatorStatisticsProviders 
+                          );
     }
 
     /**

@@ -2,9 +2,6 @@
 
 namespace Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors;
 use Carbon\Carbon;
-use Carbon\CarbonInterval;
-use Carbon\CarbonPeriod;
-use Statistics\DateProcessors\DateProcessorTypes\DateGroupedChartDateProcessors\DateGroupedChartDateProcessor;
 
 class SemiAnnaulPeriodDateProcessor extends GlobalDateProcessor
 {
@@ -17,6 +14,7 @@ class SemiAnnaulPeriodDateProcessor extends GlobalDateProcessor
             ? $date->startOfYear()->startOfMonth() // January 1
             : $date->startOfYear()->addMonths(6)->startOfMonth(); // July 1
     }
+
     public function getEndingDateInstance(): Carbon
     {
         $date = Carbon::parseOrNow($this->getStartingDateRequestValue());

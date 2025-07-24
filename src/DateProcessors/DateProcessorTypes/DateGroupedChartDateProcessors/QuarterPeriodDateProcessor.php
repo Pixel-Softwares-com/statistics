@@ -9,6 +9,7 @@ use Carbon\CarbonPeriod;
 class QuarterPeriodDateProcessor extends DateGroupedChartDateProcessor
 {
     const QuarterLengthToSUB = 16 ;
+    
     public function getStartingDateInstance(): Carbon
     {
         $endingDate = $this->endingDate ?? $this->getEndingDateInstance();

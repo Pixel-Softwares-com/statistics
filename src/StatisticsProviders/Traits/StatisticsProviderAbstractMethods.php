@@ -2,8 +2,6 @@
 
 namespace Statistics\StatisticsProviders\Traits;
 
-use Statistics\DataProcessors\DataProcessor;
-use Statistics\DateProcessors\NeededDateProcessorDeterminers\NeededDateProcessorDeterminer;
 
 trait StatisticsProviderAbstractMethods
 {

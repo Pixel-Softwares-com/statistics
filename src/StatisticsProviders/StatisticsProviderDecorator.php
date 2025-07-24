@@ -71,6 +71,7 @@ abstract class StatisticsProviderDecorator
     {
         return $this->currentStatisticsProviderData;
     }
+
     protected function mergeCurrentProviderData() : void
     {
         $dataToMerge =  $this->getCurrentStatisticsProviderData();
@@ -80,6 +81,7 @@ abstract class StatisticsProviderDecorator
         {
             $dataToMerge = array_merge( $this->data[ $StatisticsTypeName ] , $dataToMerge );
         }
+
         $this->data[ $StatisticsTypeName ] = $dataToMerge;
     }
 
@@ -96,13 +98,16 @@ abstract class StatisticsProviderDecorator
     protected function getCalculatedStatistics(): array
     {
         $data = $this->getCurrentDataResourceCalculatedStatistics();
+
         if(empty($data) && $this->dataResource)
         {
             $this->setNextDataResource();
             $data = $this->getCurrentDataResourceCalculatedStatistics();
         }
+
         return $data;
     }
+    
     /**
      * @return void
      * @throws ReflectionException

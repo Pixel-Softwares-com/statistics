@@ -16,6 +16,7 @@ abstract class PieChartStatisticsProvider extends CustomizableStatisticsProvider
     {
         return "pieChart";
     }
+
     public  static function getDataProcessorClass() : string
     {
         return PercentageGroupedChartDataProcessor::class;
@@ -27,7 +28,8 @@ abstract class PieChartStatisticsProvider extends CustomizableStatisticsProvider
     protected function getDataResourceBuildersOrdersByPriorityClasses(): array
     {
         return [
-            GlobalDataResourceBuilder::create()->useDataProcessorClass( $this->getDataProcessorClass() )
+            GlobalDataResourceBuilder::create()
+                                     ->useDataProcessorClass( $this->getDataProcessorClass() )
         ];
     }
 }

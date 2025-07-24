@@ -2,11 +2,9 @@
 
 namespace Statistics\DataResources\DBFetcherDataResources;
 
-use Statistics\DataProcessors\DataProcessor;
 use Statistics\DataResources\DataResource;
 use Statistics\DataResources\DBFetcherDataResources\Traits\Setters;
 use Statistics\DataResources\DBFetcherDataResources\Traits\StatisticsProcessingMethods;
-use Statistics\DateProcessors\DateProcessor;
 use Statistics\OperationsManagement\OperationTempHolders\DataResourceOperationsTempHolder;
 use Statistics\QueryCustomizationStrategies\QueryCustomizationStrategy;
 use Illuminate\Database\Query\Builder;

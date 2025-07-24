@@ -32,13 +32,19 @@ abstract class NeededDateProcessorDeterminer
     {
         return "period_type";
     }
+
     static protected function setRequest() : void
     {
-        if(!static::$request){static::$request = request();}
+        if(!static::$request)
+        {
+            static::$request = request();
+        }
     }
+
     static public function getPeriodTypeRequestValue() : string
     {
-        $value = static::$request->filter[ static::getPeriodTypeRequestKeyName() ] ?? "";
+        $requestFilters = static::$request->filter ?? [];
+        $value = $requestFilters[ static::getPeriodTypeRequestKeyName() ] ?? "";
         return strtolower($value);
     }
 

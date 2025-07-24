@@ -8,6 +8,7 @@ use Carbon\CarbonInterval;
 class DayPeriodDateProcessor extends DateGroupedChartDateProcessor
 {
     const DayLengthToSUB = 14 ;
+    
     public function getStartingDateInstance(): Carbon
     {
         $endingDate = $this->endingDate ?? $this->getEndingDateInstance();
@@ -23,6 +24,7 @@ class DayPeriodDateProcessor extends DateGroupedChartDateProcessor
     {
         return $singleDate->format("F-j");
     }
+    
     protected function getPeriodInterval( ) : CarbonInterval
     {
         return CarbonInterval::days(1);

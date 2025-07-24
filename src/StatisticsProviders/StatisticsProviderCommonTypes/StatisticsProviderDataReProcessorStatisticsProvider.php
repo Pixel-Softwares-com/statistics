@@ -38,6 +38,7 @@ abstract class StatisticsProviderDataReProcessorStatisticsProvider extends Custo
         $this->checkReformulatableStatisticsProvider();
         return $this->reformulatableStatisticsProvider;
     }
+
     /**
      * @return string
      * Used to allow the child class to override the DataProcessor
@@ -53,15 +54,18 @@ abstract class StatisticsProviderDataReProcessorStatisticsProvider extends Custo
      */
     protected function getDataResourceBuildersOrdersByPriorityClasses(): array
     {
+        $statisticsProvider =  $this->getReformulatableStatisticsProvider() ;
+
         /**
          * @var StatisticsProviderDecorator $statisticsProvider
+         * @var StatisticsProviderDataHandlerResourceBuilder $resourceBuilder
          */
-        $statisticsProvider =  $this->getReformulatableStatisticsProvider() ;
-        return [
-            StatisticsProviderDataHandlerResourceBuilder::create()
-                                                        ->setStatisticsProvider($statisticsProvider)
-                                                        ->useDataProcessorClass( $this->getDataProcessorClass() )
-        ];
+        $resourceBuilder = StatisticsProviderDataHandlerResourceBuilder::create();
+        
+        $resourceBuilder->setStatisticsProvider($statisticsProvider)
+                        ->useDataProcessorClass( $this->getDataProcessorClass() );
+
+        return [ $resourceBuilder  ];
     }
 
 }

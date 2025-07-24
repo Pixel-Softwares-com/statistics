@@ -20,12 +20,13 @@ abstract class RelationshipDescriber
      * Must return an array of Column object
      */
     abstract public function getRelationshipColumns() : array;
+
     public function getStatisticalOperations() : array
     {
         return  array_map(function ($column)
-        {
-            return $this->getColumnStatisticalOperation($column);
-        }, $this->getRelationshipColumns());
+                {
+                    return $this->getColumnStatisticalOperation($column);
+                }, $this->getRelationshipColumns());
     }
 
     /**
@@ -45,7 +46,11 @@ abstract class RelationshipDescriber
      */
     public static function initDescriber(string | RelationshipDescriber $describerClass) : RelationshipDescriber
     {
-        if($describerClass instanceof RelationshipDescriber) { return $describerClass;}
+        if($describerClass instanceof RelationshipDescriber) 
+        { 
+            return $describerClass;
+        }
+
         if(class_exists($describerClass))
         {
             $describer = new $describerClass;

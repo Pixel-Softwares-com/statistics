@@ -36,10 +36,14 @@ class FilteredRelationshipDetector implements DetectsFilteredRelationship
     {
         return Arr::first( $this->relationshipDescriberClasses );
     }
+    
     protected function getRelationshipFilterValue() : ?string
     {
-        return $this->getRequest()->filter[ $this->relationshipFilterKey ] ?? null;
+        $requestFilters = $this->getRequest()->filter ?? [];
+
+        return $requestFilters[ $this->relationshipFilterKey ] ?? null;
     }
+
     protected function getFilteredRelationshipDescriberClass() : ?string
     {
         return $this->relationshipDescriberClasses[ $this->getRelationshipFilterValue() ] ?? null;

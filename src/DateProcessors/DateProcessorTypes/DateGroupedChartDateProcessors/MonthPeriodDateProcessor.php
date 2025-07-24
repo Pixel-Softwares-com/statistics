@@ -20,6 +20,7 @@ class MonthPeriodDateProcessor extends DateGroupedChartDateProcessor
     {
         return Carbon::parseOrNow($this->getStartingDateRequestValue())->endOfMonth();
     }
+    
     protected function getPeriodSingleDateFormat(Carbon $singleDate): string
     {
         return $singleDate->format("Y-n");

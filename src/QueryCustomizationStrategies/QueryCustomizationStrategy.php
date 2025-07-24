@@ -35,6 +35,7 @@ abstract class QueryCustomizationStrategy
     {
         $alias = $column->getResultProcessingColumnAlias();
         $columnName = $column->getColumnFullName();
+
         $this->query->addSelect(
                                     DB::raw(
                                                 $this->getOperationSqlString($columnName , $alias)
@@ -46,6 +47,7 @@ abstract class QueryCustomizationStrategy
     {
         return $this->currentOperation->getAggregationColumns();
     }
+
     public function customize(): void
     {
         foreach ($this->getAggregationColumns() as $columnAlias => $columnOb)
@@ -53,6 +55,7 @@ abstract class QueryCustomizationStrategy
             $this->addAggregationColumnSql($columnOb);
         }
     }
+
     protected function initQueryBuilder(Builder $query )  : QueryCustomizationStrategy
     {
         $this->query = $query;
@@ -70,10 +73,10 @@ abstract class QueryCustomizationStrategy
     }
 
     /**
-     * @param OperationGroup|null $currentOperationGroup
+     * @param ?OperationGroup|null $currentOperationGroup
      * @return $this
      */
-    public function setCurrentOperationGroup(OperationGroup $currentOperationGroup = null  ): QueryCustomizationStrategy
+    public function setCurrentOperationGroup(?OperationGroup $currentOperationGroup = null  ): QueryCustomizationStrategy
     {
         $this->currentOperationGroup = $currentOperationGroup;
         return $this;

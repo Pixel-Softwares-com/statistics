@@ -6,7 +6,7 @@ use DataResourceInstructors\OperationTypes\AggregationOperation;
 use Statistics\DateProcessors\DateProcessor;
 use Statistics\DateProcessors\DateProcessorTypes\GlobalDateProcessors\GlobalDateProcessor;
 use DataResourceInstructors\OperationComponents\Columns\AggregationColumn;
-use DataResourceInstructors\OperationComponents\OperationConditions\WhereConditions\WhereConditionTypes\AndWhereCondition;
+use DataResourceInstructors\OperationComponents\OperationConditions\WhereConditions\WhereConditionTypes\WhereConditionPrimaryTypes\AndWhereCondition;
 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
 use DataResourceInstructors\OperationTypes\CountOperation;
 use Exception;
@@ -29,7 +29,12 @@ class CountingAllRowsUntilEndDateOperationFactory extends CommonOperationFactory
     {
         if($this->dateProcessor)
         {
-            $operationGroup->where( AndWhereCondition::create($this->getDateColumnConveniently() , $this->dateProcessor->getEndingDate() , "<") );
+            $condition =  AndWhereCondition::create(
+                                                        $this->getDateColumnConveniently() ,
+                                                        $this->dateProcessor->getEndingDate() ,
+                                                        "<"
+                                                    ) ;
+            $operationGroup->where($condition);
         }
     }
 
@@ -40,7 +45,10 @@ class CountingAllRowsUntilEndDateOperationFactory extends CommonOperationFactory
     protected function processAggregationResultLabel() : string
     {
         $AggregationResultLabel = $this->getAggregationResultLabel() ;
-        if(!$AggregationResultLabel){$AggregationResultLabel = "All " . $this->getTableTitleConveniently() ;}
+        if(!$AggregationResultLabel)
+        {
+            $AggregationResultLabel = "All " . $this->getTableTitleConveniently() ;
+        }
         return $AggregationResultLabel;
     }
 
@@ -51,8 +59,10 @@ class CountingAllRowsUntilEndDateOperationFactory extends CommonOperationFactory
     protected function initCountedColumn() : AggregationColumn
     {
         $AggregationResultLabel = $this->processAggregationResultLabel();
-        return AggregationColumn::create($this->getCountedKeyNameConveniently())->setResultLabel($AggregationResultLabel);
+        return AggregationColumn::create($this->getCountedKeyNameConveniently())
+                                  ->setResultLabel($AggregationResultLabel);
     }
+
     /**
      * @throws Exception
      */

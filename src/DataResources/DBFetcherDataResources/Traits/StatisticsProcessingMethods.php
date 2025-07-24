@@ -27,7 +27,10 @@ trait StatisticsProcessingMethods
 
     protected function processData(array $data = []) : array
     {
-        return $this->dataProcessor?->setDataToProcess($data)->setOperationGroup($this->currentOperationGroup)->getProcessedData() ?? $data;
+        return $this->dataProcessor?->setDataToProcess($data)
+                    ->setOperationGroup($this->currentOperationGroup)
+                    ->getProcessedData() 
+                    ?? $data;
     }
 
     protected function setOrderingColumns(array $OrderingColumns = []) : void
@@ -42,6 +45,7 @@ trait StatisticsProcessingMethods
     {
         return in_array( $columnAlias , $this->currentOperationGroup->getGroupedByColumnAliases() );
     }
+
     protected function setSelectedColumns(): void
     {
         foreach ($this->currentOperationGroup->getSelectingNeededColumnFullNames() as $column => $alias)
@@ -56,11 +60,16 @@ trait StatisticsProcessingMethods
     protected function groupBy() : void
     {
         $columns = $this->currentOperationGroup->getGroupedByColumnAliases();
-        if( !empty($columns) ) { $this->query->groupBy($columns ); }
+        if( !empty($columns) )
+        {
+             $this->query->groupBy($columns ); 
+        }
     }
+
     protected function setResultRowCount() : void
     {
         $ResultRowCount = $this->currentOperationGroup->getResultRowCount();
+
         if($ResultRowCount > 0)
         {
             $this->query->limit($ResultRowCount);
@@ -72,13 +81,22 @@ trait StatisticsProcessingMethods
         if($this->dateProcessor && $this->currentOperationGroup->getDateSensitivityStatus())
         {
             $dateColumn = $this->currentOperationGroup->getDateColumn()->getColumnFullName();
-            $this->query->whereBetween( $dateColumn,[$this->dateProcessor->getStartingDate() , $this->dateProcessor->getEndingDate()]);
+            $this->query->whereBetween( 
+                                        $dateColumn,
+                                        [
+                                            $this->dateProcessor->getStartingDate() ,
+                                            $this->dateProcessor->getEndingDate()
+                                        ]
+                                      );
         }
     }
 
     protected function isWhereCallbackCallableOnDataResourceType(WhereCallbackComponent $whereCallabckComponent) :bool
     {
-        return !array_key_exists(DBFetcherDataResource::class , $whereCallabckComponent->getExceptedDataResourceTypes());
+        return !array_key_exists(
+                                    DBFetcherDataResource::class ,
+                                    $whereCallabckComponent->getExceptedDataResourceTypes()
+                                );
     }
 
     protected function setQueryWhereCallabcks() : void
@@ -119,6 +137,7 @@ trait StatisticsProcessingMethods
             }
         }
     }
+
     protected function setQueryWhereConditions() : void
     {
 
@@ -143,6 +162,7 @@ trait StatisticsProcessingMethods
             $this->query->where($callback , null , null ,$conditionGroup->getConditionGroupType() );
         }
     }
+
     protected function setQueryConditions() : void
     {
         $this->setQueryWhereConditions();
@@ -184,11 +204,13 @@ trait StatisticsProcessingMethods
             $joinQuery->where($callback , null , null , $conditionGroup->getConditionGroupType());
         }
     }
+
     protected function setRelationshipWheres(RelationshipLoader $relationship , JoinClause $joinQuery): void
     {
         $this->setRelationshipWhereConditions( $relationship ,  $joinQuery);
         $this->setRelationshipWhereMethods( $relationship ,  $joinQuery);
     }
+
     /**
      * @param RelationshipLoader $relationship
      * @param JoinClause $joinQuery
@@ -246,10 +268,15 @@ trait StatisticsProcessingMethods
          */
         foreach ($this->currentOperation->getAggregationConditions() as $condition)
         {
-            $this->query->having( $condition->getConditionColumn()->getResultProcessingColumnAlias() , $condition->getOperator() , $condition->getConditionColumnValue()  , $condition->getConditionType());
+            $this->query->having( 
+                                    $condition->getConditionColumn()->getResultProcessingColumnAlias() ,
+                                    $condition->getOperator() ,
+                                    $condition->getConditionColumnValue()  ,
+                                    $condition->getConditionType()
+                                );
         }
-
     }
+    
     protected function customizeOperationQuery() : void
     {
         $this->getAggregationOpStrategy()->customize();

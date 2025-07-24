@@ -5,7 +5,6 @@ namespace Statistics\OperationsManagement\Operations\CommonOperationFactories;
 use Statistics\Helpers\Helpers;
 use Statistics\Interfaces\ModelInterfaces\StatisticsProviderModel;
 use DataResourceInstructors\OperationComponents\Columns\Column;
-use DataResourceInstructors\OperationComponents\Columns\GroupingByColumn;
 use DataResourceInstructors\OperationContainers\OperationGroups\OperationGroup;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -99,8 +98,16 @@ abstract class CommonOperationFactory
      */
     protected function getTableNameConveniently() : string
     {
-        if($this->tableName){return $this->tableName;}
-        if($this->model){return $this->model->getTable();}
+        if($this->tableName)
+        {
+            return $this->tableName;
+        }
+
+        if($this->model)
+        {
+            return $this->model->getTable();
+        }
+
         $exceptionClass = Helpers::getExceptionClass();
         throw new $exceptionClass("No Table Name Or Model Is Set !");
     }
@@ -124,6 +131,7 @@ abstract class CommonOperationFactory
         $this->countedKeyName = $countedKeyName;
         return $this;
     }
+
     protected function getDefaultCountedKeyName() : string
     {
         return "id";
@@ -131,8 +139,16 @@ abstract class CommonOperationFactory
 
     protected function getCountedKeyNameConveniently() : string
     {
-        if($this->countedKeyName){return $this->countedKeyName;}
-        if($this->model){return $this->model->getKeyName();}
+        if($this->countedKeyName)
+        {
+            return $this->countedKeyName;
+        }
+
+        if($this->model)
+        {
+            return $this->model->getKeyName();
+        }
+
         return $this->getDefaultCountedKeyName();
     }
 
@@ -150,14 +166,17 @@ abstract class CommonOperationFactory
     {
         return "created_at";
     }
+
     protected function getDateColumnName() : string
     {
         if($this->model instanceof StatisticsProviderModel)
         {
             return $this->model->getStatisticDateColumnName();
         }
+
         return $this->getDateColumnDefaultName();
     }
+    
     /**
      * @return Column
      */

@@ -24,10 +24,12 @@ class RelationshipFilteredColumnDetector implements DetectsRelationshipColumn
     {
         $this->relationshipDescriber = $RelationshipDescriber;
     }
+
     protected function getRequest() : Request
     {
         return request();
     }
+
     public function useColumnFilterKeyName(string $columnFilterKeyName):self
     {
         $this->columnFilterKeyName = $columnFilterKeyName;
@@ -37,10 +39,13 @@ class RelationshipFilteredColumnDetector implements DetectsRelationshipColumn
     {
         return $this->relationshipDescriber->getFilteringDefaultColumn();
     }
+
     protected function getFilterValue() : ?string
     {
-        return $this->getRequest()->filter[ $this->columnFilterKeyName ] ?? null;
+        $requestFilters = $this->getRequest()->filter ?? [];
+        return $requestFilters[ $this->columnFilterKeyName ] ?? null;
     }
+    
     protected function getRelationshipColumns() : array
     {
         return $this->relationshipDescriber->getRelationshipColumns();

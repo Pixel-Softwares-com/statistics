@@ -47,18 +47,21 @@ abstract class BarAvgChartStatisticsProvider extends StatisticsProviderDecorator
     {
         return "created_at";
     }
+
     protected function getDateColumnName() : string
     {
         if($this->model instanceof StatisticsProviderModel)
         {
             return $this->model->getStatisticDateColumnName();
         }
+
         return $this->getDateColumnDefaultName();
     }
 
     protected function getDateColumn() : Column
     {
-        return Column::create( $this->getDateColumnName() )->setResultProcessingColumnAlias("DateColumn");
+        return Column::create( $this->getDateColumnName() )
+                     ->setResultProcessingColumnAlias("DateColumn");
     }
 
     protected function getAvgOperation() : AggregationOperation
@@ -69,6 +72,7 @@ abstract class BarAvgChartStatisticsProvider extends StatisticsProviderDecorator
     protected function getAvgOperationGroup() : OperationGroup
     {
         $dateColumn = $this->getDateColumn();
+        
         return OperationGroup::create($this->model->getTable())
                              ->enableDateSensitivity($dateColumn)
                              ->addOperation( $this->getAvgOperation() );

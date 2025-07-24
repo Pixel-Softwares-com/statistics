@@ -49,6 +49,7 @@ class StatisticsProviderReformulatingParametersBinder
     {
         return StatisticsProvidersCategorizer::DoesItHaveReforulatableData($statisticsProviderDecorator);
     }
+
     protected function DoesItReformulateStatisticsProviderData(StatisticsProviderDecorator $statisticsProviderDecorator)
     {
         return StatisticsProvidersCategorizer::DoesItReformulateStatisticsProviderData($statisticsProviderDecorator);
@@ -59,6 +60,7 @@ class StatisticsProviderReformulatingParametersBinder
         $reformulatableClass = $reformator->getReformulatableStatisticsProviderClass();
         return $this->reformulatableStatisticsProviders[$reformulatableClass] ?? null;
     }
+
     protected function handleStatisticsProviderSearchingKey(array $statisticsProviders = []) : array
     {
         $newArray = [];
@@ -88,6 +90,7 @@ class StatisticsProviderReformulatingParametersBinder
 //            return $value;
 //        } , $reformartorStatisticsProviders)
     }
+    
     /**
      * @param array $reformartorStatisticsProviders
      */
@@ -105,11 +108,13 @@ class StatisticsProviderReformulatingParametersBinder
         $reformulatableStatisticsProviders = $this->handleStatisticsProviderSearchingKey($reformulatableStatisticsProviders);
         $this->reformulatableStatisticsProviders = $reformulatableStatisticsProviders;
     }
+
     protected function extractStatisticsProvidersCategorizerData(StatisticsProvidersCategorizer $categorizer) : void
     {
         $this->setReformartorStatisticsProviders( $categorizer->getReformatorStatisticsProviders() );
         $this->setReformulatableStatisticsProviders($categorizer->getReforulatableStatisticsProviders());
     }
+    
     public function bind( StatisticsProvidersCategorizer $categorizer ) : void
     {
         $this->extractStatisticsProvidersCategorizerData($categorizer);

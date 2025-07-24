@@ -9,6 +9,7 @@ use Carbon\CarbonPeriod;
 class YearPeriodDateProcessor extends DateGroupedChartDateProcessor
 {
     const YearLengthToSUB = 4 ;
+
     public function getStartingDateInstance(): Carbon
     {
         $endingDate = $this->endingDate ?? $this->getEndingDateInstance();
@@ -19,10 +20,12 @@ class YearPeriodDateProcessor extends DateGroupedChartDateProcessor
     {
         return Carbon::parseOrNow($this->getStartingDateRequestValue())->endOfYear();
     }
+
     protected function getPeriodSingleDateFormat(Carbon $singleDate): string
     {
         return $singleDate->format("Y");
     }
+    
     protected function getPeriodInterval( ) : CarbonInterval
     {
         return CarbonInterval::years(1);

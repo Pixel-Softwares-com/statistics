@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 trait SingletonInstanceMethods
 {
     protected static array $instances = [];
+
     protected function setInstanceProps(?Request $request = null) : DateProcessor
     {
         return $this->setRequest($request)->setEndingDate()->setStartingDate();
     }
+    
     protected static function createInstance(?Request $request = null): DateProcessor
     {
         return (new static())->setInstanceProps($request);

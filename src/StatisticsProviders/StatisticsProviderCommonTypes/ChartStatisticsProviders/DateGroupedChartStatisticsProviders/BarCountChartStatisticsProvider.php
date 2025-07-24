@@ -46,6 +46,7 @@ abstract class BarCountChartStatisticsProvider extends StatisticsProviderDecorat
     {
         return $this->model->getTable();
     }
+
     protected function getPrimaryKeyColumn() : AggregationColumn
     {
         return AggregationColumn::create($this->model->getKeyName());
@@ -56,10 +57,12 @@ abstract class BarCountChartStatisticsProvider extends StatisticsProviderDecorat
         $idColumn = $this->getPrimaryKeyColumn();
         return CountOperation::create()->addAggregationColumn($idColumn);
     }
+
     protected function getDateColumnDefaultName() : string
     {
         return "created_at";
     }
+
     protected function getDateColumnName() : string
     {
         if($this->model instanceof StatisticsProviderModel)
@@ -71,7 +74,8 @@ abstract class BarCountChartStatisticsProvider extends StatisticsProviderDecorat
 
     protected function getDateColumn() : Column
     {
-        return Column::create( $this->getDateColumnName() )->setResultProcessingColumnAlias("DateColumn");
+        return Column::create( $this->getDateColumnName() )
+                     ->setResultProcessingColumnAlias("DateColumn");
     }
 
     protected function getDateGroupedRowsCountOperationGroup() : OperationGroup

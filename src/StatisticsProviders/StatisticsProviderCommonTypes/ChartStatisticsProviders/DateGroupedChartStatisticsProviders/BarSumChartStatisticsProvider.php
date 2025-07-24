@@ -48,6 +48,7 @@ abstract class BarSumChartStatisticsProvider extends StatisticsProviderDecorator
     {
         return "created_at";
     }
+    
     protected function getDateColumnName() : string
     {
         if($this->model instanceof StatisticsProviderModel)
@@ -56,13 +57,16 @@ abstract class BarSumChartStatisticsProvider extends StatisticsProviderDecorator
         }
         return $this->getDateColumnDefaultName();
     }
+
     protected function getOperationGroupTableName() : string
     {
         return $this->model->getTable();
     }
+
     protected function getDateColumn() : Column
     {
-        return Column::create( $this->getDateColumnName() )->setResultProcessingColumnAlias("DateColumn");
+        return Column::create( $this->getDateColumnName() )
+                     ->setResultProcessingColumnAlias("DateColumn");
     }
 
     protected function getSumOperation() : AggregationOperation
