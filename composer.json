@@ -13,7 +13,8 @@
     "php": "^8.2",
     "laravel/framework": "^12.0",
     "pixel-softwares/data-resource-instructors": "^2.0.0",
-    "pixel-softwares/custom-generators": "^2.0.0"
+    "pixel-softwares/custom-generators": "^2.0.0",
+    "mdr2025/pixel-macroable-extenders" : "^2.0"
   },
   "autoload": {
     "psr-4": {
@@ -35,6 +36,10 @@
     {
       "type": "vcs",
       "url": "git@github.com:Pixel-Softwares-com/custom-generators.git"
+    },
+    {
+      "type": "vcs",
+         "url": "git@github.com:mdr2025/pixel-macroable-extenders.git"
     }
   ]
 }
